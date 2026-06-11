@@ -21,7 +21,7 @@ from fi import convertible as cb  # noqa: E402
 from fi import credit as cr  # noqa: E402
 from fi import curve as fc  # noqa: E402
 from fi import securitization as sz  # noqa: E402
-from fi import data, frn, futures, plotting, risk, swap, tree  # noqa: E402
+from fi import data, frn, futures, plotting, rateopt, risk, swap, tree  # noqa: E402
 from fi.cashflow import make_cashflows  # noqa: E402
 from fi.pricing import price_bond, forward_rate  # noqa: E402
 
@@ -320,6 +320,24 @@ def ch15_swap_value() -> None:
     _save(fig, "ch15_swap_value.png")
 
 
+# --- 第16章 --------------------------------------------------------------
+
+def ch16_capfloor() -> None:
+    resets, taus = [1, 2, 3, 4], [1, 1, 1, 1]
+    pay_dfs = [1.03 ** -t for t in (2, 3, 4, 5)]
+    fwds = [0.03] * 4
+    strikes = np.linspace(0.015, 0.045, 31)
+    caps = [rateopt.black_cap(fwds, K, 0.20, resets, taus, pay_dfs, kind="cap") / 1e4 for K in strikes]
+    floors = [rateopt.black_cap(fwds, K, 0.20, resets, taus, pay_dfs, kind="floor") / 1e4 for K in strikes]
+    fig, ax = plt.subplots(figsize=(8, 4.5))
+    ax.plot(strikes * 100, caps, label="Cap 价值")
+    ax.plot(strikes * 100, floors, label="Floor 价值")
+    ax.axvline(3.0, ls=":", color="gray", label="ATM (3%)")
+    ax.set_xlabel("执行利率 K (%)"); ax.set_ylabel("价值（万元）")
+    ax.set_title("图16-1　Cap 与 Floor 价值随执行价（ATM 处相交）"); ax.legend()
+    _save(fig, "ch16_capfloor.png")
+
+
 # --- 第8章 ---------------------------------------------------------------
 
 def _money_market():
@@ -374,6 +392,7 @@ def main() -> None:
     ch13_tranching()
     ch14_hedge()
     ch15_swap_value()
+    ch16_capfloor()
     ch08_carry()
     ch08_leverage_nav()
     print("所有图已生成至", FIG)
