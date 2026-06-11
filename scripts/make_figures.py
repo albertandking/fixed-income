@@ -20,6 +20,7 @@ import numpy as np  # noqa: E402
 from fi import convertible as cb  # noqa: E402
 from fi import credit as cr  # noqa: E402
 from fi import curve as fc  # noqa: E402
+from fi import securitization as sz  # noqa: E402
 from fi import data, frn, plotting, risk, tree  # noqa: E402
 from fi.cashflow import make_cashflows  # noqa: E402
 from fi.pricing import price_bond, forward_rate  # noqa: E402
@@ -262,6 +263,25 @@ def ch12_merton() -> None:
     _save(fig, "ch12_merton.png")
 
 
+# --- 第13章 --------------------------------------------------------------
+
+def ch13_tranching() -> None:
+    tranches = [("优先档", 80), ("夹层档", 15), ("次级档", 5)]
+    sizes = dict(tranches)
+    pool_losses = np.linspace(0, 30, 121)
+    series = {n: [] for n, _ in tranches}
+    for pl in pool_losses:
+        alloc = sz.allocate_losses(pl, tranches)
+        for n, _ in tranches:
+            series[n].append(alloc[n] / sizes[n] * 100)   # 该档损失率 %
+    fig, ax = plt.subplots(figsize=(8, 4.5))
+    for n, _ in tranches:
+        ax.plot(pool_losses, series[n], label=n)
+    ax.set_xlabel("资产池损失率 (%)"); ax.set_ylabel("该档损失率 (%)")
+    ax.set_title("图13-1　分层与次级垫底：优先档在池损失突破 20% 前零损失"); ax.legend()
+    _save(fig, "ch13_tranching.png")
+
+
 # --- 第8章 ---------------------------------------------------------------
 
 def _money_market():
@@ -313,6 +333,7 @@ def main() -> None:
     ch10_callable()
     ch11_convertible()
     ch12_merton()
+    ch13_tranching()
     ch08_carry()
     ch08_leverage_nav()
     print("所有图已生成至", FIG)
