@@ -17,6 +17,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 
+from fi import curve as fc  # noqa: E402
 from fi import data, plotting, risk  # noqa: E402
 from fi.cashflow import make_cashflows  # noqa: E402
 from fi.pricing import price_bond, forward_rate  # noqa: E402
@@ -119,6 +120,23 @@ def ch04_spot_forward() -> None:
     _save(fig, "ch04_spot_forward.png")
 
 
+# --- 第5章 ---------------------------------------------------------------
+
+def ch05_three_curves() -> None:
+    cv = data.load_sample("cgb_yield_curve")
+    ten = np.arange(1, 11)
+    par = fc.interpolate(cv["tenor"], cv["yield_pct"] / 100, ten, "linear")
+    zeros, _ = fc.bootstrap(par)
+    fwd_t, fwd = fc.forward_curve(zeros)
+    fig, ax = plt.subplots(figsize=(8, 4.5))
+    ax.plot(ten, par * 100, marker="o", label="到期收益率（平价）")
+    ax.plot(ten, zeros * 100, marker="^", label="即期利率（bootstrap）")
+    ax.plot(fwd_t, fwd * 100, marker="s", ls="--", label="远期利率")
+    ax.set_xlabel("期限（年）"); ax.set_ylabel("利率 (%)")
+    ax.set_title("图5-1　到期 / 即期 / 远期三条曲线（par < spot < forward）"); ax.legend()
+    _save(fig, "ch05_three_curves.png")
+
+
 # --- 第6章 ---------------------------------------------------------------
 
 def ch06_price_yield_tangent() -> None:
@@ -193,6 +211,7 @@ def main() -> None:
     ch03_price_yield()
     ch03_pull_to_par()
     ch04_spot_forward()
+    ch05_three_curves()
     ch06_price_yield_tangent()
     ch06_krd()
     ch08_carry()
