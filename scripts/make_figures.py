@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 
 from fi import curve as fc  # noqa: E402
-from fi import data, plotting, risk  # noqa: E402
+from fi import data, frn, plotting, risk  # noqa: E402
 from fi.cashflow import make_cashflows  # noqa: E402
 from fi.pricing import price_bond, forward_rate  # noqa: E402
 
@@ -187,6 +187,26 @@ def ch07_immunization() -> None:
     _save(fig, "ch07_immunization.png")
 
 
+# --- 第9章 ---------------------------------------------------------------
+
+def ch09_frn_vs_fixed() -> None:
+    refs = np.linspace(0.01, 0.04, 61)
+    # 浮息债：DM=QM=0.5%，2 年季付
+    frn_p = [frn.price_frn(L, 0.005, 0.005, n_periods=8, freq=4) for L in refs]
+    # 固息债：票息固定 2.5%，2 年季付，收益率 = 市场利率 + 0.5% 利差
+    fix_p = []
+    for L in refs:
+        cf, t = make_cashflows(0.025, 2, freq=4, face=100)
+        fix_p.append(price_bond(cf, t, L + 0.005, freq=4))
+    fig, ax = plt.subplots(figsize=(8, 4.5))
+    ax.plot(refs * 100, frn_p, label="浮息债（DM=QM）")
+    ax.plot(refs * 100, fix_p, label="固息债（票息 2.5%）")
+    ax.axhline(100, ls=":", color="gray")
+    ax.set_xlabel("市场利率 (%)"); ax.set_ylabel("价格")
+    ax.set_title("图9-1　浮息债 vs 固息债：利率变动下的价格稳定性"); ax.legend()
+    _save(fig, "ch09_frn_vs_fixed.png")
+
+
 # --- 第8章 ---------------------------------------------------------------
 
 def _money_market():
@@ -234,6 +254,7 @@ def main() -> None:
     ch06_price_yield_tangent()
     ch06_krd()
     ch07_immunization()
+    ch09_frn_vs_fixed()
     ch08_carry()
     ch08_leverage_nav()
     print("所有图已生成至", FIG)
