@@ -25,6 +25,8 @@
 
 一只债券无非是一串**事先约定的现金流**：每期票息，到期还本。给它定价的逻辑只有一条——**一价定律（Law of One Price）**：在无套利的市场里，两笔现金流完全相同的资产必须卖同样的价。
 
+**为什么一价定律必然成立？** 用反证法（套利论证）：假设一只债券的市价**低于**其现金流现值，套利者就可以"买入这只低估的债 + 卖出能复制其现金流的零息债组合"，立即锁定无风险利润；反向亦然。逐利的套利者会蜂拥而入，把价格推回到现值——除非市价恰好等于现值，套利机会才消失。**正是套利者的存在，逼着价格等于现值**。这套"复制 + 无套利"的逻辑，是整个固定收益乃至衍生品定价的总纲。
+
 于是，债券的价值就等于"复制它的现金流"所需的成本，也就是把每一笔未来现金流**各自折现到今天再加总**：
 
 $$P=\sum_{i=1}^{n}\frac{CF_i}{(1+r_i)^{t_i}}$$
@@ -107,6 +109,9 @@ $$y\uparrow\;\Longrightarrow\;P\downarrow,\qquad y\downarrow\;\Longrightarrow\;P
 ### 3.4.2 溢价/平价/折价的统一判据
 
 $$c>y\Rightarrow P>F\ (\text{溢价}),\qquad c=y\Rightarrow P=F\ (\text{平价}),\qquad c<y\Rightarrow P<F\ (\text{折价})$$
+
+!!! warning "误区：票面利率 ≠ 收益率"
+    "票息 5% 的债，收益率就是 5%"——错。**票面利率（coupon rate）**是发行时定下、用来算票息的固定数字，写在债券条款里、永不改变；**到期收益率（yield）**是市场根据当前价格随时变动的折现率。只有当债券**恰好平价**时两者才相等。溢价买入一只高票息债，你的实际收益率低于票面（因为多付的溢价会随拉回面值而损耗）。把票面利率当成投资回报，是债券投资最常见的认知错误。
 
 ### 3.4.3 拉回面值（Pull-to-Par）
 
@@ -238,3 +243,8 @@ ql.BondFunctions.cleanPrice(bond, rate)   # 97.2249，与 fi.price_bond 一致
 - 实现上，`fi.pricing.price_bond` 与 QuantLib `FixedRateBond` 结果一致；交叉对拍是排错与学习的好习惯。
 
 下一章（第4章）将反过来问：给定市场价格，债券的**到期收益率**是多少？我们将用牛顿迭代法求解 YTM，并区分即期利率、远期利率与持有期收益率。
+
+!!! quote "延伸阅读"
+    - Fabozzi, *Bond Markets, Analysis, and Strategies*，"Pricing of Bonds" 一章；
+    - Tuckman & Serrat, *Fixed Income Securities*，"Bond Prices, Discount Factors, and Arbitrage"——无套利定价与折现因子的系统论述；
+    - 中央结算公司中债估值方法说明——了解中国市场净价/全价/应计的实务计算口径。
