@@ -14,6 +14,7 @@ SUBMODULES = [
     "fi.portfolio",
     "fi.frn",
     "fi.tree",
+    "fi.convertible",
     "fi.credit",
     "fi.backtest",
     "fi.plotting",
