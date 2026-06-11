@@ -60,3 +60,8 @@ def forward_rate(spot_curve, t1: float, t2: float, freq: int = 1) -> float:
     df1 = (1.0 + z1 / freq) ** (-freq * t1)
     df2 = (1.0 + z2 / freq) ** (-freq * t2)
     return freq * ((df1 / df2) ** (1.0 / (freq * (t2 - t1))) - 1.0)
+
+
+def current_yield(annual_coupon: float, price: float) -> float:
+    """当期收益率（current yield）：年票息 / 市价。仅反映票息回报，忽略资本利得与再投资。"""
+    return annual_coupon / price
