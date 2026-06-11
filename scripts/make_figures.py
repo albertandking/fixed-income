@@ -17,6 +17,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 
+from fi import convertible as cb  # noqa: E402
 from fi import curve as fc  # noqa: E402
 from fi import data, frn, plotting, risk, tree  # noqa: E402
 from fi.cashflow import make_cashflows  # noqa: E402
@@ -224,6 +225,22 @@ def ch10_callable() -> None:
     _save(fig, "ch10_callable.png")
 
 
+# --- 第11章 --------------------------------------------------------------
+
+def ch11_convertible() -> None:
+    floor = cb.bond_floor(100, 0.015, 5, discount_rate=0.05)
+    ratio = 10
+    s = np.linspace(2, 16, 36)
+    cv = [cb.price_convertible(si, 0.30, 0.03, 5, 100, 0.015, ratio, n_steps=120)["price"] for si in s]
+    fig, ax = plt.subplots(figsize=(8, 4.5))
+    ax.plot(s, cv, label="可转债价值", lw=2)
+    ax.plot(s, ratio * s, "--", label="转股价值（ratio×S）")
+    ax.axhline(floor, ls=":", color="gray", label=f"纯债底 {floor:.1f}")
+    ax.set_xlabel("正股价格 S"); ax.set_ylabel("价值")
+    ax.set_title("图11-1　可转债的股债性切换"); ax.legend()
+    _save(fig, "ch11_convertible.png")
+
+
 # --- 第8章 ---------------------------------------------------------------
 
 def _money_market():
@@ -273,6 +290,7 @@ def main() -> None:
     ch07_immunization()
     ch09_frn_vs_fixed()
     ch10_callable()
+    ch11_convertible()
     ch08_carry()
     ch08_leverage_nav()
     print("所有图已生成至", FIG)

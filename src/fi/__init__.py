@@ -11,6 +11,8 @@
 - :mod:`fi.repo`      回购现金流、资金成本、杠杆与套息
 - :mod:`fi.portfolio` 组合久期、久期匹配（免疫）、现金流匹配
 - :mod:`fi.frn`       浮动利率债券定价、折现利差
+- :mod:`fi.tree`      利率二叉树与含权债定价
+- :mod:`fi.convertible` 可转换债券定价（股票二叉树）
 - :mod:`fi.credit`    信用风险（Merton/KMV、约化模型）
 - :mod:`fi.backtest`  债券策略回测框架
 - :mod:`fi.plotting`  统一中文绘图样式
@@ -27,6 +29,8 @@ __all__ = [
     "repo",
     "portfolio",
     "frn",
+    "tree",
+    "convertible",
     "credit",
     "backtest",
     "plotting",
