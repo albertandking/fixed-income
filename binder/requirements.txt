@@ -1,0 +1,4 @@
+# Binder 环境：安装本书复用包及其依赖（含数据与 QuantLib 组）。
+# Binder 会在仓库根目录执行 `pip install -r binder/requirements.txt`。
+-e ..[data,quantlib,opt]
+jupyterlab
