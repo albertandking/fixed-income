@@ -165,6 +165,11 @@ ax.set_xlabel("期限（年）"); ax.set_ylabel("到期收益率 (%)")
 ax.set_title("图1-1　中国国债收益率曲线（样本数据）")
 ```
 
+<figure markdown>
+  ![图1-1　中国国债收益率曲线](../assets/figures/ch01_yield_curve.png){ width="640" }
+  <figcaption>图1-1　中国国债收益率曲线（样本数据）</figcaption>
+</figure>
+
 运行后你会看到一条**向上倾斜**的曲线：短端利率低、长端利率高——这是收益率曲线最常见的形态，背后是期限溢价与对未来利率的预期（第5章详解）。这条曲线，就是后面所有定价与风险分析的起点。
 
 !!! note "样本数据 vs 真实数据"

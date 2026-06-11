@@ -99,6 +99,11 @@ $$y\uparrow\;\Longrightarrow\;P\downarrow,\qquad y\downarrow\;\Longrightarrow\;P
 
 这是固定收益最根本的一条直觉——**利率涨，债券价格跌**。这条曲线不是直线，而是向原点凸出的（凸性，第6章），但单调下降的方向永远成立。
 
+<figure markdown>
+  ![图3-1　价格—收益率关系](../assets/figures/ch03_price_yield.png){ width="640" }
+  <figcaption>图3-1　价格随收益率单调下降；票息 3% 的债在 y=3% 时平价（价格=100）</figcaption>
+</figure>
+
 ### 3.4.2 溢价/平价/折价的统一判据
 
 $$c>y\Rightarrow P>F\ (\text{溢价}),\qquad c=y\Rightarrow P=F\ (\text{平价}),\qquad c<y\Rightarrow P<F\ (\text{折价})$$
@@ -106,6 +111,11 @@ $$c>y\Rightarrow P>F\ (\text{溢价}),\qquad c=y\Rightarrow P=F\ (\text{平价})
 ### 3.4.3 拉回面值（Pull-to-Par）
 
 无论现在溢价还是折价，**只要收益率不变，随着到期日临近，债券价格都会平滑地收敛回面值**——因为到期那一刻偿付的就是面值 $F$。溢价债的价格逐步下行至 100，折价债逐步上行至 100。这个"向面值靠拢"的轨迹就是拉回面值效应，它告诉我们：**持有期收益不仅来自票息，也来自价格向面值的回归**。
+
+<figure markdown>
+  ![图3-2　拉回面值](../assets/figures/ch03_pull_to_par.png){ width="640" }
+  <figcaption>图3-2　收益率不变时，溢价债与折价债的价格随到期临近都收敛到面值 100</figcaption>
+</figure>
 
 !!! note "拉回面值 ≠ 没有风险"
     拉回面值描述的是"收益率不变"的理想轨迹。真实世界里收益率天天变，价格在这条轨迹附近上下波动；波动的幅度由久期决定（第6章）。

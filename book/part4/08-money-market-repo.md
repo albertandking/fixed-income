@@ -188,6 +188,16 @@ repo.max_leverage(haircut=0.05)   # 20.0
 - **图8-2** $L=1$ 与 $L=3$ 的累计回报对比——杠杆放大了平均收益，也放大了每日回报的波动幅度；
 - **图8-3** R007 − DR007 利差——利差走阔的时段对应非银资金紧张。
 
+<figure markdown>
+  ![图8-1 与 图8-3　carry 与流动性分层利差](../assets/figures/ch08_carry.png){ width="720" }
+  <figcaption>图8-1（上）carry = 10Y 国债收益率 − DR007；图8-3（下）R007 − DR007 流动性分层利差</figcaption>
+</figure>
+
+<figure markdown>
+  ![图8-2　杠杆前后累计回报](../assets/figures/ch08_leverage_nav.png){ width="640" }
+  <figcaption>图8-2　L=1 与 L=3 的累计净值对比：杠杆放大了平均回报（样本期 carry 恒正，故无回撤）</figcaption>
+</figure>
+
 **复盘结论（样本数据）**：
 
 1. 样本期内 carry 多数时间为正，但**在 DR007 上行阶段被压缩到极薄**，此时 $L=3$ 的超额回报几乎消失；
