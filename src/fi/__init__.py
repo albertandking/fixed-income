@@ -15,6 +15,7 @@
 - :mod:`fi.convertible` 可转换债券定价（股票二叉树）
 - :mod:`fi.credit`    信用风险（Merton/KMV、约化模型）
 - :mod:`fi.securitization` ABS/MBS 分层、损失分配与现金流瀑布
+- :mod:`fi.futures`   国债期货：转换因子、CTD、套保比率、FRA
 - :mod:`fi.backtest`  债券策略回测框架
 - :mod:`fi.plotting`  统一中文绘图样式
 """
@@ -34,6 +35,7 @@ __all__ = [
     "convertible",
     "credit",
     "securitization",
+    "futures",
     "backtest",
     "plotting",
 ]
