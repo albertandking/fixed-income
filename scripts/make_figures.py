@@ -21,7 +21,7 @@ from fi import convertible as cb  # noqa: E402
 from fi import credit as cr  # noqa: E402
 from fi import curve as fc  # noqa: E402
 from fi import securitization as sz  # noqa: E402
-from fi import data, frn, plotting, risk, tree  # noqa: E402
+from fi import data, frn, futures, plotting, risk, tree  # noqa: E402
 from fi.cashflow import make_cashflows  # noqa: E402
 from fi.pricing import price_bond, forward_rate  # noqa: E402
 
@@ -282,6 +282,27 @@ def ch13_tranching() -> None:
     _save(fig, "ch13_tranching.png")
 
 
+# --- 第14章 --------------------------------------------------------------
+
+def ch14_hedge() -> None:
+    port_dv01 = 50000.0                       # 元/bp（组合市值1亿、久期5）
+    ctd_dv01 = futures.bond_dv01(0.032, 8, 0.032)
+    ctd_cf = futures.conversion_factor(0.032, 8)
+    contract_dv01 = futures.futures_dv01(ctd_dv01, ctd_cf) / 100 * 1e6   # 元/bp 每张
+    n = -port_dv01 / contract_dv01            # 套保手数（卖出）
+    net_dv01 = port_dv01 + n * contract_dv01  # ≈ 0
+    shocks = np.linspace(-100, 100, 41)       # bp
+    unhedged = -port_dv01 * shocks / 1e4      # 损益（万元）
+    hedged = -net_dv01 * shocks / 1e4
+    fig, ax = plt.subplots(figsize=(8, 4.5))
+    ax.plot(shocks, unhedged, label="未对冲组合")
+    ax.plot(shocks, hedged, label=f"对冲后（卖出 {abs(round(n))} 张期货）")
+    ax.axhline(0, ls=":", color="gray")
+    ax.set_xlabel("利率平行冲击 (bp)"); ax.set_ylabel("组合损益（万元）")
+    ax.set_title("图14-1　国债期货久期中性套保的效果"); ax.legend()
+    _save(fig, "ch14_hedge.png")
+
+
 # --- 第8章 ---------------------------------------------------------------
 
 def _money_market():
@@ -334,6 +355,7 @@ def main() -> None:
     ch11_convertible()
     ch12_merton()
     ch13_tranching()
+    ch14_hedge()
     ch08_carry()
     ch08_leverage_nav()
     print("所有图已生成至", FIG)
