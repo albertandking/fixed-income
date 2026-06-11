@@ -168,6 +168,25 @@ def ch06_krd() -> None:
     _save(fig, "ch06_krd.png")
 
 
+# --- 第7章 ---------------------------------------------------------------
+
+def ch07_immunization() -> None:
+    cfs, ts = make_cashflows(0.03, 6, freq=1, face=100)
+    y0 = 0.03
+    P0 = price_bond(cfs, ts, y0, 1)
+    H = risk.macaulay_duration(cfs, ts, y0, 1)   # 持有期 = 久期
+    target = P0 * (1 + y0) ** H
+    dys = np.linspace(-0.02, 0.02, 81)
+    vals = [sum(cf * (1 + y0 + dy) ** (H - t) for cf, t in zip(cfs, ts)) for dy in dys]
+    fig, ax = plt.subplots(figsize=(8, 4.5))
+    ax.plot(dys * 100, vals)
+    ax.axhline(target, ls=":", color="gray", label=f"目标终值 {target:.2f}")
+    ax.axvline(0, ls=":", color="gray")
+    ax.set_xlabel("利率平行移动 Δy (%)"); ax.set_ylabel(f"H={H:.2f}年 时点实现终值")
+    ax.set_title("图7-1　单期免疫：久期=持有期时财富被锁定（Δy=0 处最小）"); ax.legend()
+    _save(fig, "ch07_immunization.png")
+
+
 # --- 第8章 ---------------------------------------------------------------
 
 def _money_market():
@@ -214,6 +233,7 @@ def main() -> None:
     ch05_three_curves()
     ch06_price_yield_tangent()
     ch06_krd()
+    ch07_immunization()
     ch08_carry()
     ch08_leverage_nav()
     print("所有图已生成至", FIG)
