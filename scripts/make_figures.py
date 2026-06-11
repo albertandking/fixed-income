@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 
 from fi import curve as fc  # noqa: E402
-from fi import data, frn, plotting, risk  # noqa: E402
+from fi import data, frn, plotting, risk, tree  # noqa: E402
 from fi.cashflow import make_cashflows  # noqa: E402
 from fi.pricing import price_bond, forward_rate  # noqa: E402
 
@@ -207,6 +207,23 @@ def ch09_frn_vs_fixed() -> None:
     _save(fig, "ch09_frn_vs_fixed.png")
 
 
+# --- 第10章 --------------------------------------------------------------
+
+def ch10_callable() -> None:
+    refs = np.linspace(0.01, 0.08, 36)
+    sig, n, cpn = 0.20, 6, 6.0
+    straight = [tree.value_bond(tree.short_rate_tree(r, sig, n), cpn, 100) for r in refs]
+    callable_ = [tree.value_bond(tree.short_rate_tree(r, sig, n), cpn, 100,
+                                 call_price=100, call_from=1) for r in refs]
+    fig, ax = plt.subplots(figsize=(8, 4.5))
+    ax.plot(refs * 100, straight, label="普通债")
+    ax.plot(refs * 100, callable_, label="可赎回债（赎回价 100）")
+    ax.axhline(100, ls=":", color="gray")
+    ax.set_xlabel("短期利率 r0 (%)"); ax.set_ylabel("价格")
+    ax.set_title("图10-1　可赎回债的负凸性：低利率端价格被赎回价封顶"); ax.legend()
+    _save(fig, "ch10_callable.png")
+
+
 # --- 第8章 ---------------------------------------------------------------
 
 def _money_market():
@@ -255,6 +272,7 @@ def main() -> None:
     ch06_krd()
     ch07_immunization()
     ch09_frn_vs_fixed()
+    ch10_callable()
     ch08_carry()
     ch08_leverage_nav()
     print("所有图已生成至", FIG)
