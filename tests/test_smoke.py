@@ -11,6 +11,7 @@ SUBMODULES = [
     "fi.curve",
     "fi.risk",
     "fi.repo",
+    "fi.portfolio",
     "fi.credit",
     "fi.backtest",
     "fi.plotting",
