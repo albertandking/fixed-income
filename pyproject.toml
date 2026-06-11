@@ -1,0 +1,50 @@
+[project]
+name = "fixed-income"
+version = "0.1.0"
+description = "面向中国高年级本科生的固定收益证券教材（理论·模型·中国市场实践，含可在线运行 notebook）"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = [
+    "numpy>=1.26",
+    "pandas>=2.1",
+    "scipy>=1.11",
+    "matplotlib>=3.8",
+]
+
+[project.optional-dependencies]
+# 联网抓取中国市场数据：uv sync --extra data
+data = [
+    "akshare>=1.12",
+    "tushare>=1.2",
+]
+# 衍生品与含权债定价：uv sync --extra quantlib
+quantlib = [
+    "QuantLib>=1.33",
+]
+# 组合优化：uv sync --extra opt
+opt = [
+    "cvxpy>=1.4",
+]
+# 成书工具链：uv sync --extra book
+book = [
+    "mkdocs-material>=9.5",
+    "mkdocs-print-site-plugin>=2.4",
+    "jupyter>=1.0",
+    "nbconvert>=7.0",
+]
+# 一键安装全部：uv sync --extra all
+all = [
+    "fixed-income[data,quantlib,opt,book]",
+    "pytest>=8.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/fi"]
+
+[tool.uv]
+package = true

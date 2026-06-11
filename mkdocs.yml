@@ -1,0 +1,96 @@
+site_name: 固定收益证券
+site_description: 面向中国高年级本科生的固定收益证券教材（理论·模型·中国市场实践，含可在线运行 notebook）
+site_author: ""
+site_url: https://albertandking.github.io/fixed-income/
+repo_url: https://github.com/albertandking/fixed-income
+repo_name: albertandking/fixed-income
+edit_uri: edit/main/book/
+docs_dir: book
+site_dir: site
+
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - toc.follow
+    - content.code.copy
+    - content.code.annotate
+  palette:
+    - scheme: default
+      primary: indigo
+      toggle:
+        icon: material/weather-night
+        name: 切换到夜间模式
+    - scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: 切换到日间模式
+
+markdown_extensions:
+  - admonition
+  - footnotes
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.tabbed:
+      alternate_style: true
+
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+plugins:
+  - search
+  - print-site:
+      add_to_navigation: false
+      print_page_title: 固定收益证券（全书打印版）
+      add_print_site_banner: false
+      enumerate_headings: false
+      enumerate_figures: false
+      add_cover_page: true
+
+nav:
+  - 首页: index.md
+  - 前言: preface.md
+  - 第一部分·基础与工具:
+      - 第1章 固定收益证券与中国债券市场概述: part1/01-fi-overview.md
+      - 第2章 计息惯例、现金流与货币时间价值: part1/02-time-value-conventions.md
+  - 第二部分·定价与收益率:
+      - 第3章 债券定价原理: part2/03-bond-pricing.md
+      - 第4章 收益率计量: part2/04-yield-measures.md
+      - 第5章 利率期限结构与曲线构建: part2/05-term-structure.md
+  - 第三部分·风险度量与组合:
+      - 第6章 久期与凸性: part3/06-duration-convexity.md
+      - 第7章 债券组合管理: part3/07-portfolio-management.md
+  - 第四部分·市场机制:
+      - 第8章 货币市场工具与回购市场: part4/08-money-market-repo.md
+  - 第五部分·含权与高级品种:
+      - 第9章 浮动利率债券: part5/09-floating-rate-bonds.md
+      - 第10章 可赎回债券与可回售债券: part5/10-callable-putable.md
+      - 第11章 可转换债券: part5/11-convertible-bonds.md
+  - 第六部分·信用与结构化:
+      - 第12章 信用风险与定价模型: part6/12-credit-risk.md
+      - 第13章 结构化产品与 ABS: part6/13-structured-products.md
+  - 第七部分·利率衍生品:
+      - 第14章 利率期货与远期: part7/14-futures-forwards.md
+      - 第15章 利率互换: part7/15-interest-rate-swaps.md
+      - 第16章 利率期权（Cap/Floor/Swaption）: part7/16-interest-rate-options.md
+  - 第八部分·综合应用:
+      - 第17章 债券投资策略与回测: part8/17-investment-strategies.md
+      - 第18章 风险管理系统: part8/18-risk-management.md
+  - 附录:
+      - 附录A 本地环境配置: appendix/a-setup.md
+      - 附录B QuantLib 速查: appendix/b-quantlib.md
+      - 附录C 中国债券市场数据源: appendix/c-data-sources.md
+      - 附录D 数学与公式推导: appendix/d-math.md
+      - 附录E 术语与符号表: appendix/e-glossary.md
