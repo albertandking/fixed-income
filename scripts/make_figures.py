@@ -19,7 +19,7 @@ import numpy as np  # noqa: E402
 
 from fi import data, plotting, risk  # noqa: E402
 from fi.cashflow import make_cashflows  # noqa: E402
-from fi.pricing import price_bond  # noqa: E402
+from fi.pricing import price_bond, forward_rate  # noqa: E402
 
 FIG = Path(__file__).resolve().parents[1] / "book" / "assets" / "figures"
 
@@ -101,6 +101,24 @@ def ch03_pull_to_par() -> None:
     _save(fig, "ch03_pull_to_par.png")
 
 
+# --- 第4章 ---------------------------------------------------------------
+
+def ch04_spot_forward() -> None:
+    curve = data.load_sample("cgb_yield_curve")
+    zt = dict(zip(curve["tenor"], curve["yield_pct"] / 100))
+    ten = list(curve["tenor"])
+    fwd_x, fwd_y = [], []
+    for a, b in zip(ten[:-1], ten[1:]):
+        fwd_x.append(b)
+        fwd_y.append(forward_rate(lambda t: zt[t], a, b, freq=1) * 100)
+    fig, ax = plt.subplots(figsize=(8, 4.5))
+    ax.plot(curve["tenor"], curve["yield_pct"], marker="o", label="即期利率 z(t)（样本近似）")
+    ax.plot(fwd_x, fwd_y, marker="s", ls="--", label="隐含远期利率 f")
+    ax.set_xlabel("期限（年）"); ax.set_ylabel("利率 (%)")
+    ax.set_title("图4-1　即期曲线与隐含远期曲线"); ax.legend()
+    _save(fig, "ch04_spot_forward.png")
+
+
 # --- 第6章 ---------------------------------------------------------------
 
 def ch06_price_yield_tangent() -> None:
@@ -174,6 +192,7 @@ def main() -> None:
     ch02_mortgage()
     ch03_price_yield()
     ch03_pull_to_par()
+    ch04_spot_forward()
     ch06_price_yield_tangent()
     ch06_krd()
     ch08_carry()
