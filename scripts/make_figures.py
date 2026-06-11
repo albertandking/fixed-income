@@ -18,6 +18,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 
 from fi import convertible as cb  # noqa: E402
+from fi import credit as cr  # noqa: E402
 from fi import curve as fc  # noqa: E402
 from fi import data, frn, plotting, risk, tree  # noqa: E402
 from fi.cashflow import make_cashflows  # noqa: E402
@@ -241,6 +242,26 @@ def ch11_convertible() -> None:
     _save(fig, "ch11_convertible.png")
 
 
+# --- 第12章 --------------------------------------------------------------
+
+def ch12_merton() -> None:
+    D, sig, r, T = 100.0, 0.25, 0.03, 1.0
+    lev = np.linspace(0.4, 0.92, 40)           # 杠杆 D/V
+    V = D / lev
+    pd = [cr.merton_pd(v, D, sig, r, T)["pd"] * 100 for v in V]
+    spread = [cr.merton_credit_spread(v, D, sig, r, T) * 1e4 for v in V]
+    fig, ax1 = plt.subplots(figsize=(8, 4.5))
+    ax1.plot(lev, pd, "C0", label="违约概率 PD")
+    ax1.set_xlabel("杠杆 D/V"); ax1.set_ylabel("违约概率 PD (%)", color="C0")
+    ax1.tick_params(axis="y", labelcolor="C0")
+    ax2 = ax1.twinx()
+    ax2.plot(lev, spread, "C3--", label="Merton 信用利差")
+    ax2.set_ylabel("信用利差 (bp)", color="C3")
+    ax2.tick_params(axis="y", labelcolor="C3")
+    ax1.set_title("图12-1　Merton 模型：违约概率与利差随杠杆上升")
+    _save(fig, "ch12_merton.png")
+
+
 # --- 第8章 ---------------------------------------------------------------
 
 def _money_market():
@@ -291,6 +312,7 @@ def main() -> None:
     ch09_frn_vs_fixed()
     ch10_callable()
     ch11_convertible()
+    ch12_merton()
     ch08_carry()
     ch08_leverage_nav()
     print("所有图已生成至", FIG)
