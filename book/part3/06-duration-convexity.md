@@ -71,6 +71,9 @@ $$\boxed{\,D_{\text{mod}}=\frac{D_{\text{mac}}}{1+\dfrac{y}{k}}\,}\qquad\Longrig
 | 到期收益率 ↑ | 久期 ↓ | 远期现金流被折得更狠，权重前移 |
 | 付息频率 ↑ | 久期 ↓ | 现金流更早、更密 |
 
+!!! warning "误区：久期 = 到期期限？"
+    麦考利久期的单位是"年"，初学者常把它和"到期期限"混为一谈。**只有零息债的久期才等于其期限**；附息债因为期间有票息回款，久期总是**短于**到期期限。比如一只 10 年期附息国债，久期可能只有 8 年左右。把久期当成"还有几年到期"，会严重高估利率敏感度。记住：久期是**现金流的现值加权平均回收时间**，不是"最后一笔现金流的时间"。
+
 !!! example "例6.1：3 年期附息国债的久期与凸性"
     某国债：面值 100 元，年付息一次（$k=1$），票面利率 3%，剩余期限 3 年，当前到期收益率 $y=3\%$（平价）。
 
@@ -327,3 +330,8 @@ ql.BondFunctions.convexity(bond, rate)                        # ≈ 10.88（口�
 - 实现上，`fi.risk` 提供解析与数值两套指标，可与 QuantLib `BondFunctions` 对拍；务必关注计息惯例与结算天数带来的口径差异。
 
 下一章（第7章）将把久期从"度量"推进到"管理"——用久期匹配与现金流匹配构建**免疫组合**，让资产对利率冲击免疫于既定的负债。
+
+!!! quote "延伸阅读"
+    - Fabozzi, *Bond Markets, Analysis, and Strategies*，"Measuring Interest-Rate Risk"（久期、凸性、PVBP）一章；
+    - Tuckman & Serrat, *Fixed Income Securities*，"One-Factor Measures of Price Sensitivity" 与 "Key Rate '01s'"；
+    - 关于久期的局限与有效久期，可对照阅读含权债定价文献（本书第10章）。

@@ -31,6 +31,9 @@ $$P=\sum_{j=1}^{N}\frac{CF_j}{\left(1+\dfrac{y}{k}\right)^{j}}\quad\Longrightarr
 
 它本质是债券现金流的**内部收益率（IRR）**：把买入价当作初始投资、把票息和本金当作回款，使净现值为零的那个利率。由于 $P$ 是 $y$ 的非线性函数，YTM 一般没有解析解，要用数值方法迭代求解（4.5 节）。
 
+!!! note "为什么债券的 YTM 是唯一的"
+    一般项目的 IRR 可能有多个解（现金流正负交替时），但**普通债券不会**：现金流模式是"一次流出（买入）+ 之后全部流入（票息与本金）"，符号只变一次。由笛卡尔符号法则，净现值方程只有一个正实根——所以普通附息债的 YTM **存在且唯一**，牛顿法能稳定收敛。只有当债券带有复杂嵌入条款、现金流可能转负时，才需警惕多解问题。
+
 ### 4.2.2 三个"收益率"别混淆
 
 | 名称 | 定义 | 局限 |
@@ -218,3 +221,8 @@ bond.bondYield(price, ql.ActualActual(ql.ActualActual.ISDA), ql.Compounded, ql.A
 - `fi.pricing.ytm`（牛顿 + 二分）与 QuantLib `bondYield` 结果一致；再投资风险与价格风险此消彼长，指向第7章的免疫。
 
 下一章（第5章）将把"即期利率曲线"从近似变成精确——用 Bootstrap 从附息债价格逐期剥离出零息利率，构建中国国债的期限结构。
+
+!!! quote "延伸阅读"
+    - Fabozzi, *Bond Markets, Analysis, and Strategies*，"Measuring Yield" 与 "Yield Measures, Spot Rates, and Forward Rates" 两章；
+    - Tuckman & Serrat, *Fixed Income Securities*，"Spot, Forward, and Par Rates"；
+    - 关于持有期收益与再投资风险，可对照阅读 CFA 教材中 "Yield-to-Maturity vs. Realized Return" 的讨论。
