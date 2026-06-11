@@ -21,7 +21,7 @@ from fi import convertible as cb  # noqa: E402
 from fi import credit as cr  # noqa: E402
 from fi import curve as fc  # noqa: E402
 from fi import securitization as sz  # noqa: E402
-from fi import data, frn, futures, plotting, risk, tree  # noqa: E402
+from fi import data, frn, futures, plotting, risk, swap, tree  # noqa: E402
 from fi.cashflow import make_cashflows  # noqa: E402
 from fi.pricing import price_bond, forward_rate  # noqa: E402
 
@@ -303,6 +303,23 @@ def ch14_hedge() -> None:
     _save(fig, "ch14_hedge.png")
 
 
+# --- 第15章 --------------------------------------------------------------
+
+def ch15_swap_value() -> None:
+    taus = [1, 1, 1, 1, 1]
+    rates = np.linspace(0.01, 0.05, 41)
+    vals = []
+    for z in rates:
+        dfs = [(1 + z) ** -t for t in range(1, 6)]
+        vals.append(swap.swap_value(0.025, dfs, taus, notional=1e8, payer=True) / 1e4)
+    fig, ax = plt.subplots(figsize=(8, 4.5))
+    ax.plot(rates * 100, vals, label="payer 互换（付固定 2.5%）")
+    ax.axhline(0, ls=":", color="gray"); ax.axvline(2.5, ls=":", color="gray")
+    ax.set_xlabel("市场利率 (%)"); ax.set_ylabel("互换盯市价值（万元）")
+    ax.set_title("图15-1　payer 互换价值随市场利率变动（利率升则获利）"); ax.legend()
+    _save(fig, "ch15_swap_value.png")
+
+
 # --- 第8章 ---------------------------------------------------------------
 
 def _money_market():
@@ -356,6 +373,7 @@ def main() -> None:
     ch12_merton()
     ch13_tranching()
     ch14_hedge()
+    ch15_swap_value()
     ch08_carry()
     ch08_leverage_nav()
     print("所有图已生成至", FIG)
