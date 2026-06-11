@@ -38,6 +38,10 @@ def make_cashflows(coupon_rate, maturity, freq: int = 2, face: float = 100.0):
         现金流序列及其对应时间（年）；末期含还本。
     """
     n = int(round(maturity * freq))
+    if n <= 0:
+        # 不足一个付息周期：退化为到期日的单笔本金（含末期票息）兑付
+        coupon = face * coupon_rate / freq if maturity > 0 else 0.0
+        return np.array([face + coupon], dtype=float), np.array([max(maturity, 0.0)], dtype=float)
     times = np.array([(i + 1) / freq for i in range(n)], dtype=float)
     coupon = face * coupon_rate / freq
     cashflows = np.full(n, coupon, dtype=float)
