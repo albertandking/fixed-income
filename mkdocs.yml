@@ -12,12 +12,13 @@ theme:
   name: material
   language: zh
   features:
-    - navigation.tabs
-    - navigation.sections
-    - navigation.top
+    - navigation.top        # 返回顶部按钮
+    - navigation.indexes
     - toc.follow
     - content.code.copy
     - content.code.annotate
+    # 左侧导航采用可折叠目录：仅当前部分展开，其余部分折叠，
+    # 18 章不再一次性铺满侧栏（移除了 navigation.tabs / navigation.sections）。
   palette:
     - scheme: default
       primary: indigo
