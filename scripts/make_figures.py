@@ -17,6 +17,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 
+from fi import backtest as bt  # noqa: E402
 from fi import convertible as cb  # noqa: E402
 from fi import credit as cr  # noqa: E402
 from fi import curve as fc  # noqa: E402
@@ -338,6 +339,30 @@ def ch16_capfloor() -> None:
     _save(fig, "ch16_capfloor.png")
 
 
+# --- 第17章 --------------------------------------------------------------
+
+def ch17_riding() -> None:
+    cv = data.load_sample("cgb_yield_curve")
+    tenor, yld = cv["tenor"].to_numpy(), (cv["yield_pct"] / 100).to_numpy()
+    buy_tenors = [2, 3, 5, 7, 10]
+    carries, rolls = [], []
+    for bt_ten in buy_tenors:
+        yb = float(np.interp(bt_ten, tenor, yld))
+        ys = float(np.interp(bt_ten - 1, tenor, yld))
+        cf, t = make_cashflows(yb, bt_ten, 1, 100)
+        d = risk.modified_duration(cf, t, yb, 1)
+        r = bt.riding_attribution(yb, ys, d, yb, 1)
+        carries.append(r["carry"] * 100)
+        rolls.append(r["rolldown"] * 100)
+    x = [f"{b}Y" for b in buy_tenors]
+    fig, ax = plt.subplots(figsize=(8, 4.5))
+    ax.bar(x, carries, label="carry（票息）")
+    ax.bar(x, rolls, bottom=carries, label="roll-down（骑乘）")
+    ax.set_xlabel("买入期限（持有 1 年）"); ax.set_ylabel("收益贡献 (%)")
+    ax.set_title("图17-1　骑乘曲线策略收益归因：carry + roll-down"); ax.legend()
+    _save(fig, "ch17_riding.png")
+
+
 # --- 第8章 ---------------------------------------------------------------
 
 def _money_market():
@@ -393,6 +418,7 @@ def main() -> None:
     ch14_hedge()
     ch15_swap_value()
     ch16_capfloor()
+    ch17_riding()
     ch08_carry()
     ch08_leverage_nav()
     print("所有图已生成至", FIG)
