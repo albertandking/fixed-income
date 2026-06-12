@@ -18,6 +18,7 @@
 - :mod:`fi.futures`   国债期货：转换因子、CTD、套保比率、FRA
 - :mod:`fi.swap`      利率互换：平价互换利率、估值、DV01、互换曲线 bootstrap
 - :mod:`fi.rateopt`   利率期权：Cap/Floor/Swaption 的 Black 定价与隐含波动率
+- :mod:`fi.var`       风险价值 VaR/CVaR（历史/参数/蒙特卡洛）、压力与情景
 - :mod:`fi.backtest`  债券策略回测框架
 - :mod:`fi.plotting`  统一中文绘图样式
 """
@@ -40,6 +41,7 @@ __all__ = [
     "futures",
     "swap",
     "rateopt",
+    "var",
     "backtest",
     "plotting",
 ]

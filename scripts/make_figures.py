@@ -23,6 +23,7 @@ from fi import credit as cr  # noqa: E402
 from fi import curve as fc  # noqa: E402
 from fi import securitization as sz  # noqa: E402
 from fi import data, frn, futures, plotting, rateopt, risk, swap, tree  # noqa: E402
+from fi import var as fivar  # noqa: E402
 from fi.cashflow import make_cashflows  # noqa: E402
 from fi.pricing import price_bond, forward_rate  # noqa: E402
 
@@ -363,6 +364,26 @@ def ch17_riding() -> None:
     _save(fig, "ch17_riding.png")
 
 
+# --- 第18章 --------------------------------------------------------------
+
+def ch18_var() -> None:
+    sigma = fivar.bond_pnl_sigma(1e8, 5, 0.0005)      # 25 万
+    rng = np.random.default_rng(7)
+    normal = rng.normal(0, sigma, 100000)
+    fat = rng.standard_t(4, 100000) * sigma / np.sqrt(4 / 2)   # 厚尾
+    var99 = fivar.parametric_var(sigma, 0.99)
+    cvar99 = fivar.parametric_cvar(sigma, 0.99)
+    fig, ax = plt.subplots(figsize=(8, 4.5))
+    ax.hist(normal / 1e4, bins=120, density=True, alpha=0.5, label="正态损益")
+    ax.hist(fat / 1e4, bins=200, density=True, alpha=0.4, label="厚尾损益")
+    ax.axvline(-var99 / 1e4, color="C3", ls="--", label=f"99% VaR ≈ {var99/1e4:.0f} 万")
+    ax.axvline(-cvar99 / 1e4, color="C1", ls=":", label=f"99% CVaR ≈ {cvar99/1e4:.0f} 万")
+    ax.set_xlim(-150, 150)
+    ax.set_xlabel("日损益（万元）"); ax.set_ylabel("密度")
+    ax.set_title("图18-1　组合损益分布与 VaR/CVaR（厚尾尾部更肥）"); ax.legend()
+    _save(fig, "ch18_var.png")
+
+
 # --- 第8章 ---------------------------------------------------------------
 
 def _money_market():
@@ -419,6 +440,7 @@ def main() -> None:
     ch15_swap_value()
     ch16_capfloor()
     ch17_riding()
+    ch18_var()
     ch08_carry()
     ch08_leverage_nav()
     print("所有图已生成至", FIG)
