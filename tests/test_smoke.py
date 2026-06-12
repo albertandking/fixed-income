@@ -20,6 +20,7 @@ SUBMODULES = [
     "fi.futures",
     "fi.swap",
     "fi.rateopt",
+    "fi.var",
     "fi.backtest",
     "fi.plotting",
 ]
