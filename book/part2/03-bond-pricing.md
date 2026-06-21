@@ -19,6 +19,15 @@
     5. 区分**净价、全价与应计利息**，了解中国债市"净价报价、全价结算"的惯例；
     6. 用 `fi.pricing.price_bond` 与 QuantLib `FixedRateBond` 两条路径定价并相互验证。
 
+!!! note "本章知识结构"
+    **无套利 / 一价定律**（3.2）→ 债券 = 现金流现值之和
+    　↓ 写成公式
+    **定价公式**（3.3，附息债年金闭式解 / 零息债）
+    　↓ 价格随收益率怎么变
+    **价格—收益率关系**（3.4，溢价/平价/折价、拉回面值）
+    　↓ 成交价的两个口径
+    **净价 / 全价 / 应计利息**（3.5）→ `fi.price_bond` 与 QuantLib 对拍（3.6–3.7）
+
 ---
 
 ## 3.2 债券定价的基本原理：无套利与现金流折现
@@ -279,6 +288,15 @@ ql.BondFunctions.cleanPrice(bond, rate)   # 97.2249，与 fi.price_bond 一致
 - 实现上，`fi.pricing.price_bond` 与 QuantLib `FixedRateBond` 结果一致；交叉对拍是排错与学习的好习惯。
 
 下一章（第4章）将反过来问：给定市场价格，债券的**到期收益率**是多少？我们将用牛顿迭代法求解 YTM，并区分即期利率、远期利率与持有期收益率。
+
+!!! note "关键公式速查"
+    | 概念 | 公式 |
+    |---|---|
+    | 附息债定价 | $P=\sum_i CF_i/(1+y/k)^{k t_i}$ |
+    | 年金闭式解 | $P=\dfrac{Fc}{k}\cdot\dfrac{1-(1+y/k)^{-N}}{y/k}+F(1+y/k)^{-N}$ |
+    | 零息债定价 | $P=F(1+y)^{-T}$ |
+    | 溢价/平价/折价 | $c>y$ 溢价，$c=y$ 平价，$c<y$ 折价 |
+    | 净价与全价 | 全价 = 净价 + 应计利息 |
 
 !!! quote "延伸阅读"
     - Fabozzi, *Bond Markets, Analysis, and Strategies*，"Pricing of Bonds" 一章；

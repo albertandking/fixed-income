@@ -20,6 +20,15 @@
     4. 由一组互换报价 **bootstrap 互换曲线**，了解 **OIS 折现**（双曲线）；
     5. 用 `fi.swap` 与 QuantLib `VanillaSwap` 定价并对拍。
 
+!!! note "本章知识结构"
+    **互换机制**（15.2，交换固定/浮动利息、不换本金；FR007 互换）
+    　↓ 两条腿现值
+    **浮动腿 = 名义×(1−DF(Tₙ))**（15.3）→ **平价互换利率** $s=\frac{1-DF(T_n)}{\sum\tau_i DF_i}$
+    　↓ 存量估值与风险
+    **互换价值与 DV01**（15.3.3）
+    　↓ 曲线从哪来
+    **互换曲线 Bootstrap + OIS 双曲线折现**（15.4）→ 套保应用（15.7）
+
 ---
 
 ## 15.2 利率互换的原理与应用
@@ -238,6 +247,15 @@ swap.fairRate()  # ≈ 3.05%（平价互换利率）
 - `fi.swap` 与 QuantLib `VanillaSwap` 机制一致，差异来自计息惯例。
 
 下一章（第16章）进入本部分最后、也是最复杂的利率衍生品——**利率期权（Cap/Floor/Swaption）**：用 Black 模型给"利率的期权"定价，并构建波动率曲面。
+
+!!! note "关键公式速查"
+    | 概念 | 公式 |
+    |---|---|
+    | 浮动腿现值 | 名义 ×(1 − DF(Tₙ)) |
+    | 年金因子 | $A=\sum_i \tau_i DF(T_i)$ |
+    | 平价互换利率 | $s=\dfrac{1-DF(T_n)}{\sum_i\tau_i DF(T_i)}$ |
+    | payer 互换价值 | 名义 ×[(1−DF(Tₙ)) − s·A] |
+    | 互换 DV01 | 年金因子 × 名义 × 1bp |
 
 !!! quote "延伸阅读"
     - Hull, *Options, Futures, and Other Derivatives*，"Swaps" 与 "OIS Discounting" 章节；

@@ -20,6 +20,15 @@
     4. 由价格反求**隐含波动率**，理解**波动率曲面/微笑**；
     5. 用 `fi.rateopt` 与 QuantLib 定价并对拍。
 
+!!! note "本章知识结构"
+    **Cap / Floor / Collar**（16.2，caplet=看涨、floorlet=看跌）→ **Cap−Floor = payer 互换**（连第15章）
+    　↓ 进入互换的期权
+    **Swaption**（16.3，可赎回债内嵌 receiver swaption，连第10章）
+    　↓ 怎么定价
+    **Black 模型**（16.4，到期=重置日是关键细节）
+    　↓ 报价的语言
+    **隐含波动率与波动率曲面**（16.5）→ 波动率曲面构建（16.8）
+
 ---
 
 ## 16.2 利率上限、下限与双限
@@ -238,6 +247,15 @@ cap.NPV()   # ≈145 万（与 fi 同量级，差异来自计息惯例与远期/
 - **隐含波动率**是市场对波动的定价；**波动率曲面/微笑**是交易核心；低/负利率时改用**正态（Bachelier）波动率**。
 
 下一部分（第17–18章）进入**综合应用**：把前面所有工具（定价、久期、曲线、衍生品）整合进**投资策略回测**与**风险管理系统**，完成从单一工具到完整框架的跨越。
+
+!!! note "关键公式速查"
+    | 概念 | 公式 |
+    |---|---|
+    | caplet（Black） | 名义·τ·DF·[F·N(d₁) − K·N(d₂)] |
+    | $d_1,d_2$ | $d_1=\dfrac{\ln(F/K)+\tfrac12\sigma^2T}{\sigma\sqrt T}$，$d_2=d_1-\sigma\sqrt T$ |
+    | Cap−Floor 平价 | Cap(K) − Floor(K) = payer 互换(K)；ATM 时 Cap=Floor |
+    | Swaption | 名义·年金·[F·N(d₁) − K·N(d₂)] |
+    | 关键细节 | 到期时间 = 重置日；折现 = 支付日 |
 
 !!! quote "延伸阅读"
     - Hull, *Options, Futures, and Other Derivatives*，"Interest Rate Derivatives: The Standard Market Models"（Black 模型、Cap/Floor、Swaption）；

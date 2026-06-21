@@ -19,6 +19,15 @@
     5. 计算**持有期收益率**，解释**再投资风险**为何让实现收益偏离 YTM；
     6. 用 `fi.pricing.ytm`（牛顿 + 二分）与 QuantLib 两条路径求解并验证。
 
+!!! note "本章知识结构"
+    **给定价格 → 反求收益率**
+    　↓
+    **到期收益率 YTM**（4.2，债券的内部收益率 / IRR）；辨析票面、当期、到期三种收益率
+    　↓ YTM 用单一利率折现，太粗
+    **即期利率 / 远期利率**（4.3，逐笔折现的基准、无套利推远期）
+    　↓ YTM 真能赚到吗
+    **持有期收益率与再投资风险**（4.4）→ 牛顿/二分求解（4.5）、QuantLib 对拍（4.6）
+
 ---
 
 ## 4.2 到期收益率（YTM）
@@ -249,6 +258,15 @@ bond.bondYield(price, ql.ActualActual(ql.ActualActual.ISDA), ql.Compounded, ql.A
 - `fi.pricing.ytm`（牛顿 + 二分）与 QuantLib `bondYield` 结果一致；再投资风险与价格风险此消彼长，指向第7章的免疫。
 
 下一章（第5章）将把"即期利率曲线"从近似变成精确——用 Bootstrap 从附息债价格逐期剥离出零息利率，构建中国国债的期限结构。
+
+!!! note "关键公式速查"
+    | 概念 | 公式 |
+    |---|---|
+    | 到期收益率 YTM | 解 $P=\sum_j CF_j/(1+y/k)^{j}$（数值求解） |
+    | 当期收益率 | 年票息 / 市价 |
+    | 折价债收益率排序 | 票面 < 当期 < YTM |
+    | 远期利率 | $f(t_1,t_2)=\left[\dfrac{(1+z_2)^{t_2}}{(1+z_1)^{t_1}}\right]^{\frac{1}{t_2-t_1}}-1$ |
+    | 实现收益 = YTM 的条件 | 持有到期 + 票息按 YTM 再投资 |
 
 !!! quote "延伸阅读"
     - Fabozzi, *Bond Markets, Analysis, and Strategies*，"Measuring Yield" 与 "Yield Measures, Spot Rates, and Forward Rates" 两章；
