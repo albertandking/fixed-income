@@ -220,6 +220,9 @@ bond.accruedAmount(ql.Date(15, 6, 2026))   # 0.75，与 fi.accrued_interest 一�
 
 ## 2.10 习题参考答案与详解
 
+!!! tip "完整可运行解答 notebook"
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch02_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch02_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+
 !!! success "概念题 1"
     **货币时间价值**：同等金额的钱，越早到手越值钱，因为它能再投资生息——所以未来现金流必须**折现**到今天才能比较与加总。
     比较两个利率必须说清**复利频率**，因为同一个名义年利率，复利越频繁、实际收益越高（如 12% 按月复利的实际年利率 ≈ 12.68% > 按年复利的 12%）。不指明频率的利率无法直接比较。

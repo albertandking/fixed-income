@@ -200,6 +200,9 @@ res["shortfall"]   # {'优先档': 0.77, '次级档': 20.0}
 
 ## 13.10 习题参考答案与详解
 
+!!! tip "完整可运行解答 notebook"
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch13_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch13_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+
 !!! success "概念题 1"
     **真实出售**：资产从发起人真正转让给 SPV（不是抵押借款）；**破产隔离**：即使发起人破产，SPV 持有的资产不纳入其破产财产。二者合起来，让 ABS 投资者的现金流来源**只取决于资产池本身**、与发起人整体信用脱钩——这是证券化"信用脱离发起人"的法律基石。
 

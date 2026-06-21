@@ -4,6 +4,7 @@
 
 - 正文用 Markdown 编写（`book/` 目录）
 - 代码放在 Jupyter Notebook 中（`notebooks/` 目录），可本地逐格运行
+- 每章习题的**编程实验完整可运行解答**放在 `notebooks/solutions/`（每章一个，离线可执行；各章正文"习题参考答案与详解"含 Colab 链接）
 - 正文按需引用 / 嵌入 notebook 的代码与输出（通过 `scripts/export_notebooks.py` 手动导出）
 - 数据：内置示例数据集（离线可跑）+ 中国市场接口（akshare / tushare，联网抓取）
 - 环境：uv 管理，推荐 Python 3.14（兼容 3.11+）；成书：MkDocs + Material 主题

@@ -359,6 +359,9 @@ ql.BondFunctions.convexity(bond, rate)                        # ≈ 10.88（口�
 
 ## 6.10 习题参考答案与详解
 
+!!! tip "完整可运行解答 notebook"
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch06_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch06_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+
 !!! success "概念题 1 详解"
     - **麦考利久期**：现金流按现值加权的**平均回收时间**（单位：年），回答"我投出去的钱平均多久收回来"；
     - **修正久期**：价格对收益率的**弹性**，$\Delta P/P\approx -D_{\text{mod}}\Delta y$，回答"收益率动 1%、价格动百分之几"；二者关系 $D_{\text{mod}}=D_{\text{mac}}/(1+y/k)$。

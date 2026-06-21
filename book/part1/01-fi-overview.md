@@ -217,6 +217,9 @@ ax.set_title("图1-1　中国国债收益率曲线（样本数据）")
 
 ## 1.9 习题参考答案与详解
 
+!!! tip "完整可运行解答 notebook"
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch01_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch01_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+
 !!! success "概念题 1"
     **债券是债权、股票是股权**：债券是发行人承诺按约定时间/金额还本付息的**债务合同**（现金流事先约定、求偿优先、收益相对确定），股票是分享企业剩余收益、承担经营风险的**所有权凭证**。
     国债收益率曲线被称为**无风险利率基准**，是因为国债以国家信用背书、几乎无违约风险，其收益率代表"纯粹的时间价值"；任何带风险资产的要求回报都可拆成"无风险利率 + 风险溢价"，国债曲线就是那把度量一切资产的"标尺"。

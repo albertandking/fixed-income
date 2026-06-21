@@ -213,6 +213,9 @@ swap.fairRate()  # ≈ 3.05%（平价互换利率）
 
 ## 15.9 习题参考答案与详解
 
+!!! tip "完整可运行解答 notebook"
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch15_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch15_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+
 !!! success "概念题 1"
     互换交换的是**利息现金流之差**（按名义本金计算、净额交收），本金只用于计息、不交换——但利息差已足以改变利率敞口（如把浮动负债"换成"固定）。**payer**（付固定、收浮动）在**利率上行**时获利（收的浮动变多、付的固定不变）；**receiver**（收固定、付浮动）在**利率下行**时获利。
 
