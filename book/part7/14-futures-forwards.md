@@ -222,6 +222,9 @@ fwd = curve.forwardRate(d1, d2, dc, ql.Simple).rate()   # 远期利率 ≈ FRA �
 
 ## 14.10 习题参考答案与详解
 
+!!! tip "完整可运行解答 notebook"
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch14_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch14_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+
 !!! success "概念题 1"
     用"名义标准券 + 一篮子可交割券"，是为了**避免单一现券被逼仓（squeeze）**：若只许交割某一只券，空头到期必须买入该券，多头可囤券抬价。一篮子可交割让空头能选最便宜的券交割，市场更难操纵；名义标准券（3% 票息虚拟券）则提供统一报价基准。
 

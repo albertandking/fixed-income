@@ -207,6 +207,9 @@ bond.NPV()   # ≈ 104.9（含 2% 信用利差，低于 fi 的 112）
 
 ## 11.9 习题参考答案与详解
 
+!!! tip "完整可运行解答 notebook"
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch11_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch11_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+
 !!! success "概念题 1"
     - **转股权**（投资者）：转股期内按转股价把债转成股；
     - **赎回/强赎**（发行人）：正股大涨（如 15/30 日 ≥ 转股价 130%）时强制赎回 → 逼投资者转股；

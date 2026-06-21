@@ -160,6 +160,9 @@ bt.performance(returns, periods_per_year=252)
 
 ## 17.8 习题参考答案与详解
 
+!!! tip "完整可运行解答 notebook"
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch17_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch17_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+
 !!! success "概念题 1"
     **骑乘曲线**在曲线向上倾斜时，买入期限长于投资期的债券，持有后它沿曲线"下滚"到更低收益率点，收益率下降→价格上涨（roll-down），叠加票息（carry），无需预测利率即可获超额收益。**前提**：收益率曲线向上倾斜且大致不变。**风险**：若曲线大幅上移，roll-down 收益会被价格下跌吞没——它赚的是"曲线形状 + 时间"，不是免费午餐。
 

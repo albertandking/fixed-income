@@ -207,6 +207,9 @@ bond.cleanPrice()   # ≈ 99.99，DM=QM 时接近面值
 
 ## 9.9 习题参考答案与详解
 
+!!! tip "完整可运行解答 notebook"
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch09_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch09_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+
 !!! success "概念题 1"
     在每个**重定价日**，浮息债的票息重置为"当前基准 + QM"，相当于"重新平价发行"，价格被拉回面值附近。所以利率风险只在"两个重定价日之间"积累，对基准利率的久期 ≈ **到下次重定价的时间**（通常几个月），而非到期期限。可把浮息债近似看作"不断滚动持有一只到下次重定价的短债"。
 

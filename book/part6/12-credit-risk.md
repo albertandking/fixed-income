@@ -234,6 +234,9 @@ dpts.defaultProbability(d5)    # 0.1535
 
 ## 12.10 习题参考答案与详解
 
+!!! tip "完整可运行解答 notebook"
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch12_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch12_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+
 !!! success "概念题 1"
     **预期损失 $EL=PD\times LGD\times EAD$**：违约概率 × 违约损失率 × 违约时敞口。**回收率 $R$ 与 LGD 的关系**：$LGD=1-R$（违约后没收回的比例）。例如 PD=3%、回收率 40%（LGD=60%）、敞口 1 亿，则 $EL=3\%\times60\%\times1\text{亿}=180$ 万元。
 

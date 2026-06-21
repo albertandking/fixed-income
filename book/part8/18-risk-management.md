@@ -198,6 +198,9 @@ v.scenario_pnl(value=1e8, duration=5, convexity=30, dy=0.01)   # -4,850,000
 
 ## 18.9 习题参考答案与详解
 
+!!! tip "完整可运行解答 notebook"
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch18_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch18_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+
 !!! success "概念题 1"
     **VaR 三要素**：置信水平（如 99%）、持有期（如 1 日）、损益分布。三法：**历史模拟**（用历史损益经验分布取分位数）——不假设分布、自然含厚尾，但依赖历史样本；**参数法**（假设正态，$z_\alpha\sigma$）——简单快速，但正态假设低估厚尾；**蒙特卡洛**（模拟情景取分位数）——灵活、可含非线性，但计算量大、依赖模型。
 

@@ -221,6 +221,9 @@ import QuantLib as ql
 
 ## 7.9 习题参考答案与详解
 
+!!! tip "完整可运行解答 notebook"
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch07_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch07_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+
 !!! success "概念题 1"
     持有到期点 $H$ 的最终财富 = 票息再投资累积值 + $H$ 时点债券卖价。利率上行→再投资收益↑（好）、卖价↓（坏）；下行则相反。当**久期 = 持有期 $H$** 时，这两个相反效应在 $H$ 点一阶抵消，财富对小幅利率变动不敏感——被"免疫"。直觉：把跷跷板支点放在 $H$，无论利率怎么晃，$H$ 点高度不变。
 

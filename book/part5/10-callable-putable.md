@@ -220,6 +220,9 @@ bond.cleanPrice()   # ≈ 102.69（与 fi.tree 的 102.91 同量级，模型不�
 
 ## 10.10 习题参考答案与详解
 
+!!! tip "完整可运行解答 notebook"
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch10_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch10_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+
 !!! success "概念题 1"
     **可赎回债 = 普通债 − 赎回期权**：期权归**发行人**（利率下行时赎回再融资），投资者**卖出**了期权、**收权利金**（表现为更高收益率）。**可回售债 = 普通债 + 回售期权**：期权归**投资者**（利率上行时回售），投资者**买入**期权、**付权利金**（表现为更低收益率）。
 

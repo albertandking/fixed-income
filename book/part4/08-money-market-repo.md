@@ -239,6 +239,9 @@ repo.max_leverage(haircut=0.05)   # 20.0
 
 ## 8.9 习题参考答案与详解
 
+!!! tip "完整可运行解答 notebook"
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch08_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch08_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+
 !!! success "概念题 1"
     **质押式回购**：债券所有权不转移、仅质押冻结，逆回购方**不能**再处置质押券；是日常融资的绝对主流。**买断式回购**：债券所有权**转移**给逆回购方，到期再买回，逆回购方**能**再卖出/再质押。正因所有权转移、逆回购方真正持有了券，买断式回购才能让其在市场上**卖出该券做空**——质押式做不到（券被冻结）。
 

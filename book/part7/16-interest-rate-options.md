@@ -213,6 +213,9 @@ cap.NPV()   # ≈145 万（与 fi 同量级，差异来自计息惯例与远期/
 
 ## 16.10 习题参考答案与详解
 
+!!! tip "完整可运行解答 notebook"
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch16_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch16_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+
 !!! success "概念题 1"
     **Cap（上限）**保护浮动利率**借款人**（利率超上限获赔，对冲加息）；**Floor（下限）**保护浮动利率**投资者/放款人**（利率低于下限获赔，对冲降息）；**Collar（双限）= 买 Cap + 卖 Floor**，把利率锁在区间内。**零成本 Collar**：选择 Floor 的执行价，使卖 Floor 的权利金恰好抵消买 Cap 的成本（净权利金为零）。
 
