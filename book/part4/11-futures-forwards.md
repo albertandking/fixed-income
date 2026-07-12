@@ -1,6 +1,6 @@
-# 第14章　利率期货与远期
+# 第11章　利率期货与远期
 
-[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch14_futures_forwards.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch14_futures_forwards.ipynb)
+[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch11_futures_forwards.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch11_futures_forwards.ipynb)
 
 !!! info "配套代码"
     本章转换因子、CTD、套保比率与 FRA 由 `fi.futures` 实现；案例用国债期货对冲组合久期，离线即可运行。
@@ -9,7 +9,7 @@
 
 前面我们用**现券组合**管理利率风险（第7章免疫、第6章久期）。但调整现券组合需要买卖大量债券、占用大量资金，并对市场形成冲击。**利率衍生品**提供了更高效的工具：借助少量保证金、高流动性的**国债期货**，即可较快地调整整个组合的久期、对冲利率风险。这标志着利率风险管理从"重资产"方式向"轻资本"方式的重要转变。
 
-但国债期货有一项独特的复杂性：它对应的不是某一只具体的债券，而是一个**名义标准券**，其背后对应**一篮子可交割券**。卖方可以选择交割其中哪一只，理性的选择是交割**最便宜可交割券（CTD）**。这一"转换因子 + CTD"机制是国债期货定价与套保的核心，也是本章的重点。本部分（第14–16章）大量用到第5章的曲线与第6章的久期。
+但国债期货有一项独特的复杂性：它对应的不是某一只具体的债券，而是一个**名义标准券**，其背后对应**一篮子可交割券**。卖方可以选择交割其中哪一只，理性的选择是交割**最便宜可交割券（CTD）**。这一"转换因子 + CTD"机制是国债期货定价与套保的核心，也是本章的重点。本部分（第11–13章）大量用到第5章的曲线与第6章的久期。
 
 !!! abstract "学习目标"
     学完本章，你应能：
@@ -77,7 +77,7 @@ $$\text{毛基差}=\underbrace{\text{现券净价}}_{\text{买券成本}}-\under
 
 毛基差最小的券就是 **CTD**（更精确用"隐含回购率最高"或"净基差最小"，需计入持有期 carry）。
 
-值得注意的是，CTD 机制的背后同样隐含一份**期权**，只不过其持有者是期货空头。合约允许空头在交割时从一篮子券中选择一只交付，而理性的空头总会选择对自身最有利（交割成本最低）的那只。**从多个选项中择优的权利本身即构成一种选择权**，金融上称为空头的"**交割期权（delivery option）**"或"质量期权（quality option）"。这解释了一个看似异常的现象：国债期货价格往往略低于"直接按 CTD 折算"所对应的价格。究其原因，多头知道自己将被交付那只对空头最有利、对自己最不利的券，于是要求一定的价格折让作为补偿，这一折让正对应交割期权的价值。本书的 CTD 分析采用静态的毛基差近似，把握了问题的主线，但应注意其中的期权属性：它与第10章可赎回债、第11章可转债同属一个母题——只要合约中有一方持有"选择权"，定价中便相应包含一份期权的价值。这也是 CTD 会随利率与曲线形状发生切换的原因：选择权的最优行权对象，本就会随市场环境而变化。
+值得注意的是，CTD 机制的背后同样隐含一份**期权**，只不过其持有者是期货空头。合约允许空头在交割时从一篮子券中选择一只交付，而理性的空头总会选择对自身最有利（交割成本最低）的那只。**从多个选项中择优的权利本身即构成一种选择权**，金融上称为空头的"**交割期权（delivery option）**"或"质量期权（quality option）"。这解释了一个看似异常的现象：国债期货价格往往略低于"直接按 CTD 折算"所对应的价格。究其原因，多头知道自己将被交付那只对空头最有利、对自己最不利的券，于是要求一定的价格折让作为补偿，这一折让正对应交割期权的价值。本书的 CTD 分析采用静态的毛基差近似，把握了问题的主线，但应注意其中的期权属性：它与第9章可赎回债、第10章可转债同属一个母题——只要合约中有一方持有"选择权"，定价中便相应包含一份期权的价值。这也是 CTD 会随利率与曲线形状发生切换的原因：选择权的最优行权对象，本就会随市场环境而变化。
 
 !!! example "例14.2：确定 CTD"
     期货价格 100。三只可交割券的毛基差：
@@ -116,11 +116,11 @@ $$\boxed{\;N=-\frac{\text{组合 DV01}}{\text{每张期货合约 DV01}}\;}$$
 
     $$N=-\frac{50{,}000}{686}\approx -72.8\ \Rightarrow\ \textbf{卖出约 73 张}$$
 
-    卖出 73 张国债期货后，组合对小幅平行利率变动的损益被对冲到接近零（图14-1）。
+    卖出 73 张国债期货后，组合对小幅平行利率变动的损益被对冲到接近零（图11-1）。
 
 <figure markdown>
-  ![图14-1　国债期货对冲组合久期](../assets/figures/ch14_hedge.png){ width="640" }
-  <figcaption>图14-1　利率冲击下，未对冲组合损益随利率大幅波动；卖出久期中性数量的国债期货后，组合损益被对冲到接近水平线</figcaption>
+  ![图11-1　国债期货对冲组合久期](../assets/figures/ch11_hedge.png){ width="640" }
+  <figcaption>图11-1　利率冲击下，未对冲组合损益随利率大幅波动；卖出久期中性数量的国债期货后，组合损益被对冲到接近水平线</figcaption>
 </figure>
 
 !!! warning "套保不是完美的"
@@ -195,7 +195,7 @@ fwd = curve.forwardRate(d1, d2, dc, ql.Simple).rate()   # 远期利率 ≈ FRA �
 
 1. **确定 CTD**（例14.2）：从一篮子可交割券中找出 CTD，得到期货的 DV01；
 2. **计算套保手数**（例14.3）：用 DV01 中性算出需卖出的期货张数；
-3. **回测对冲效果**（图14-1）：模拟利率 ±100bp 冲击，对比未对冲与对冲后组合的损益曲线；
+3. **回测对冲效果**（图11-1）：模拟利率 ±100bp 冲击，对比未对冲与对冲后组合的损益曲线；
 4. **残余风险**：观察曲线非平行移动、CTD 切换下对冲的不完美。
 
 **结论要点**：国债期货可用较小的资金占用调整组合久期，既可用于对冲（将久期降至零），也可用于主动加减久期（久期择时，第17章）。但 DV01 中性仅覆盖一阶平行风险，基差、CTD 切换与曲线风险均为残余敞口，套保需动态再平衡。中金所国债期货已成为中国机构管理利率风险的核心工具。
@@ -219,7 +219,7 @@ fwd = curve.forwardRate(d1, d2, dc, ql.Simple).rate()   # 远期利率 ≈ FRA �
 **编程实验**
 
 7. 用 `fi.futures` 复现例14.1、例14.2，再改变期货价格，观察 CTD 是否切换。
-8. 复现例14.3 与图14-1：用久期中性法对冲一个组合，模拟 ±100bp 冲击，画出未对冲 vs 对冲后的损益曲线。
+8. 复现例14.3 与图11-1：用久期中性法对冲一个组合，模拟 ±100bp 冲击，画出未对冲 vs 对冲后的损益曲线。
 9. 用 `fi.futures.fra_value` 复现例14.4；再用 QuantLib 由一条曲线取远期利率，作为 FRA 的公允约定利率。
 
 ---
@@ -227,7 +227,7 @@ fwd = curve.forwardRate(d1, d2, dc, ql.Simple).rate()   # 远期利率 ≈ FRA �
 ## 14.10 习题参考答案与详解
 
 !!! tip "完整可运行解答 notebook"
-    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch14_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch14_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch11_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch11_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
 
 !!! success "概念题 1"
     用"名义标准券 + 一篮子可交割券"，是为了**避免单一现券被逼仓（squeeze）**：若只许交割某一只券，空头到期必须买入该券，多头可囤券抬价。一篮子可交割让空头能选最便宜的券交割，市场更难操纵；名义标准券（3% 票息虚拟券）则提供统一报价基准。
@@ -254,7 +254,7 @@ fwd = curve.forwardRate(d1, d2, dc, ql.Simple).rate()   # 远期利率 ≈ FRA �
 
 !!! success "编程实验 7–9（要点）"
     - **实验 7**：`fi.futures` 复现 CF（例14.1）与 CTD（例14.2，CTD=券B）；改变期货价格会改变各券毛基差，可能触发 **CTD 切换**。
-    - **实验 8**：用 DV01 中性算套保手数（例14.3，N≈−73），±100bp 冲击下未对冲组合损益 ±500 万、对冲后接近水平线（图14-1）。
+    - **实验 8**：用 DV01 中性算套保手数（例14.3，N≈−73），±100bp 冲击下未对冲组合损益 ±500 万、对冲后接近水平线（图11-1）。
     - **实验 9**：`fra_value` 复现例14.4（75000 元）；QuantLib 由曲线 `forwardRate` 取远期利率作为 FRA 公允约定利率（注意期货与远期间的凸性调整）。
 
 ---
@@ -267,7 +267,7 @@ fwd = curve.forwardRate(d1, d2, dc, ql.Simple).rate()   # 远期利率 ≈ FRA �
 - **FRA** 锁定未来利率，公允约定利率 = 远期利率；价值 = 名义 ×（远期−合约）× τ × DF。
 - `fi.futures` 实现 CF/CTD/套保/FRA；期货与远期间有**凸性调整**的精微差异。
 
-下一章（第15章）进入**利率互换**：把"未来一系列利率"打包交换，是场外利率衍生品中体量最大、应用最广的品种，定价同样建立在第5章的曲线之上。
+下一章（第12章）进入**利率互换**：把"未来一系列利率"打包交换，是场外利率衍生品中体量最大、应用最广的品种，定价同样建立在第5章的曲线之上。
 
 !!! note "关键公式速查"
     | 概念 | 公式 |

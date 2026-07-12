@@ -1,6 +1,6 @@
-# 第10章　可赎回债券与可回售债券
+# 第9章　可赎回债券与可回售债券
 
-[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch10_callable_putable.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch10_callable_putable.ipynb)
+[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch09_callable_putable.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch09_callable_putable.ipynb)
 
 !!! info "配套代码"
     本章利率二叉树、含权债定价、有效久期/凸性由 `fi.tree` 实现，并与 QuantLib `CallableFixedRateBond`（Hull-White 树引擎）对拍。
@@ -62,7 +62,7 @@ $$\boxed{\;V_{\text{可回售}}=V_{\text{普通债}}+V_{\text{回售期权}}\;}$
 
 ### 10.3.1 价格被"封顶"与"托底"
 
-把可赎回债与普通债的**价格—利率曲线**画在一起（图10-1）：
+把可赎回债与普通债的**价格—利率曲线**画在一起（图9-1）：
 
 - **利率高时**：赎回期权几乎一文不值（没人会赎回一只低于面值的债），可赎回债 ≈ 普通债；
 - **利率低时**：普通债价格本应大涨，但发行人会以赎回价赎回，价格被**封顶**在赎回价附近——可赎回债涨不上去了。
@@ -72,8 +72,8 @@ $$\boxed{\;V_{\text{可回售}}=V_{\text{普通债}}+V_{\text{回售期权}}\;}$
 负凸性的本质，是投资者面临一种**收益不对称**的格局。利率上行、债券贬值时，无人会赎回一只跌破面值的债，可赎回债与普通债同步下跌，投资者须全额承担损失；而利率下行、债券本应大幅升值时，发行人随即行权封顶，投资者本可享有的涨幅就此被截断。**下跌时全额承担、上涨时被封顶**，正是负凸性"涨少跌多"的全部含义。其结构可类比为投资者卖出了一份期权：行情平稳时收取权利金（更高票息），一旦出现对其有利的大幅行情（利率大跌），赎回义务即被触发，相应的好处随之被发行人收回。理解这种不对称，便可理解含权债久期为何被"压缩"（低利率端价格几乎不动，对利率自然不敏感），也可理解第6章"正凸性具有价值、须为之付费"的反面：负凸性对投资者不利，发行人须以更高利息加以补偿，投资者方愿持有。
 
 <figure markdown>
-  ![图10-1　可赎回债的负凸性](../assets/figures/ch10_callable.png){ width="640" }
-  <figcaption>图10-1　利率下行时，普通债价格持续上升，而可赎回债被赎回价"封顶"——低利率端的负凸性</figcaption>
+  ![图9-1　可赎回债的负凸性](../assets/figures/ch09_callable.png){ width="640" }
+  <figcaption>图9-1　利率下行时，普通债价格持续上升，而可赎回债被赎回价"封顶"——低利率端的负凸性</figcaption>
 </figure>
 
 ### 10.3.2 久期压缩
@@ -202,12 +202,12 @@ bond.cleanPrice()   # ≈ 102.69（与 fi.tree 的 102.91 同量级，模型不�
 
 中国信用债大量带含权结构（"X+Y"、永续债赎回权等）。配套 notebook 演示：
 
-1. **负凸性可视化**（图10-1）：画出可赎回债与普通债的价格—利率曲线，定位负凸性区间；
+1. **负凸性可视化**（图9-1）：画出可赎回债与普通债的价格—利率曲线，定位负凸性区间；
 2. **期权价值分解**：对同一只债，分别计算普通债价值、可赎回/可回售价值与嵌入期权价值；
 3. **久期压缩**：比较普通债的修正久期与含权债的有效久期，量化"用错久期"的误差；
 4. **OAS 对波动率的敏感性**：用 QuantLib 在不同波动率假设下计算 OAS，验证"波动率越高、可赎回债 OAS 越低"。
 
-**结论要点**：含权债不能用修正久期，必须用有效久期/有效凸性与 OAS；中国"X+Y"债与永续债的估值，本质是给一组嵌入期权定价——这把第14–16章的利率期权工具提前用到了债券上。
+**结论要点**：含权债不能用修正久期，必须用有效久期/有效凸性与 OAS；中国"X+Y"债与永续债的估值，本质是给一组嵌入期权定价——这把第11–13章的利率期权工具提前用到了债券上。
 
 ---
 
@@ -227,7 +227,7 @@ bond.cleanPrice()   # ≈ 102.69（与 fi.tree 的 102.91 同量级，模型不�
 
 **编程实验**
 
-7. 用 `fi.tree` 复现例10.1、例10.2，并复现图10-1（可赎回 vs 普通的价格—利率曲线），标出负凸性区间。
+7. 用 `fi.tree` 复现例10.1、例10.2，并复现图9-1（可赎回 vs 普通的价格—利率曲线），标出负凸性区间。
 8. 用 `fi.tree.effective_convexity_tree` 扫描 $r_0$，找出可赎回债有效凸性由正转负的利率区间，解释为何发生在"期权价内附近"。
 9. 用 QuantLib `CallableFixedRateBond` 在波动率 0.5%、1.5%、3% 三种假设下计算同一只可赎回债的 OAS，验证 OAS 随波动率上升而下降。
 
@@ -236,7 +236,7 @@ bond.cleanPrice()   # ≈ 102.69（与 fi.tree 的 102.91 同量级，模型不�
 ## 10.10 习题参考答案与详解
 
 !!! tip "完整可运行解答 notebook"
-    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch10_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch10_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch09_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch09_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
 
 !!! success "概念题 1"
     **可赎回债 = 普通债 − 赎回期权**：期权归**发行人**（利率下行时赎回再融资），投资者**卖出**了期权、**收权利金**（表现为更高收益率）。**可回售债 = 普通债 + 回售期权**：期权归**投资者**（利率上行时回售），投资者**买入**期权、**付权利金**（表现为更低收益率）。
@@ -257,7 +257,7 @@ bond.cleanPrice()   # ≈ 102.69（与 fi.tree 的 102.91 同量级，模型不�
     赎回期权价值 ≈ 普通债模型价 − 可赎回债市价 $=115-102=\mathbf{13}$。**若波动率假设提高**：嵌入期权更值钱（期权价值↑）；在给定市价下，期权"解释"了更多收益率，留给 **OAS 的更少 → OAS 下降**（与编程实验 9 一致：vol 0.5%/1.5%/3% → OAS 约 17/0/−105 bp）。
 
 !!! success "编程实验 7–9（要点）"
-    - **实验 7**：`fi.tree` 复现例10.1（普通 115.52 / 可赎回 102.91 / 期权值 12.61）、例10.2（可回售托底）；图10-1 中可赎回曲线在低利率端被赎回价封顶（负凸性区）。
+    - **实验 7**：`fi.tree` 复现例10.1（普通 115.52 / 可赎回 102.91 / 期权值 12.61）、例10.2（可回售托底）；图9-1 中可赎回曲线在低利率端被赎回价封顶（负凸性区）。
     - **实验 8**：`effective_convexity_tree` 扫描 $r_0$，凸性在 $r_0\approx4\%\sim6\%$（期权"价内附近"、债价接近赎回价）由正转负——此处赎回概率随利率下行迅速上升，价格被封顶。
     - **实验 9**：QuantLib `CallableFixedRateBond` 在 vol 0.5%/1.5%/3% 下算 OAS，得约 +17bp / 0 / −105bp，验证 **OAS 随波动率上升而下降**。
 
@@ -271,7 +271,7 @@ bond.cleanPrice()   # ≈ 102.69（与 fi.tree 的 102.91 同量级，模型不�
 - **OAS** 剥离期权价值、反映纯信用补偿，可在含权与不含权债间公平比较，但**依赖波动率假设**。
 - `fi.tree` 与 QuantLib `CallableFixedRateBond` 定性一致；中国"X+Y"含权债与永续债是这套方法的主战场。
 
-下一章（第11章）将走向最复杂的含权品种——**可转换债券**：它同时嵌入了股票看涨期权与债券，价值在"股性"与"债性"之间切换。
+下一章（第10章）将走向最复杂的含权品种——**可转换债券**：它同时嵌入了股票看涨期权与债券，价值在"股性"与"债性"之间切换。
 
 !!! note "知识点自测清单"
     - [ ] 用"债券 = 普通债 ± 期权"分解可赎回债与可回售债（期权归谁、谁收/付权利金）

@@ -1,13 +1,13 @@
-# 第9章　浮动利率债券
+# 第8章　浮动利率债券
 
-[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch09_floating_rate.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch09_floating_rate.ipynb)
+[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch08_floating_rate.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch08_floating_rate.ipynb)
 
 !!! info "配套代码"
     本章浮息债定价、折现利差与"浮息 vs 固息"对比由 `fi.frn` 实现，并与 QuantLib `FloatingRateBond` 对拍；案例基于中国 LPR/SHIBOR 浮息债，离线即可运行。
 
 ## 9.1 本章导读与学习目标
 
-前八章的债券，票息都是**固定**的——发行时定好，到期不变。但利率会变：若投资者持有一只固定票息 3% 的债券，而市场利率升至 5%，该债券便显得"票息偏低"、价格下跌（第6章的利率风险）。**浮动利率债券（Floating Rate Note, FRN）**给出了另一种思路：**让票息随市场利率一起浮动**——市场利率涨，下一期票息也涨。如此一来，债券价格几乎不随基准利率波动，利率风险被大幅削弱。
+此前各章讨论的债券，票息都是**固定**的——发行时定好，到期不变。但利率会变：若投资者持有一只固定票息 3% 的债券，而市场利率升至 5%，该债券便显得"票息偏低"、价格下跌（第6章的利率风险）。**浮动利率债券（Floating Rate Note, FRN）**给出了另一种思路：**让票息随市场利率一起浮动**——市场利率涨，下一期票息也涨。如此一来，债券价格几乎不随基准利率波动，利率风险被大幅削弱。
 
 但"几乎不随利率波动"不等于"没有风险"。浮息债把利率风险换成了另一类风险——**利差风险**：当市场要求的信用/流动性利差变化时，浮息债的价格依然会动。本章讲清浮息债的**重定价机制**、两个关键利差（**票面利差 QM** 与**折现利差 DM**），以及它在中国市场（LPR/SHIBOR 基准）的应用。
 
@@ -122,8 +122,8 @@ $$P=\frac{(L+QM)}{k}\cdot\frac{1-\left(1+\frac{L+DM}{k}\right)^{-N}}{\frac{L+DM}
     一句话：浮息债是"用利率风险换利差风险与基准下行风险"，不是消灭风险。
 
 <figure markdown>
-  ![图9-1　浮息债 vs 固息债的价格稳定性](../assets/figures/ch09_frn_vs_fixed.png){ width="640" }
-  <figcaption>图9-1　市场利率变动时，浮息债（DM=QM）价格钉在面值，而同期限固息债价格大幅波动——浮息债利率风险低的直观体现</figcaption>
+  ![图8-1　浮息债 vs 固息债的价格稳定性](../assets/figures/ch08_frn_vs_fixed.png){ width="640" }
+  <figcaption>图8-1　市场利率变动时，浮息债（DM=QM）价格钉在面值，而同期限固息债价格大幅波动——浮息债利率风险低的直观体现</figcaption>
 </figure>
 
 ---
@@ -181,7 +181,7 @@ bond.cleanPrice()   # ≈ 99.99，DM=QM 时接近面值
 
 中国市场的浮息债以 **LPR** 与 **SHIBOR** 为主要基准（早期亦有定存基准老券）。配套 notebook 演示：
 
-1. **浮息 vs 固息的利率风险对比**（图9-1）：让市场利率从 1% 变到 4%，浮息债（DM=QM）价格钉在面值，固息债价格大幅波动；
+1. **浮息 vs 固息的利率风险对比**（图8-1）：让市场利率从 1% 变到 4%，浮息债（DM=QM）价格钉在面值，固息债价格大幅波动；
 2. **折现利差分析**：给定一只 SHIBOR 浮息债的市价，反求 DM，与票面利差 QM 比较，判断其相对贵贱；
 3. **远期曲线定价**：用第5章构建的基准远期曲线投影票息，给浮息债定价，与"基准恒定"近似对比；
 4. **利差久期**：数值估计该浮息债对 DM 变动的敏感度，量化其"利差风险"。
@@ -206,7 +206,7 @@ bond.cleanPrice()   # ≈ 99.99，DM=QM 时接近面值
 **编程实验**
 
 6. 用 `fi.frn.price_frn` 复现例9.1，验证 DM=QM 时价格与基准水平无关；再画出"价格关于 DM"的曲线，标出 DM=QM 处为面值。
-7. 复现图9-1：让市场利率从 1% 到 4%，对比浮息债（DM=QM）与同期限固息债的价格曲线。
+7. 复现图8-1：让市场利率从 1% 到 4%，对比浮息债（DM=QM）与同期限固息债的价格曲线。
 8. 用 `fi.frn.discount_margin` 对一只给定市价的浮息债反求 DM；再用 `fi.frn.price_frn` 数值估计其**利差久期**（DM ±1bp 重定价），与固息债的修正久期对比。
 
 ---
@@ -214,7 +214,7 @@ bond.cleanPrice()   # ≈ 99.99，DM=QM 时接近面值
 ## 9.9 习题参考答案与详解
 
 !!! tip "完整可运行解答 notebook"
-    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch09_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch09_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch08_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch08_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
 
 !!! success "概念题 1"
     在每个**重定价日**，浮息债的票息重置为"当前基准 + QM"，相当于"重新平价发行"，价格被拉回面值附近。所以利率风险只在"两个重定价日之间"积累，对基准利率的久期 ≈ **到下次重定价的时间**（通常几个月），而非到期期限。可把浮息债近似看作"不断滚动持有一只到下次重定价的短债"。
@@ -237,7 +237,7 @@ bond.cleanPrice()   # ≈ 99.99，DM=QM 时接近面值
 
 !!! success "编程实验 6–8（要点）"
     - **实验 6**：`price_frn` 在 DM=QM 时对任意基准都返回 100；画"价格 vs DM"曲线，在 DM=QM 处穿过面值、DM 越大价格越低。
-    - **实验 7**：图9-1——市场利率从 1% 到 4%，浮息债（DM=QM）价格钉在 100，固息债大幅波动，直观显示浮息债利率风险低。
+    - **实验 7**：图8-1——市场利率从 1% 到 4%，浮息债（DM=QM）价格钉在 100，固息债大幅波动，直观显示浮息债利率风险低。
     - **实验 8**：`discount_margin` 由市价反求 DM；用 DM±1bp 重定价的差商估"利差久期"，会发现它与**同期限固息债的修正久期相当**（≈到期期限），而浮息债的利率久期却很低——印证"利率短、信用长"的二重性。
 
 ---
@@ -250,7 +250,7 @@ bond.cleanPrice()   # ≈ 99.99，DM=QM 时接近面值
 - `fi.frn`（基准恒定模型 + 远期曲线模型 + DM 求解）与 QuantLib `FloatingRateBond`（双曲线机制）一致。
 - 中国浮息债以 **LPR/SHIBOR** 为主要基准，相对价值分析看 **DM** 而非 YTM。
 
-下一章（第10章）进入**含权债券**：可赎回/可回售债券的现金流会随利率变化，带来**负凸性**，让第6章的久期凸性分析变得更微妙，也需要新的定价工具（利率树）。
+下一章（第9章）进入**含权债券**：可赎回/可回售债券的现金流会随利率变化，带来**负凸性**，让第6章的久期凸性分析变得更微妙，也需要新的定价工具（利率树）。
 
 !!! note "关键公式速查"
     | 概念 | 公式 |
