@@ -1,6 +1,6 @@
-# 第15章　利率互换
+# 第12章　利率互换
 
-[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch15_swaps.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch15_swaps.ipynb)
+[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch12_swaps.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch12_swaps.ipynb)
 
 !!! info "配套代码"
     本章平价互换利率、互换估值、DV01 与互换曲线 bootstrap 由 `fi.swap` 实现，并与 QuantLib `VanillaSwap` 对拍。
@@ -70,7 +70,7 @@
 
 $$PV_{\text{浮动}}=\text{名义}\times\big(1-DF(T_n)\big)$$
 
-这一结论之所以简洁，是因为它将一长串看似随市场变动、当前无法预知的浮动利息现金流，化简为一个**仅含首尾两个折现因子**的表达式——中间各期的浮动利息均相互抵消。其原理如下：对浮动腿作等价处理，**虚拟地补入一笔期初流出、一笔期末流入的名义本金**（二者现值相消，不改变价值）。补入之后，浮动腿即等价于一只标准的**浮息债**：期初投出本金 1、每期收取浮动利息、期末收回本金。第9章已证明，这样一只按市场利率重置的浮息债，**在重置日的价值精确等于面值**。既然"投出 1、未来收回的全部现金流现值亦为 1"，那么将期末本金 $DF(T_n)$ 的现值单独分离，剩余"全部浮动利息的现值"自然等于 $1-DF(T_n)$。换言之，中间各期的未知浮动利息逐期**伸缩相消（telescoping）**，仅在首尾保留两个端点。由此可把握互换定价中这一关键步骤：**未来浮动利率虽无法预测，但无套利定价并不依赖对其的预测。**
+这一结论之所以简洁，是因为它将一长串看似随市场变动、当前无法预知的浮动利息现金流，化简为一个**仅含首尾两个折现因子**的表达式——中间各期的浮动利息均相互抵消。其原理如下：对浮动腿作等价处理，**虚拟地补入一笔期初流出、一笔期末流入的名义本金**（二者现值相消，不改变价值）。补入之后，浮动腿即等价于一只标准的**浮息债**：期初投出本金 1、每期收取浮动利息、期末收回本金。第8章已证明，这样一只按市场利率重置的浮息债，**在重置日的价值精确等于面值**。既然"投出 1、未来收回的全部现金流现值亦为 1"，那么将期末本金 $DF(T_n)$ 的现值单独分离，剩余"全部浮动利息的现值"自然等于 $1-DF(T_n)$。换言之，中间各期的未知浮动利息逐期**伸缩相消（telescoping）**，仅在首尾保留两个端点。由此可把握互换定价中这一关键步骤：**未来浮动利率虽无法预测，但无套利定价并不依赖对其的预测。**
 
 ### 15.3.2 固定腿现值与平价互换利率
 
@@ -178,15 +178,15 @@ swap.fairRate()  # ≈ 3.05%（平价互换利率）
 配套 notebook 演示：
 
 1. **bootstrap FR007 互换曲线**（例15.4）：由一组互换报价反推折现因子与即期曲线，并自检复原；
-2. **存量互换估值与 MTM**（图15-1）：模拟市场利率平行移动，画出 payer 互换的盯市价值——利率上行时 payer 获利（斜率即 DV01）；
+2. **存量互换估值与 MTM**（图12-1）：模拟市场利率平行移动，画出 payer 互换的盯市价值——利率上行时 payer 获利（斜率即 DV01）；
 3. **用 IRS 对冲浮动负债**：一笔浮动利率负债 + 一笔"付固定、收浮动"互换 = 锁定为固定成本，展示对冲后净现金流的确定性；
 4. **互换利差**：比较互换利率与同期限国债收益率，解读 swap spread 的信息。
 
 **结论要点**：互换以零初始成本、不占本金的方式调整利率敞口，是 ALM 与利率观点表达的主力工具；其定价完全依赖折现曲线（第5章），风险用 DV01 衡量（第6章）。中国 FR007 IRS 市场的深度，是利率市场化与衍生品发展的重要标志。
 
 <figure markdown>
-  ![图15-1　payer 互换的盯市价值随利率变动](../assets/figures/ch15_swap_value.png){ width="640" }
-  <figcaption>图15-1　付固定 2.5% 的 payer 互换：市场利率上行时价值上升、下行时下降，在市场利率=2.5% 处价值为零（斜率即 DV01）</figcaption>
+  ![图12-1　payer 互换的盯市价值随利率变动](../assets/figures/ch12_swap_value.png){ width="640" }
+  <figcaption>图12-1　付固定 2.5% 的 payer 互换：市场利率上行时价值上升、下行时下降，在市场利率=2.5% 处价值为零（斜率即 DV01）</figcaption>
 </figure>
 
 ---
@@ -208,7 +208,7 @@ swap.fairRate()  # ≈ 3.05%（平价互换利率）
 **编程实验**
 
 7. 用 `fi.swap.bootstrap_swap_curve` 复现例15.4，并用 bootstrap 出的折现因子重算各期限平价互换利率，验证复原。
-8. 复现图15-1：对一笔付固定 2.5% 的 payer 互换，模拟市场利率从 1% 到 5%，画出其盯市价值，标出价值为零处与斜率（DV01）。
+8. 复现图12-1：对一笔付固定 2.5% 的 payer 互换，模拟市场利率从 1% 到 5%，画出其盯市价值，标出价值为零处与斜率（DV01）。
 9. 用 `fi.swap` 与 QuantLib `VanillaSwap` 对同一笔互换定价，比较 NPV 与 fair rate 的差异，解释计息惯例的影响。
 
 ---
@@ -216,13 +216,13 @@ swap.fairRate()  # ≈ 3.05%（平价互换利率）
 ## 15.9 习题参考答案与详解
 
 !!! tip "完整可运行解答 notebook"
-    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch15_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch15_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch12_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch12_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
 
 !!! success "概念题 1"
     互换交换的是**利息现金流之差**（按名义本金计算、净额交收），本金只用于计息、不交换——但利息差已足以改变利率敞口（如把浮动负债"换成"固定）。**payer**（付固定、收浮动）在**利率上行**时获利（收的浮动变多、付的固定不变）；**receiver**（收固定、付浮动）在**利率下行**时获利。
 
 !!! success "概念题 2"
-    标准浮动腿等价于"期初投出名义本金、每期收浮动利息、期末收回本金"，其现值 = 名义 −（期末本金现值）= 名义 ×(1−DF(Tₙ))。这与第9章浮息债"**重置日平价**"同源：浮动腿在重置日价值回到面值，差额就是 1−DF(Tₙ)。
+    标准浮动腿等价于"期初投出名义本金、每期收浮动利息、期末收回本金"，其现值 = 名义 −（期末本金现值）= 名义 ×(1−DF(Tₙ))。这与第8章浮息债"**重置日平价**"同源：浮动腿在重置日价值回到面值，差额就是 1−DF(Tₙ)。
 
 !!! success "概念题 3"
     平价互换利率 $s=\dfrac{1-DF(T_n)}{\sum_i\tau_i DF(T_i)}$（使互换初始价值为零的固定利率）。它与**平价债收益率同形**，因为"付固定 = 一只平价债的票息、收浮动 = 平价的浮息腿"，令二者现值相等求出的固定利率，正是让"固定腿像一只平价债"的票息率。
@@ -238,7 +238,7 @@ swap.fairRate()  # ≈ 3.05%（平价互换利率）
 
 !!! success "编程实验 7–9（要点）"
     - **实验 7**：`bootstrap_swap_curve` 复现例15.4，用反推的折现因子重算各期限平价互换利率，应**精确复原**输入报价（曲线自洽）。
-    - **实验 8**：图15-1——payer 互换价值随市场利率线性上升，在市场利率 = 固定利率（2.5%）处价值为零，斜率即 DV01。
+    - **实验 8**：图12-1——payer 互换价值随市场利率线性上升，在市场利率 = 固定利率（2.5%）处价值为零，斜率即 DV01。
     - **实验 9**：`fi.swap` 与 QuantLib `VanillaSwap` 对拍，NPV（约 229 万 vs 250 万）、fair rate（3.00% vs 3.05%）有差异，来自计息惯例（Actual365 真实日历使年金因子略偏离整年）。
 
 ---
@@ -251,7 +251,7 @@ swap.fairRate()  # ≈ 3.05%（平价互换利率）
 - **互换曲线 bootstrap** 与债券 par 曲线同形；现代用 **OIS 双曲线**折现。
 - `fi.swap` 与 QuantLib `VanillaSwap` 机制一致，差异来自计息惯例。
 
-下一章（第16章）进入本部分最后、也是最复杂的利率衍生品——**利率期权（Cap/Floor/Swaption）**：用 Black 模型给"利率的期权"定价，并构建波动率曲面。
+下一章（第13章）进入本部分最后、也是最复杂的利率衍生品——**利率期权（Cap/Floor/Swaption）**：用 Black 模型给"利率的期权"定价，并构建波动率曲面。
 
 !!! note "关键公式速查"
     | 概念 | 公式 |

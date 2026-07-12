@@ -1,6 +1,6 @@
-# 第8章　货币市场工具与回购市场
+# 第16章　货币市场工具与回购市场
 
-[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch08_money_market_repo.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch08_money_market_repo.ipynb)
+[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch16_money_market_repo.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch16_money_market_repo.ipynb)
 
 !!! info "配套代码"
     本章回购现金流、资金成本与杠杆套息均由复用包 `fi.repo` 实现；案例使用内置货币市场利率样本（`fi.data.load_sample("money_market")`），离线即可运行。
@@ -204,18 +204,18 @@ repo.max_leverage(haircut=0.05)   # 20.0
 
 配套 notebook 画出三张图并给出统计：
 
-- **图8-1** carry 随时间的波动——资金中枢 DR007 抬升时，carry 被显著压缩；
-- **图8-2** $L=1$ 与 $L=3$ 的累计回报对比——杠杆放大了平均收益，也放大了每日回报的波动幅度；
-- **图8-3** R007 − DR007 利差——利差走阔的时段对应非银资金紧张。
+- **图16-1** carry 随时间的波动——资金中枢 DR007 抬升时，carry 被显著压缩；
+- **图16-2** $L=1$ 与 $L=3$ 的累计回报对比——杠杆放大了平均收益，也放大了每日回报的波动幅度；
+- **图16-3** R007 − DR007 利差——利差走阔的时段对应非银资金紧张。
 
 <figure markdown>
-  ![图8-1 与 图8-3　carry 与流动性分层利差](../assets/figures/ch08_carry.png){ width="720" }
-  <figcaption>图8-1（上）carry = 10Y 国债收益率 − DR007；图8-3（下）R007 − DR007 流动性分层利差</figcaption>
+  ![图16-1 与 图16-3　carry 与流动性分层利差](../assets/figures/ch16_carry.png){ width="720" }
+  <figcaption>图16-1（上）carry = 10Y 国债收益率 − DR007；图16-3（下）R007 − DR007 流动性分层利差</figcaption>
 </figure>
 
 <figure markdown>
-  ![图8-2　杠杆前后累计回报](../assets/figures/ch08_leverage_nav.png){ width="640" }
-  <figcaption>图8-2　L=1 与 L=3 的累计净值对比：杠杆放大了平均回报（样本期 carry 恒正，故无回撤）</figcaption>
+  ![图16-2　杠杆前后累计回报](../assets/figures/ch16_leverage_nav.png){ width="640" }
+  <figcaption>图16-2　L=1 与 L=3 的累计净值对比：杠杆放大了平均回报（样本期 carry 恒正，故无回撤）</figcaption>
 </figure>
 
 **复盘结论（样本数据）**：
@@ -253,7 +253,7 @@ repo.max_leverage(haircut=0.05)   # 20.0
 ## 8.9 习题参考答案与详解
 
 !!! tip "完整可运行解答 notebook"
-    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch08_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch08_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch16_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch16_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
 
 !!! success "概念题 1"
     **质押式回购**：债券所有权不转移、仅质押冻结，逆回购方**不能**再处置质押券；是日常融资的绝对主流。**买断式回购**：债券所有权**转移**给逆回购方，到期再买回，逆回购方**能**再卖出/再质押。正因所有权转移、逆回购方真正持有了券，买断式回购才能让其在市场上**卖出该券做空**——质押式做不到（券被冻结）。
@@ -310,4 +310,4 @@ repo.max_leverage(haircut=0.05)   # 20.0
     - 中国人民银行《货币政策执行报告》中关于公开市场操作、DR 利率培育与流动性管理的专栏；
     - 全国银行间同业拆借中心关于质押式/买断式回购的交易规则；复盘 2013 年"钱荒"与 2022 年理财赎回潮的研究报告，理解杠杆与流动性风险的传导。
 
-下一部分（第9章起）将进入含权与高级债券品种；其中浮息债的定价正好要用到本章的基准利率（LPR/SHIBOR/DR）体系。
+下一章（第17章）转入**债券投资策略与回测**：把前面各章的定价、风险与品种工具组装成可回测的投资策略；本章的回购与基准利率（LPR/SHIBOR/DR）体系，正是理解杠杆套息策略的基础。

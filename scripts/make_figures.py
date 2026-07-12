@@ -192,9 +192,9 @@ def ch07_immunization() -> None:
     _save(fig, "ch07_immunization.png")
 
 
-# --- 第9章 ---------------------------------------------------------------
+# --- 第8章 ---------------------------------------------------------------
 
-def ch09_frn_vs_fixed() -> None:
+def ch08_frn_vs_fixed() -> None:
     refs = np.linspace(0.01, 0.04, 61)
     # 浮息债：DM=QM=0.5%，2 年季付
     frn_p = [frn.price_frn(L, 0.005, 0.005, n_periods=8, freq=4) for L in refs]
@@ -208,13 +208,13 @@ def ch09_frn_vs_fixed() -> None:
     ax.plot(refs * 100, fix_p, label="固息债（票息 2.5%）")
     ax.axhline(100, ls=":", color="gray")
     ax.set_xlabel("市场利率 (%)"); ax.set_ylabel("价格")
-    ax.set_title("图9-1　浮息债 vs 固息债：利率变动下的价格稳定性"); ax.legend()
-    _save(fig, "ch09_frn_vs_fixed.png")
+    ax.set_title("图8-1　浮息债 vs 固息债：利率变动下的价格稳定性"); ax.legend()
+    _save(fig, "ch08_frn_vs_fixed.png")
 
 
-# --- 第10章 --------------------------------------------------------------
+# --- 第9章 --------------------------------------------------------------
 
-def ch10_callable() -> None:
+def ch09_callable() -> None:
     refs = np.linspace(0.01, 0.08, 36)
     sig, n, cpn = 0.20, 6, 6.0
     straight = [tree.value_bond(tree.short_rate_tree(r, sig, n), cpn, 100) for r in refs]
@@ -225,13 +225,13 @@ def ch10_callable() -> None:
     ax.plot(refs * 100, callable_, label="可赎回债（赎回价 100）")
     ax.axhline(100, ls=":", color="gray")
     ax.set_xlabel("短期利率 r0 (%)"); ax.set_ylabel("价格")
-    ax.set_title("图10-1　可赎回债的负凸性：低利率端价格被赎回价封顶"); ax.legend()
-    _save(fig, "ch10_callable.png")
+    ax.set_title("图9-1　可赎回债的负凸性：低利率端价格被赎回价封顶"); ax.legend()
+    _save(fig, "ch09_callable.png")
 
 
-# --- 第11章 --------------------------------------------------------------
+# --- 第10章 --------------------------------------------------------------
 
-def ch11_convertible() -> None:
+def ch10_convertible() -> None:
     floor = cb.bond_floor(100, 0.015, 5, discount_rate=0.05)
     ratio = 10
     s = np.linspace(2, 16, 36)
@@ -241,13 +241,13 @@ def ch11_convertible() -> None:
     ax.plot(s, ratio * s, "--", label="转股价值（ratio×S）")
     ax.axhline(floor, ls=":", color="gray", label=f"纯债底 {floor:.1f}")
     ax.set_xlabel("正股价格 S"); ax.set_ylabel("价值")
-    ax.set_title("图11-1　可转债的股债性切换"); ax.legend()
-    _save(fig, "ch11_convertible.png")
+    ax.set_title("图10-1　可转债的股债性切换"); ax.legend()
+    _save(fig, "ch10_convertible.png")
 
 
-# --- 第12章 --------------------------------------------------------------
+# --- 第14章 --------------------------------------------------------------
 
-def ch12_merton() -> None:
+def ch14_merton() -> None:
     D, sig, r, T = 100.0, 0.25, 0.03, 1.0
     lev = np.linspace(0.4, 0.92, 40)           # 杠杆 D/V
     V = D / lev
@@ -261,13 +261,13 @@ def ch12_merton() -> None:
     ax2.plot(lev, spread, "C3--", label="Merton 信用利差")
     ax2.set_ylabel("信用利差 (bp)", color="C3")
     ax2.tick_params(axis="y", labelcolor="C3")
-    ax1.set_title("图12-1　Merton 模型：违约概率与利差随杠杆上升")
-    _save(fig, "ch12_merton.png")
+    ax1.set_title("图14-1　Merton 模型：违约概率与利差随杠杆上升")
+    _save(fig, "ch14_merton.png")
 
 
-# --- 第13章 --------------------------------------------------------------
+# --- 第15章 --------------------------------------------------------------
 
-def ch13_tranching() -> None:
+def ch15_tranching() -> None:
     tranches = [("优先档", 80), ("夹层档", 15), ("次级档", 5)]
     sizes = dict(tranches)
     pool_losses = np.linspace(0, 30, 121)
@@ -280,13 +280,13 @@ def ch13_tranching() -> None:
     for n, _ in tranches:
         ax.plot(pool_losses, series[n], label=n)
     ax.set_xlabel("资产池损失率 (%)"); ax.set_ylabel("该档损失率 (%)")
-    ax.set_title("图13-1　分层与次级垫底：优先档在池损失突破 20% 前零损失"); ax.legend()
-    _save(fig, "ch13_tranching.png")
+    ax.set_title("图15-1　分层与次级垫底：优先档在池损失突破 20% 前零损失"); ax.legend()
+    _save(fig, "ch15_tranching.png")
 
 
-# --- 第14章 --------------------------------------------------------------
+# --- 第11章 --------------------------------------------------------------
 
-def ch14_hedge() -> None:
+def ch11_hedge() -> None:
     port_dv01 = 50000.0                       # 元/bp（组合市值1亿、久期5）
     ctd_dv01 = futures.bond_dv01(0.032, 8, 0.032)
     ctd_cf = futures.conversion_factor(0.032, 8)
@@ -301,13 +301,13 @@ def ch14_hedge() -> None:
     ax.plot(shocks, hedged, label=f"对冲后（卖出 {abs(round(n))} 张期货）")
     ax.axhline(0, ls=":", color="gray")
     ax.set_xlabel("利率平行冲击 (bp)"); ax.set_ylabel("组合损益（万元）")
-    ax.set_title("图14-1　国债期货久期中性套保的效果"); ax.legend()
-    _save(fig, "ch14_hedge.png")
+    ax.set_title("图11-1　国债期货久期中性套保的效果"); ax.legend()
+    _save(fig, "ch11_hedge.png")
 
 
-# --- 第15章 --------------------------------------------------------------
+# --- 第12章 --------------------------------------------------------------
 
-def ch15_swap_value() -> None:
+def ch12_swap_value() -> None:
     taus = [1, 1, 1, 1, 1]
     rates = np.linspace(0.01, 0.05, 41)
     vals = []
@@ -318,13 +318,13 @@ def ch15_swap_value() -> None:
     ax.plot(rates * 100, vals, label="payer 互换（付固定 2.5%）")
     ax.axhline(0, ls=":", color="gray"); ax.axvline(2.5, ls=":", color="gray")
     ax.set_xlabel("市场利率 (%)"); ax.set_ylabel("互换盯市价值（万元）")
-    ax.set_title("图15-1　payer 互换价值随市场利率变动（利率升则获利）"); ax.legend()
-    _save(fig, "ch15_swap_value.png")
+    ax.set_title("图12-1　payer 互换价值随市场利率变动（利率升则获利）"); ax.legend()
+    _save(fig, "ch12_swap_value.png")
 
 
-# --- 第16章 --------------------------------------------------------------
+# --- 第13章 --------------------------------------------------------------
 
-def ch16_capfloor() -> None:
+def ch13_capfloor() -> None:
     resets, taus = [1, 2, 3, 4], [1, 1, 1, 1]
     pay_dfs = [1.03 ** -t for t in (2, 3, 4, 5)]
     fwds = [0.03] * 4
@@ -336,8 +336,8 @@ def ch16_capfloor() -> None:
     ax.plot(strikes * 100, floors, label="Floor 价值")
     ax.axvline(3.0, ls=":", color="gray", label="ATM (3%)")
     ax.set_xlabel("执行利率 K (%)"); ax.set_ylabel("价值（万元）")
-    ax.set_title("图16-1　Cap 与 Floor 价值随执行价（ATM 处相交）"); ax.legend()
-    _save(fig, "ch16_capfloor.png")
+    ax.set_title("图13-1　Cap 与 Floor 价值随执行价（ATM 处相交）"); ax.legend()
+    _save(fig, "ch13_capfloor.png")
 
 
 # --- 第17章 --------------------------------------------------------------
@@ -384,7 +384,7 @@ def ch18_var() -> None:
     _save(fig, "ch18_var.png")
 
 
-# --- 第8章 ---------------------------------------------------------------
+# --- 第16章 ---------------------------------------------------------------
 
 def _money_market():
     mm = data.load_sample("money_market").copy()
@@ -392,19 +392,19 @@ def _money_market():
     return mm.set_index("date")
 
 
-def ch08_carry() -> None:
+def ch16_carry() -> None:
     mm = _money_market()
     carry = mm["cgb_10y"] - mm["dr007"]
     r_dr = mm["r007"] - mm["dr007"]
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(9, 6))
     ax1.plot(carry.index, carry.values)
-    ax1.set_ylabel("carry (%)"); ax1.set_title("图8-1　carry = 10Y 国债收益率 − DR007")
+    ax1.set_ylabel("carry (%)"); ax1.set_title("图16-1　carry = 10Y 国债收益率 − DR007")
     ax2.plot(r_dr.index, r_dr.values, color="C3")
-    ax2.set_ylabel("R007 − DR007 (%)"); ax2.set_title("图8-3　非银流动性分层利差")
-    _save(fig, "ch08_carry.png")
+    ax2.set_ylabel("R007 − DR007 (%)"); ax2.set_title("图16-3　非银流动性分层利差")
+    _save(fig, "ch16_carry.png")
 
 
-def ch08_leverage_nav() -> None:
+def ch16_leverage_nav() -> None:
     mm = _money_market()
     y_d, r_d = mm["cgb_10y"] / 100, mm["dr007"] / 100
 
@@ -416,8 +416,8 @@ def ch08_leverage_nav() -> None:
     fig, ax = plt.subplots(figsize=(8, 4.5))
     ax.plot(cum1.index, cum1.values, label="L=1（不加杠杆）")
     ax.plot(cum3.index, cum3.values, label="L=3")
-    ax.set_ylabel("累计净值"); ax.set_title("图8-2　杠杆前后累计回报对比"); ax.legend()
-    _save(fig, "ch08_leverage_nav.png")
+    ax.set_ylabel("累计净值"); ax.set_title("图16-2　杠杆前后累计回报对比"); ax.legend()
+    _save(fig, "ch16_leverage_nav.png")
 
 
 def main() -> None:
@@ -431,18 +431,18 @@ def main() -> None:
     ch06_price_yield_tangent()
     ch06_krd()
     ch07_immunization()
-    ch09_frn_vs_fixed()
-    ch10_callable()
-    ch11_convertible()
-    ch12_merton()
-    ch13_tranching()
-    ch14_hedge()
-    ch15_swap_value()
-    ch16_capfloor()
+    ch08_frn_vs_fixed()
+    ch09_callable()
+    ch10_convertible()
+    ch14_merton()
+    ch15_tranching()
+    ch11_hedge()
+    ch12_swap_value()
+    ch13_capfloor()
     ch17_riding()
     ch18_var()
-    ch08_carry()
-    ch08_leverage_nav()
+    ch16_carry()
+    ch16_leverage_nav()
     print("所有图已生成至", FIG)
 
 

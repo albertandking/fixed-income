@@ -1,6 +1,6 @@
-# 第12章　信用风险与定价模型
+# 第14章　信用风险与定价模型
 
-[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch12_credit_risk.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch12_credit_risk.ipynb)
+[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch14_credit_risk.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch14_credit_risk.ipynb)
 
 !!! info "配套代码"
     本章 Merton 结构化模型、约化模型与隐含违约率曲线由 `fi.credit` 实现，并与 QuantLib 违约期限结构对拍。
@@ -94,8 +94,8 @@ $$PD = N(-d_2),\qquad d_2=\frac{\ln(V/D)+(r-\tfrac12\sigma_V^2)T}{\sigma_V\sqrt 
     **规律**：杠杆越高（资产越接近负债），违约距离越短、违约概率越高、信用利差越宽。这把"信用风险"和可观测的**资产负债结构、股价波动率**直接挂钩——这是结构化模型最大的魅力。
 
 <figure markdown>
-  ![图12-1　Merton 模型：违约概率与利差随杠杆上升](../assets/figures/ch12_merton.png){ width="640" }
-  <figcaption>图12-1　杠杆越高，违约概率与 Merton 信用利差越大——结构化模型把信用风险与资本结构挂钩</figcaption>
+  ![图14-1　Merton 模型：违约概率与利差随杠杆上升](../assets/figures/ch14_merton.png){ width="640" }
+  <figcaption>图14-1　杠杆越高，违约概率与 Merton 信用利差越大——结构化模型把信用风险与资本结构挂钩</figcaption>
 </figure>
 
 ### 12.3.3 KMV 的工程化扩展
@@ -214,7 +214,7 @@ dpts.defaultProbability(d5)    # 0.1535
 
 配套 notebook 以中国信用债为背景演示：
 
-1. **Merton 评分**（图12-1）：用公司资产/负债/股价波动率，画出违约概率、信用利差随杠杆的变化，给企业做结构化信用评分；
+1. **Merton 评分**（图14-1）：用公司资产/负债/股价波动率，画出违约概率、信用利差随杠杆的变化，给企业做结构化信用评分；
 2. **利差反推违约率**：取不同评级（AAA/AA+/AA）信用债的利差曲线，反推隐含违约率曲线，比较评级间的违约预期差异；
 3. **风险中性 vs 真实**：对比利差反推的违约率与历史违约率，量化"信用利差之谜"中的风险/流动性溢价；
 4. **事件冲击**：模拟"永煤式"信用事件——利差骤然走阔时，隐含违约率与风险债价格如何重定价。
@@ -239,7 +239,7 @@ dpts.defaultProbability(d5)    # 0.1535
 
 **编程实验**
 
-7. 用 `fi.credit` 复现例12.1，并复现图12-1（违约概率/利差随杠杆 $D/V$ 的曲线）。
+7. 用 `fi.credit` 复现例12.1，并复现图14-1（违约概率/利差随杠杆 $D/V$ 的曲线）。
 8. 用 `fi.credit.implied_default_curve` 由一条利差曲线 bootstrap 隐含违约率曲线，并比较回收率 30%/40%/50% 对结果的影响。
 9. 用 QuantLib `FlatHazardRate` 验证例12.2，并尝试用 `PiecewiseFlatHazardRate` + CDS helper 由多个期限利差 bootstrap 分段强度曲线。
 
@@ -248,7 +248,7 @@ dpts.defaultProbability(d5)    # 0.1535
 ## 12.10 习题参考答案与详解
 
 !!! tip "完整可运行解答 notebook"
-    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch12_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch12_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch14_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch14_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
 
 !!! success "概念题 1"
     **预期损失 $EL=PD\times LGD\times EAD$**：违约概率 × 违约损失率 × 违约时敞口。**回收率 $R$ 与 LGD 的关系**：$LGD=1-R$（违约后没收回的比例）。例如 PD=3%、回收率 40%（LGD=60%）、敞口 1 亿，则 $EL=3\%\times60\%\times1\text{亿}=180$ 万元。
@@ -274,7 +274,7 @@ dpts.defaultProbability(d5)    # 0.1535
     违约强度 $\lambda=\dfrac{s}{1-R}=\dfrac{0.03}{1-0.30}=\mathbf{4.286\%}$。5 年累计违约概率 $=1-e^{-\lambda\times5}=1-e^{-0.2143}=\mathbf{19.29\%}$。（回收率越低、LGD 越大，同样利差反推出的强度越低——因为更高的 LGD 用更少的违约就能解释利差。）
 
 !!! success "编程实验 7–9（要点）"
-    - **实验 7**：`fi.credit` 复现例12.1（V=120/150/200 → PD 23.4/5.3/0.28%）；图12-1 中 PD 与利差随杠杆 D/V 凸性上升。
+    - **实验 7**：`fi.credit` 复现例12.1（V=120/150/200 → PD 23.4/5.3/0.28%）；图14-1 中 PD 与利差随杠杆 D/V 凸性上升。
     - **实验 8**：`implied_default_curve` 由利差曲线反推累计违约率；回收率越高（LGD 越小），同一利差反推的违约率越高（$\lambda=s/(1-R)$，分母越小、强度越大）。
     - **实验 9**：QuantLib `FlatHazardRate` 验证例12.2（生存 96.72/90.48/84.65%）；`PiecewiseFlatHazardRate`+CDS helper 由多期限利差 bootstrap 分段强度曲线，与第5章利率曲线 bootstrap 同理。
 
@@ -288,7 +288,7 @@ dpts.defaultProbability(d5)    # 0.1535
 - 由利差反推的是**风险中性违约率**，通常高于真实违约率（信用利差之谜）；做信用分析要分清二者。
 - `fi.credit` 与 QuantLib 违约期限结构一致；中国信用债的关键是读懂评级、隐含评级与利差的背离。
 
-下一章（第13章）进入**结构化产品与 ABS**：把一组资产的现金流打包、分层、再分配，信用风险在不同档级之间被重新切割——本章的违约/回收概念将用于给各档定价。
+下一章（第15章）进入**结构化产品与 ABS**：把一组资产的现金流打包、分层、再分配，信用风险在不同档级之间被重新切割——本章的违约/回收概念将用于给各档定价。
 
 !!! note "知识点自测清单"
     - [ ] 用 **EL = PD × LGD × EAD** 拆解预期损失，说清回收率与 LGD 的关系

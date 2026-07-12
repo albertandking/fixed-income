@@ -1,15 +1,15 @@
-# 第16章　利率期权（Cap/Floor/Swaption）
+# 第13章　利率期权（Cap/Floor/Swaption）
 
-[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch16_ir_options.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch16_ir_options.ipynb)
+[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch13_ir_options.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch13_ir_options.ipynb)
 
 !!! info "配套代码"
     本章 Cap/Floor/Swaption 的 Black 定价、隐含波动率由 `fi.rateopt` 实现，并与 QuantLib `CapFloor` 对拍。
 
 ## 16.1 本章导读与学习目标
 
-第14章的期货、第15章的互换都是**线性**工具——损益与利率近似成正比。本章进入**非线性**的世界：**利率期权**。它给持有者"权利而非义务"，从而提供**不对称**的保护——只在利率朝不利方向变动时赔付，朝有利方向变动则保留收益。
+第11章的期货、第12章的互换都是**线性**工具——损益与利率近似成正比。本章进入**非线性**的世界：**利率期权**。它给持有者"权利而非义务"，从而提供**不对称**的保护——只在利率朝不利方向变动时赔付，朝有利方向变动则保留收益。
 
-有浮动利率贷款的企业怕利率上行，可以买一个**利率上限（Cap）**：利率超过上限就获赔，没超过则不行权，最多损失权利金。这正是期权"下有保底、上不封顶"的魅力。本章用 **Black 模型**给 Cap/Floor 与**互换期权（Swaption）**定价，并引入利率衍生品交易的核心——**波动率曲面**。这是 Part 7 的收尾，也把"期权"这条线（第10–11章的嵌入期权）推向显式的利率期权。
+有浮动利率贷款的企业怕利率上行，可以买一个**利率上限（Cap）**：利率超过上限就获赔，没超过则不行权，最多损失权利金。这正是期权"下有保底、上不封顶"的魅力。本章用 **Black 模型**给 Cap/Floor 与**互换期权（Swaption）**定价，并引入利率衍生品交易的核心——**波动率曲面**。这是第四部分（利率衍生品和高级品种）的收尾，也把"期权"这条线（第9–10章的嵌入期权）推向显式的利率期权。
 
 !!! abstract "学习目标"
     学完本章，你应能：
@@ -21,9 +21,9 @@
     5. 用 `fi.rateopt` 与 QuantLib 定价并对拍。
 
 !!! note "本章知识结构"
-    **Cap / Floor / Collar**（16.2，caplet=看涨、floorlet=看跌）→ **Cap−Floor = payer 互换**（连第15章）
+    **Cap / Floor / Collar**（16.2，caplet=看涨、floorlet=看跌）→ **Cap−Floor = payer 互换**（连第12章）
     　↓ 进入互换的期权
-    **Swaption**（16.3，可赎回债内嵌 receiver swaption，连第10章）
+    **Swaption**（16.3，可赎回债内嵌 receiver swaption，连第9章）
     　↓ 怎么定价
     **Black 模型**（16.4，到期=重置日是关键细节）
     　↓ 报价的语言
@@ -54,7 +54,7 @@ Cap 是浮动利率借款人的"利率保险"：锁定融资成本上限，又�
 
 $$\boxed{\;\text{Cap}(K)-\text{Floor}(K)=\text{payer 互换}(K)\;}$$
 
-直觉：caplet−floorlet 的赔付 $=\max(r-K,0)-\max(K-r,0)=r-K$，正是互换每期的净现金流。当 $K$ = 平价互换利率（ATM）时，payer 互换价值为零，故 **ATM 时 Cap = Floor**。这是第15章互换与本章期权之间的桥梁。
+直觉：caplet−floorlet 的赔付 $=\max(r-K,0)-\max(K-r,0)=r-K$，正是互换每期的净现金流。当 $K$ = 平价互换利率（ATM）时，payer 互换价值为零，故 **ATM 时 Cap = Floor**。这是第12章互换与本章期权之间的桥梁。
 
 ---
 
@@ -65,7 +65,7 @@ $$\boxed{\;\text{Cap}(K)-\text{Floor}(K)=\text{payer 互换}(K)\;}$$
 - **payer swaption**：未来按约定固定利率**付固定**进入互换的权利（看涨利率）；
 - **receiver swaption**：**收固定**进入互换的权利（看跌利率）。
 
-用途广泛：企业锁定未来融资的利率上限、对冲或表达对未来利率波动的看法；更重要的是——**第10章可赎回债的赎回权，本质就是一个内嵌的 receiver swaption**。Swaption 是连接含权债与显式利率期权的纽带。
+用途广泛：企业锁定未来融资的利率上限、对冲或表达对未来利率波动的看法；更重要的是——**第9章可赎回债的赎回权，本质就是一个内嵌的 receiver swaption**。Swaption 是连接含权债与显式利率期权的纽带。
 
 ---
 
@@ -179,16 +179,16 @@ cap.NPV()   # ≈145 万（与 fi 同量级，差异来自计息惯例与远期/
 
 配套 notebook 演示：
 
-1. **Cap/Floor vs 执行价**（图16-1）：画出 Cap 与 Floor 价值随执行价的曲线，定位 ATM 交点，验证 Cap−Floor 平价；
+1. **Cap/Floor vs 执行价**（图13-1）：画出 Cap 与 Floor 价值随执行价的曲线，定位 ATM 交点，验证 Cap−Floor 平价；
 2. **隐含波动率反求**：由一组（合成）市场价格反求隐含波动率，画出**波动率微笑**；
 3. **波动率曲面**：构建期限 × 执行价的隐含波动率网格，观察期限结构与偏斜；
 4. **Collar 构造**：用买 Cap + 卖 Floor 构造零成本 Collar，求使成本为零的 Floor 执行价。
 
-**结论要点**：利率期权提供非线性、不对称的利率保护；定价靠 Black 模型，交易靠波动率曲面。中国利率期权市场（利率互换期权、国债期货期权等）仍在发展，但 Cap/Floor/Swaption 的定价框架是全球通用的。第10–11章的嵌入期权（可赎回债 = 内嵌 swaption、可转债 = 内嵌股票期权）至此与显式利率期权完全打通。
+**结论要点**：利率期权提供非线性、不对称的利率保护；定价靠 Black 模型，交易靠波动率曲面。中国利率期权市场（利率互换期权、国债期货期权等）仍在发展，但 Cap/Floor/Swaption 的定价框架是全球通用的。第9–10章的嵌入期权（可赎回债 = 内嵌 swaption、可转债 = 内嵌股票期权）至此与显式利率期权完全打通。
 
 <figure markdown>
-  ![图16-1　Cap 与 Floor 价值随执行价](../assets/figures/ch16_capfloor.png){ width="640" }
-  <figcaption>图16-1　Cap 价值随执行价下降、Floor 随执行价上升，在 ATM（3%）处相交（此处 Cap=Floor）；二者之差 = payer 互换</figcaption>
+  ![图13-1　Cap 与 Floor 价值随执行价](../assets/figures/ch13_capfloor.png){ width="640" }
+  <figcaption>图13-1　Cap 价值随执行价下降、Floor 随执行价上升，在 ATM（3%）处相交（此处 Cap=Floor）；二者之差 = payer 互换</figcaption>
 </figure>
 
 ---
@@ -209,7 +209,7 @@ cap.NPV()   # ≈145 万（与 fi 同量级，差异来自计息惯例与远期/
 
 **编程实验**
 
-7. 用 `fi.rateopt` 复现例16.1–16.4，并复现图16-1（Cap/Floor vs 执行价），验证 Cap−Floor 平价。
+7. 用 `fi.rateopt` 复现例16.1–16.4，并复现图13-1（Cap/Floor vs 执行价），验证 Cap−Floor 平价。
 8. 构造一组不同执行价的（合成）caplet 价格，用 `implied_vol` 反求隐含波动率并画**波动率微笑**。
 9. 用 `fi.rateopt.black_swaption` 计算不同期权期限 × 执行价的 swaption 价格，反求隐含波动率，构建一张小型**波动率曲面**。
 
@@ -218,7 +218,7 @@ cap.NPV()   # ≈145 万（与 fi 同量级，差异来自计息惯例与远期/
 ## 16.10 习题参考答案与详解
 
 !!! tip "完整可运行解答 notebook"
-    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch16_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch16_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch13_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch13_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
 
 !!! success "概念题 1"
     **Cap（上限）**保护浮动利率**借款人**（利率超上限获赔，对冲加息）；**Floor（下限）**保护浮动利率**投资者/放款人**（利率低于下限获赔，对冲降息）；**Collar（双限）= 买 Cap + 卖 Floor**，把利率锁在区间内。**零成本 Collar**：选择 Floor 的执行价，使卖 Floor 的权利金恰好抵消买 Cap 的成本（净权利金为零）。
@@ -239,7 +239,7 @@ cap.NPV()   # ≈145 万（与 fi 同量级，差异来自计息惯例与远期/
     ATM caplet（F=K=3%、重置 1y、支付 2y、名义 1 亿）市价 30 万元，反求 Black 隐含波动率：用 `fi.rateopt.implied_vol(300000, 0.03, 0.03, t=1, tau=1, df=1.03**-2, notional=1e8)` 得 **≈ 26.67%**。隐含波动率是把市场价格"翻译"成波动率的通用语言。
 
 !!! success "编程实验 7–9（要点）"
-    - **实验 7**：`fi.rateopt` 复现例16.1–16.4；图16-1 中 Cap 随执行价下降、Floor 上升，在 ATM 相交，且 Cap−Floor 在每个执行价都等于 payer 互换（平价验证）。
+    - **实验 7**：`fi.rateopt` 复现例16.1–16.4；图13-1 中 Cap 随执行价下降、Floor 上升，在 ATM 相交，且 Cap−Floor 在每个执行价都等于 payer 互换（平价验证）。
     - **实验 8**：给一组执行价造（带偏斜的）caplet 价格，`implied_vol` 反求得**波动率微笑**（隐含波动率随执行价变化，而非常数）。
     - **实验 9**：`black_swaption` 算期权期限 × 执行价网格的价格，反求隐含波动率，拼成小型**波动率曲面**——利率期权交易的核心工具。
 
@@ -248,7 +248,7 @@ cap.NPV()   # ≈145 万（与 fi 同量级，差异来自计息惯例与远期/
 ## 16.11 本章小结
 
 - **利率期权**提供非线性、不对称的利率保护：**Cap**（caplet=看涨）保护借款人、**Floor**（floorlet=看跌）保护投资者、**Collar**=买 Cap+卖 Floor。
-- **Cap−Floor 平价**：同执行价下 = payer 互换；ATM 时 Cap = Floor——连接第15章互换与本章期权。
+- **Cap−Floor 平价**：同执行价下 = payer 互换；ATM 时 Cap = Floor——连接第12章互换与本章期权。
 - **Swaption** 是进入互换的权利；可赎回债内嵌一个 **receiver swaption**——打通含权债与显式期权。
 - **Black 模型**给 caplet/floorlet/swaption 定价；**caplet 到期 = 重置日、折现用支付日**是关键细节。
 - **隐含波动率**是市场对波动的定价；**波动率曲面/微笑**是交易核心；低/负利率时改用**正态（Bachelier）波动率**。

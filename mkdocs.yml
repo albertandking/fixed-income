@@ -75,22 +75,20 @@ nav:
   - 第三部分·风险度量与组合:
       - 第6章 久期与凸性: part3/06-duration-convexity.md
       - 第7章 债券组合管理: part3/07-portfolio-management.md
-  - 第四部分·市场机制:
-      - 第8章 货币市场工具与回购市场: part4/08-money-market-repo.md
-  - 第五部分·含权与高级品种:
-      - 第9章 浮动利率债券: part5/09-floating-rate-bonds.md
-      - 第10章 可赎回债券与可回售债券: part5/10-callable-putable.md
-      - 第11章 可转换债券: part5/11-convertible-bonds.md
-  - 第六部分·信用与结构化:
-      - 第12章 信用风险与定价模型: part6/12-credit-risk.md
-      - 第13章 结构化产品与 ABS: part6/13-structured-products.md
-  - 第七部分·利率衍生品:
-      - 第14章 利率期货与远期: part7/14-futures-forwards.md
-      - 第15章 利率互换: part7/15-interest-rate-swaps.md
-      - 第16章 利率期权（Cap/Floor/Swaption）: part7/16-interest-rate-options.md
-  - 第八部分·综合应用:
-      - 第17章 债券投资策略与回测: part8/17-investment-strategies.md
-      - 第18章 风险管理系统: part8/18-risk-management.md
+  - 第四部分·利率衍生品和高级品种:
+      - 第8章 浮动利率债券: part4/08-floating-rate-bonds.md
+      - 第9章 可赎回债券与可回售债券: part4/09-callable-putable.md
+      - 第10章 可转换债券: part4/10-convertible-bonds.md
+      - 第11章 利率期货与远期: part4/11-futures-forwards.md
+      - 第12章 利率互换: part4/12-interest-rate-swaps.md
+      - 第13章 利率期权（Cap/Floor/Swaption）: part4/13-interest-rate-options.md
+  - 第五部分·信用与结构化产品:
+      - 第14章 信用风险与定价模型: part5/14-credit-risk.md
+      - 第15章 结构化产品与 ABS: part5/15-structured-products.md
+  - 第六部分·市场机制和综合应用:
+      - 第16章 货币市场工具与回购市场: part6/16-money-market-repo.md
+      - 第17章 债券投资策略与回测: part6/17-investment-strategies.md
+      - 第18章 风险管理系统: part6/18-risk-management.md
   - 附录:
       - 附录A 本地环境配置: appendix/a-setup.md
       - 附录B QuantLib 速查: appendix/b-quantlib.md
