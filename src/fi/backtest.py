@@ -1,8 +1,8 @@
-"""债券策略回测框架、绩效评估与收益归因。
+"""债券策略回测框架、绩效评估与单期收益分解。
 
 - :func:`nav` / :func:`performance` 由收益序列计算净值与绩效指标；
-- :func:`bond_period_return` 把单期债券收益分解为 carry + roll-down + 久期 + 凸性；
-- :func:`riding_attribution` 给"骑乘曲线"策略做收益归因。
+- :func:`bond_period_return` 把单期债券收益近似分解为 carry + 收益率变动的久期项 + 凸性项；
+- :func:`riding_attribution` 近似分解骑乘策略的 carry 与 roll-down 收益。
 """
 
 from __future__ import annotations
@@ -23,7 +23,8 @@ def performance(returns, periods_per_year: int = 252) -> dict:
     ann_return = float(nav_[-1] ** (periods_per_year / n) - 1.0)
     ann_vol = float(r.std(ddof=1) * np.sqrt(periods_per_year)) if n > 1 else 0.0
     sharpe = float(ann_return / ann_vol) if ann_vol > 0 else float("nan")
-    max_dd = float((nav_ / np.maximum.accumulate(nav_) - 1.0).min())
+    nav_with_start = np.r_[1.0, nav_]
+    max_dd = float((nav_with_start / np.maximum.accumulate(nav_with_start) - 1.0).min())
     return {"ann_return": ann_return, "ann_vol": ann_vol, "sharpe": sharpe, "max_drawdown": max_dd}
 
 
@@ -41,10 +42,10 @@ def bond_period_return(yield_start, yield_end, duration, convexity, coupon_rate,
 
 
 def riding_attribution(y_buy, y_sell, duration, coupon_rate, horizon: float = 1.0) -> dict:
-    """骑乘曲线（riding the yield curve）策略的收益归因。
+    """骑乘曲线（riding the yield curve）策略的近似收益分解。
 
     买入较长期限债持有 ``horizon`` 后卖出：曲线不变时债券沿曲线"下滚"到更低收益率，
-    带来 roll-down 资本利得。总收益 = carry（票息）+ roll-down（−久期×(y_sell−y_buy)）。
+    带来 roll-down 资本利得。近似总收益 = carry（票息）+ roll-down（−久期×(y_sell−y_buy)）。
     """
     carry = coupon_rate * horizon
     rolldown = -duration * (y_sell - y_buy)

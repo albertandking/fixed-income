@@ -1,7 +1,8 @@
-"""风险价值（VaR）与条件风险价值（CVaR/ES）：历史、参数、蒙特卡洛三法，及压力/情景。
+"""风险价值（VaR）与条件风险价值（CVaR/ES）：经验分位数、参数与蒙特卡洛方法，及情景损益。
 
-VaR 回答"在置信水平 α 下，给定持有期内最大可能损失是多少"；CVaR（期望损失/ES）回答
-"一旦突破 VaR，平均损失多大"。债券组合的损益由久期 × 收益率变动驱动。
+VaR 是给定持有期与损益模型下的损失分位数；ES 描述最差一部分结果的平均损失。
+本模块的债券损益函数（:func:`bond_pnl_sigma`、:func:`scenario_pnl`）采用单一收益率因子的
+久期（—凸性）近似。
 """
 
 from __future__ import annotations
@@ -11,12 +12,12 @@ from scipy.stats import norm
 
 
 def historical_var(pnl, alpha: float = 0.99) -> float:
-    """历史模拟法 VaR：损益经验分布的 (1−α) 分位数（取正损失）。"""
+    """输入损益的经验分位数；仅当输入为历史损益时才是历史模拟法。"""
     return float(-np.percentile(np.asarray(pnl, dtype=float), (1 - alpha) * 100))
 
 
 def historical_cvar(pnl, alpha: float = 0.99) -> float:
-    """历史模拟法 CVaR（ES）：超过 VaR 的尾部损失均值。"""
+    """输入损益中达到或超过经验 VaR 门槛的平均损失。"""
     pnl = np.asarray(pnl, dtype=float)
     var = historical_var(pnl, alpha)
     tail = pnl[pnl <= -var]
@@ -44,7 +45,7 @@ def monte_carlo_var(sigma, alpha: float = 0.99, mean: float = 0.0, n: int = 2000
 
 
 def bond_pnl_sigma(value, duration, yield_vol) -> float:
-    """债券组合损益的标准差 ≈ 久期 × 市值 × 收益率波动率。"""
+    """单一利率因子下的损益标准差近似：久期 × 市值 × 收益率变动标准差。"""
     return float(duration * value * yield_vol)
 
 

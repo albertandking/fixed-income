@@ -16,6 +16,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
+from matplotlib.patches import FancyBboxPatch  # noqa: E402
 
 from fi import backtest as bt  # noqa: E402
 from fi import convertible as cb  # noqa: E402
@@ -118,10 +119,10 @@ def ch04_spot_forward() -> None:
         fwd_x.append(b)
         fwd_y.append(forward_rate(lambda t: zt[t], a, b, freq=1) * 100)
     fig, ax = plt.subplots(figsize=(8, 4.5))
-    ax.plot(curve["tenor"], curve["yield_pct"], marker="o", label="即期利率 z(t)（样本近似）")
-    ax.plot(fwd_x, fwd_y, marker="s", ls="--", label="隐含远期利率 f")
+    ax.plot(curve["tenor"], curve["yield_pct"], marker="o", label="即期利率 z(t)（教学样本）")
+    ax.plot(fwd_x, fwd_y, marker="s", ls="--", label="相邻区间远期利率 f（画在区间右端）")
     ax.set_xlabel("期限（年）"); ax.set_ylabel("利率 (%)")
-    ax.set_title("图4-1　即期曲线与隐含远期曲线"); ax.legend()
+    ax.set_title("图4-1　教学样本即期曲线与相邻区间远期利率"); ax.legend()
     _save(fig, "ch04_spot_forward.png")
 
 
@@ -360,8 +361,41 @@ def ch17_riding() -> None:
     ax.bar(x, carries, label="carry（票息）")
     ax.bar(x, rolls, bottom=carries, label="roll-down（骑乘）")
     ax.set_xlabel("买入期限（持有 1 年）"); ax.set_ylabel("收益贡献 (%)")
-    ax.set_title("图17-1　骑乘曲线策略收益归因：carry + roll-down"); ax.legend()
+    ax.set_title("图17-1　骑乘策略的近似收益分解：carry + roll-down"); ax.legend()
     _save(fig, "ch17_riding.png")
+
+
+def ch17_riding_stress() -> None:
+    """例17.1/例17.3：在曲线不变情景上叠加卖出收益率偏移与合计交易成本。"""
+    cv = data.load_sample("cgb_yield_curve")
+    tenor, yld = cv["tenor"].to_numpy(), (cv["yield_pct"] / 100).to_numpy()
+    buy_tenor, horizon, cost = 5, 1, 0.0010          # 例17.1：买 5 年期持有 1 年；例17.3：成本 0.10%
+    yb = float(np.interp(buy_tenor, tenor, yld))               # 2.25%
+    ys = float(np.interp(buy_tenor - horizon, tenor, yld))     # 2.165%
+    y_short = float(np.interp(horizon, tenor, yld))            # 示意 1 年期点 1.75%
+    cf, t = make_cashflows(yb, buy_tenor, 1, 100)
+    dur = risk.modified_duration(cf, t, yb, 1)                 # ≈ 4.68
+    base = bt.riding_attribution(yb, ys, dur, yb, horizon)["total"]   # ≈ 2.648%
+
+    shift_bp = np.arange(-40, 41)
+    gross = (base - dur * shift_bp / 1e4) * 100      # 线性久期近似，未计凸性
+    net = gross - cost * 100
+    mark_bp = 20
+    mark_net = (base - dur * mark_bp / 1e4 - cost) * 100      # ≈ 1.61%
+
+    fig, ax = plt.subplots(figsize=(8, 4.7))
+    ax.plot(shift_bp, gross, label="骑乘：未扣成本")
+    ax.plot(shift_bp, net, label=f"骑乘：扣除 {cost * 100:.2f}% 成本")
+    ax.axhline(y_short * 100, color="C2", ls="--", label=f"示意 1 年期债券：{y_short * 100:.2f}%")
+    ax.axvline(0, color="gray", ls=":", lw=1)
+    ax.scatter([mark_bp], [mark_net], color="C1", zorder=3)
+    ax.annotate(f"+{mark_bp}bp，扣费后约 {mark_net:.2f}%", xy=(mark_bp, mark_net),
+                xytext=(-35, mark_net - 0.4),
+                arrowprops=dict(arrowstyle="->", color="#555555"))
+    ax.set_xlabel(f"卖出时剩余 {buy_tenor - horizon} 年期收益率相对曲线不变情景的偏移（bp）")
+    ax.set_ylabel("一年近似收益 (%)")
+    ax.set_title("图17-2　利率冲击与骑乘策略近似收益"); ax.legend(loc="upper right")
+    _save(fig, "ch17_riding_stress.png")
 
 
 # --- 第18章 --------------------------------------------------------------
@@ -374,14 +408,42 @@ def ch18_var() -> None:
     var99 = fivar.parametric_var(sigma, 0.99)
     cvar99 = fivar.parametric_cvar(sigma, 0.99)
     fig, ax = plt.subplots(figsize=(8, 4.5))
-    ax.hist(normal / 1e4, bins=120, density=True, alpha=0.5, label="正态损益")
-    ax.hist(fat / 1e4, bins=200, density=True, alpha=0.4, label="厚尾损益")
-    ax.axvline(-var99 / 1e4, color="C3", ls="--", label=f"99% VaR ≈ {var99/1e4:.0f} 万")
-    ax.axvline(-cvar99 / 1e4, color="C1", ls=":", label=f"99% CVaR ≈ {cvar99/1e4:.0f} 万")
+    ax.hist(normal / 1e4, bins=120, density=True, alpha=0.5, label="正态模拟损益")
+    ax.hist(fat / 1e4, bins=200, density=True, alpha=0.4, label="厚尾模拟损益（t 分布，自由度 4）")
+    ax.axvline(-var99 / 1e4, color="C3", ls="--", label=f"正态参数法 99% VaR ≈ {var99/1e4:.0f} 万")
+    ax.axvline(-cvar99 / 1e4, color="C1", ls=":", label=f"正态参数法 99% ES ≈ {cvar99/1e4:.0f} 万")
     ax.set_xlim(-150, 150)
     ax.set_xlabel("日损益（万元）"); ax.set_ylabel("密度")
-    ax.set_title("图18-1　组合损益分布与 VaR/CVaR（厚尾尾部更肥）"); ax.legend()
+    ax.set_title("图18-1　正态与厚尾模拟损益分布及 VaR/ES"); ax.legend()
     _save(fig, "ch18_var.png")
+
+
+def ch18_factor_scenario() -> None:
+    """例18.4：两类债券的基准利率与信用利差分项冲击（线性久期近似，不计凸性）。"""
+    gov_value, gov_dur = 60_000_000, 4                # 国债：市值 6000 万元、修正久期 4
+    cr_value, cr_dur = 40_000_000, 3                  # 信用债：市值 4000 万元、修正久期 3
+    d_rate, d_spread = 0.0050, 0.0080                 # 基准利率 +50bp；信用利差 +80bp
+    rate_loss = -(fivar.scenario_pnl(gov_value, gov_dur, 0, d_rate)
+                  + fivar.scenario_pnl(cr_value, cr_dur, 0, d_rate)) / 1e4   # 万元，180
+    spread_loss = -fivar.scenario_pnl(cr_value, cr_dur, 0, d_spread) / 1e4    # 万元，96
+    total = rate_loss + spread_loss                                           # 万元，276
+
+    names = [f"仅基准利率 +{d_rate * 1e4:.0f}bp",
+             f"基准利率 +{d_rate * 1e4:.0f}bp\n信用利差 +{d_spread * 1e4:.0f}bp"]
+    fig, ax = plt.subplots(figsize=(8, 4.2))
+    ax.barh(names, [rate_loss, rate_loss], color="C0", label="基准利率冲击损失")
+    ax.barh(names, [0, spread_loss], left=[rate_loss, rate_loss], color="C1",
+            label="信用利差冲击损失")
+    for i in (0, 1):
+        ax.text(rate_loss / 2, i, f"{rate_loss:.0f}", ha="center", va="center", color="white")
+    ax.text(rate_loss + spread_loss / 2, 1, f"{spread_loss:.0f}", ha="center", va="center",
+            color="white")
+    ax.text(total + 4, 1, f"合计 {total:.0f}", va="center")
+    ax.set_xlim(0, total * 1.2)
+    ax.invert_yaxis()
+    ax.set_xlabel("近似损失（万元）")
+    ax.set_title("图18-2　两类债券的分项情景损益"); ax.legend(loc="upper right")
+    _save(fig, "ch18_factor_scenario.png")
 
 
 # --- 第16章 ---------------------------------------------------------------
@@ -392,15 +454,91 @@ def _money_market():
     return mm.set_index("date")
 
 
+def ch16_money_market_map() -> None:
+    """货币市场工具分类图：按融资方式而非按机构名称分类。"""
+    fig, ax = plt.subplots(figsize=(11, 6.2))
+    ax.set_xlim(0, 12); ax.set_ylim(0.75, 7.6); ax.axis("off")
+
+    def box(x, y, w, h, text, color, fontsize=11, linestyle="-"):
+        patch = FancyBboxPatch(
+            (x, y), w, h, boxstyle="round,pad=0.03,rounding_size=0.12",
+            linewidth=1.4, edgecolor=color, facecolor=color, alpha=0.13,
+            linestyle=linestyle,
+        )
+        ax.add_patch(patch)
+        ax.text(x + w / 2, y + h / 2, text, ha="center", va="center",
+                fontsize=fontsize, linespacing=1.45)
+
+    box(4.45, 6.55, 3.1, 0.8, "货币市场\n（通常期限不超过 1 年）", "#1f4e79", 13)
+    groups = [
+        (0.35, 4.75, "短期债务证券", "#2f75b5"),
+        (4.45, 4.75, "存款与银行负债", "#548235"),
+        (8.55, 4.75, "机构间资金融通", "#c55a11"),
+    ]
+    for x, y, title, color in groups:
+        box(x, y, 3.1, 0.75, title, color, 12)
+        ax.annotate("", xy=(x + 1.55, y + 0.75), xytext=(6, 6.55),
+                    arrowprops=dict(arrowstyle="->", color="#777777", lw=1.2))
+
+    box(0.35, 2.55, 3.1, 1.65,
+        "政府：短期国库券\n央行：央行票据\n企业：CP / SCP", "#2f75b5")
+    box(4.45, 2.55, 3.1, 1.65,
+        "同业存单（NCD）\n大额存单（CD）\n短期银行存款", "#548235")
+    box(8.55, 2.55, 3.1, 1.65,
+        "同业拆借：无担保\n回购：质押式 / 买断式", "#c55a11")
+    for x in (1.9, 6.0, 10.1):
+        ax.annotate("", xy=(x, 4.2), xytext=(x, 4.75),
+                    arrowprops=dict(arrowstyle="->", color="#777777", lw=1.2))
+
+    # 央行公开市场操作属于政策操作，不是机构间融资工具：单列，并用虚线表示它借助回购等交易实施
+    box(4.45, 1.0, 3.1, 1.05,
+        "央行公开市场操作（政策操作）\n借助逆回购、正回购等交易\n调节银行体系流动性",
+        "#7f6000", 10.5, linestyle="--")
+    ax.annotate("", xy=(9.2, 2.5), xytext=(7.65, 1.5),
+                arrowprops=dict(arrowstyle="->", color="#7f6000", lw=1.2, ls="--"))
+    ax.text(9.6, 1.65, "以回购等交易实施", fontsize=9.5, color="#7f6000",
+            ha="center", va="center")
+
+    ax.set_title("图16-1　中国货币市场工具分类")
+    _save(fig, "ch16_money_market_map.png")
+
+
+def ch16_repo_rates() -> None:
+    """DR007/R007/GC007 的教学情景图，不冒充真实行情。"""
+    days = np.arange(1, 31)
+    dr = 1.80 + 0.035 * np.sin(days / 3.4)
+    nonbank_stress = 0.10 + 0.04 * np.sin(days / 2.8) + 0.55 * np.exp(-((days - 20) / 2.2) ** 2)
+    exchange_stress = 0.14 + 0.07 * np.sin(days / 2.1) + 1.05 * np.exp(-((days - 10) / 1.55) ** 2)
+    r = dr + nonbank_stress
+    gc = dr + exchange_stress
+
+    fig, ax = plt.subplots(figsize=(9, 4.8))
+    ax.plot(days, dr, lw=2.3, label="DR007：银行体系资金中枢")
+    ax.plot(days, r, lw=2.0, label="R007：含非银融资溢价")
+    ax.plot(days, gc, lw=2.0, label="GC007：交易所资金价格")
+    ax.axvspan(8.5, 11.5, color="C2", alpha=0.09)
+    ax.axvspan(17.5, 22.5, color="C1", alpha=0.09)
+    ax.annotate("交易所资金需求冲击", xy=(10, gc[9]), xytext=(12, 2.82),
+                arrowprops=dict(arrowstyle="->", color="C2"), color="C2")
+    ax.annotate("非银融资压力上升\nR007 − DR007 走阔", xy=(20, r[19]), xytext=(22.5, 2.65),
+                arrowprops=dict(arrowstyle="->", color="C1"), color="C1")
+    ax.set_xlabel("交易日（情景序号）"); ax.set_ylabel("7 天期回购利率 (%)")
+    ax.set_title("图16-2　DR007、R007 与 GC007 的变化及利差（情景示意，非真实行情）")
+    ax.legend(loc="upper left", ncol=1)
+    _save(fig, "ch16_repo_rates.png")
+
+
 def ch16_carry() -> None:
     mm = _money_market()
     carry = mm["cgb_10y"] - mm["dr007"]
     r_dr = mm["r007"] - mm["dr007"]
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(9, 6))
     ax1.plot(carry.index, carry.values)
-    ax1.set_ylabel("carry (%)"); ax1.set_title("图16-1　carry = 10Y 国债收益率 − DR007")
+    ax1.set_ylabel("carry (%)"); ax1.set_title("carry = 10Y 国债收益率 − DR007")
     ax2.plot(r_dr.index, r_dr.values, color="C3")
-    ax2.set_ylabel("R007 − DR007 (%)"); ax2.set_title("图16-3　非银流动性分层利差")
+    ax2.set_ylabel("R007 − DR007 (%)"); ax2.set_title("非银流动性分层利差")
+    fig.suptitle("图16-3　套息空间与流动性分层（内置样本数据）")
+    fig.tight_layout()
     _save(fig, "ch16_carry.png")
 
 
@@ -416,7 +554,7 @@ def ch16_leverage_nav() -> None:
     fig, ax = plt.subplots(figsize=(8, 4.5))
     ax.plot(cum1.index, cum1.values, label="L=1（不加杠杆）")
     ax.plot(cum3.index, cum3.values, label="L=3")
-    ax.set_ylabel("累计净值"); ax.set_title("图16-2　杠杆前后累计回报对比"); ax.legend()
+    ax.set_ylabel("累计净值"); ax.set_title("图16-4　杠杆前后累计回报对比"); ax.legend()
     _save(fig, "ch16_leverage_nav.png")
 
 
@@ -440,7 +578,11 @@ def main() -> None:
     ch12_swap_value()
     ch13_capfloor()
     ch17_riding()
+    ch17_riding_stress()
     ch18_var()
+    ch18_factor_scenario()
+    ch16_money_market_map()
+    ch16_repo_rates()
     ch16_carry()
     ch16_leverage_nav()
     print("所有图已生成至", FIG)
