@@ -242,13 +242,13 @@ uv run mkdocs build --strict
 
 仓库的 `.github/workflows/deploy.yml` 在每次推送到 `main` 分支后，依次执行 `uv sync --extra book`、`uv run python scripts/make_sample_data.py`、`uv run mkdocs build --strict`，再把生成的网站发布到 GitHub Pages。
 
-### A.6.2 导出 Word 版
+### A.6.2 导出 Word 版与 PDF 版
 
 ```bash
 uv run python scripts/make_docx.py
 ```
 
-脚本按 `mkdocs.yml` 的 `nav` 顺序，把正文导出为 `dist/固定收益证券-全书.docx` 和 `dist/chapters/` 下的分章文件；`dist/` 不入库。加 `--book-only` 只生成全书文件，加 `--chapters-only` 只生成分章文件。
+脚本按 `mkdocs.yml` 的 `nav` 顺序，把正文导出为 `dist/固定收益证券-全书.docx` 和 `dist/chapters/` 下的分章文件；`dist/` 不入库。加 `--book-only` 只生成全书文件，加 `--chapters-only` 只生成分章文件。加 `--pdf` 时，再调用 Microsoft Word 把全书文件导出为 `dist/固定收益证券-全书.pdf`：导出前更新目录与页码，按标题生成书签并嵌入字体，版式与 Word 版完全一致。该选项需要在装有 Microsoft Word 的 Windows 上运行；其他系统可用 Word 或 LibreOffice 打开全书 docx 后另存为 PDF。
 
 该脚本需要 `docx` 依赖组（`uv sync --extra all` 已包含），并调用系统中的 **pandoc**（要求版本不低于 3.8，作者本机为 3.12.1）。pandoc 不是 Python 包，需单独安装，安装方法见 <https://pandoc.org/installing.html>：Windows 可执行 `winget install --source winget --exact --id JohnMacFarlane.Pandoc`，macOS 可执行 `brew install pandoc`。安装后用 `pandoc --version` 确认。
 

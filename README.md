@@ -52,8 +52,8 @@ uv run jupyter lab
 uv run python scripts/export_notebooks.py
 uv run mkdocs serve          # 浏览器打开 http://127.0.0.1:8000
 
-# 5. 导出 Word 版（全书 + 各章，输出到 dist/，不入库）
-uv run python scripts/make_docx.py
+# 5. 导出 Word 版（全书 + 各章，输出到 dist/，不入库）；加 --pdf 另导出全书 PDF（需 Windows + Word）
+uv run python scripts/make_docx.py --pdf
 ```
 
 ## 写作约定
