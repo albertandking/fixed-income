@@ -38,9 +38,9 @@
 
 **利率上限（Cap）**：买方在每个重置期，若浮动利率高于约定**执行利率（strike）$K$**，就收到 $(\text{利率}-K)$ 的赔付。它由一串**caplet**组成——每个 caplet 是对该期浮动利率的**看涨期权**：
 
-$$\text{caplet 赔付}=N\times\tau\times\max(L-K,\ 0)$$
+$$\text{caplet 赔付}=M\times\tau\times\max(L-K,\ 0)$$
 
-其中 $N$ 为名义本金，$\tau$ 为该计息期间按合约日计数惯例计算的年化因子，$L$ 为重置日确定的参考利率。Cap 是浮动利率借款人的"利率保险"：限制参考利率部分的融资成本上行，又保留利率下行时少付利息的好处。
+其中 $M$ 为名义本金，$\tau$ 为该计息期间按合约日计数惯例计算的年化因子，$L$ 为重置日确定的参考利率。Cap 是浮动利率借款人的"利率保险"：限制参考利率部分的融资成本上行，又保留利率下行时少付利息的好处。
 
 可以把 Cap 理解为一张**保险单**，其各要素与保险概念一一对应。执行利率 $K$ 相当于保险的**免赔额（起赔点）**：利率涨过 $K$ 才开始赔付，未涨过则不赔。买 Cap 支付的**权利金**相当于**保费**，是一笔确定的、不论将来是否出险都不退还的支出。而构成 Cap 的一串 caplet，相当于把一份"三年期利率保险"按每个重置期**拆分为若干张独立的保单**，每张分别判断该期利率是否超过 $K$、是否赔付。这一结构的关键特征在于其**不对称性**：企业买入 Cap 之后，若利率大幅上行，超出部分由 Cap 赔付，参考利率部分的融资成本被限制在 $K$ 附近；若利率不升反降，企业仍可享受较低利率，所付出的仅为权利金。**不利方向获得补偿、有利方向收益保留**，正是期权区别于期货、互换等线性工具之处。实际融资成本还可能包含信贷利差、基准失配或权利金摊销，因而不应把 Cap 理解为对全部融资成本的无条件封顶。
 
@@ -56,7 +56,7 @@ $$\text{caplet 赔付}=N\times\tau\times\max(L-K,\ 0)$$
 
 $$\boxed{\;\text{Cap}(K)-\text{Floor}(K)=\text{payer 互换}(K)\;}$$
 
-直觉：caplet−floorlet 的赔付 $=N\tau[\max(L-K,0)-\max(K-L,0)]=N\tau(L-K)$，正是互换每期的净现金流。当 $K$ 等于**同一支付安排下标的互换的平价固定利率**（ATM）时，payer 互换价值为零，故 **ATM 时 Cap = Floor**。这是第12章互换与本章期权之间的桥梁。
+直觉：caplet−floorlet 的赔付 $=M\tau[\max(L-K,0)-\max(K-L,0)]=M\tau(L-K)$，正是互换每期的净现金流。当 $K$ 等于**同一支付安排下标的互换的平价固定利率**（ATM）时，payer 互换价值为零，故 **ATM 时 Cap = Floor**。这是第12章互换与本章期权之间的桥梁。
 
 ---
 
@@ -79,14 +79,14 @@ $$\boxed{\;\text{Cap}(K)-\text{Floor}(K)=\text{payer 互换}(K)\;}$$
 
 利率期权的标准定价常用 **Black 模型**——把"远期利率/远期互换利率"当作对数正态分布的标的。对正的 $F$ 和 $K$，caplet（对期间 $[T_{i-1},T_i]$ 的远期利率 $F$ 的看涨）为：
 
-$$\text{caplet}=N\times\tau\times DF(T_i)\times\big[F\,\Phi(d_1)-K\,\Phi(d_2)\big]$$
+$$\text{caplet}=M\times\tau\times DF(T_i)\times\big[F\,\Phi(d_1)-K\,\Phi(d_2)\big]$$
 $$d_1=\frac{\ln(F/K)+\tfrac12\sigma^2 T}{\sigma\sqrt T},\quad d_2=d_1-\sigma\sqrt T$$
 
 对应 floorlet 为：
 
-$$\text{floorlet}=N\times\tau\times DF(T_i)\times\big[K\,\Phi(-d_2)-F\,\Phi(-d_1)\big]$$
+$$\text{floorlet}=M\times\tau\times DF(T_i)\times\big[K\,\Phi(-d_2)-F\,\Phi(-d_1)\big]$$
 
-其中 $\Phi(\cdot)$ 表示标准正态分布函数，$\tau$ 仍为该计息期间的年化因子（同 13.2.1）。Swaption 类似，把 $F$ 换成**远期互换利率**、把 $\tau\,DF(T_i)$ 换成标的互换的**年金因子** $A=\sum_{j}\tau_j\,DF(T_j)$（对标的互换固定腿各支付日求和）。实物交割 payer swaption 的价值为 $N\times A\times[F\,\Phi(d_1)-K\,\Phi(d_2)]$，此时 $T$ 取期权到期日；receiver swaption 将括号换为 $K\,\Phi(-d_2)-F\,\Phi(-d_1)$。
+其中 $\Phi(\cdot)$ 表示标准正态分布函数，$\tau$ 仍为该计息期间的年化因子（同 13.2.1）。Swaption 类似，把 $F$ 换成**远期互换利率**、把 $\tau\,DF(T_i)$ 换成标的互换的**年金因子** $A=\sum_{j}\tau_j\,DF(T_j)$（对标的互换固定腿各支付日求和）。实物交割 payer swaption 的价值为 $M\times A\times[F\,\Phi(d_1)-K\,\Phi(d_2)]$，此时 $T$ 取期权到期日；receiver swaption 将括号换为 $K\,\Phi(-d_2)-F\,\Phi(-d_1)$。
 
 !!! warning "关键细节：caplet 到期日 = 利率重置日，不是支付日"
     对期间 $[T_{i-1},T_i]$ 的 caplet，其浮动利率在**期初 $T_{i-1}$ 重置（观测）**、在**期末 $T_i$ 支付**。所以 Black 公式里的**到期时间 $T$ 用重置日 $T_{i-1}$**（波动累积到利率被观测为止），而**折现因子用支付日 $DF(T_i)$**。初学者常误用支付日作为到期日，会高估期权时间价值。
@@ -239,7 +239,7 @@ cap.NPV()   # ≈1,311,843（例13.2 为 1,310,756，差异来自闰年计息天
     **Cap（上限）**保护浮动利率**借款人**（利率超上限获赔，对冲加息）；**Floor（下限）**保护浮动利率**投资者/放款人**（利率低于下限获赔，对冲降息）；**Collar（双限）= 买 Cap + 卖 Floor**，把利率锁在区间内。**零成本 Collar**：选择 Floor 的执行价，使卖 Floor 的权利金恰好抵消买 Cap 的成本（净权利金为零）；它不表示未来没有现金流或风险。
 
 !!! success "概念题 2"
-    caplet−floorlet 的赔付 $=N\tau[\max(L-K,0)-\max(K-L,0)]=N\tau(L-K)$，正是 payer 互换每期的净现金流（收浮动 $L$、付固定 $K$）。把各期加总，**Cap(K)−Floor(K) = 付固定 K 的 payer 互换**。只有现金流约定匹配，且 $K=$ 匹配标的互换的平价固定利率时，payer 互换价值为零，故 **Cap = Floor**。
+    caplet−floorlet 的赔付 $=M\tau[\max(L-K,0)-\max(K-L,0)]=M\tau(L-K)$，正是 payer 互换每期的净现金流（收浮动 $L$、付固定 $K$）。把各期加总，**Cap(K)−Floor(K) = 付固定 K 的 payer 互换**。只有现金流约定匹配，且 $K=$ 匹配标的互换的平价固定利率时，payer 互换价值为零，故 **Cap = Floor**。
 
 !!! success "概念题 3"
     **payer swaption** = 未来按约定固定利率**付固定**进入互换的权利（看涨利率）；**receiver swaption** = **收固定**进入互换的权利（看跌利率）。实物交割时行权生成互换，现金结算时按约定公式支付现金。**可赎回债与 receiver swaption** 的联系是简化复制框架下的近似：赎回价格、通知期、信用利差、税费和多次行权都会造成差异。
@@ -247,7 +247,7 @@ cap.NPV()   # ≈1,311,843（例13.2 为 1,310,756，差异来自闰年计息天
 !!! success "概念题 4"
     （1）caplet 的浮动利率在**期初（重置日 $T_{i-1}$）观测、期末支付**，波动只累积到利率被观测为止，故 Black 到期时间用**重置日**；折现因子用支付日 $DF(T_i)$。**误用支付日会高估**期权价值：到期时间被拉长，多算了波动累积时间，时间价值偏大。
 
-    （2）首期利率在期初已经定盘，不再有不确定性，也就没有时间价值；若该期现金流尚未支付，应按已知利率计算赔付 $N\tau\max(L-K,0)$，再以支付日折现因子折现，作为确定现金流计入 Cap 价值。
+    （2）首期利率在期初已经定盘，不再有不确定性，也就没有时间价值；若该期现金流尚未支付，应按已知利率计算赔付 $M\tau\max(L-K,0)$，再以支付日折现因子折现，作为确定现金流计入 Cap 价值。
 
 !!! success "计算题 5"
     caplet：远期 2.5%、执行 3%、重置 2 年、vol 25%、名义 1 亿、$DF=1.03^{-3}$。因 $F<K$（价外），主要是时间价值。用 `fi.rateopt.black_caplet(0.025, 0.03, 0.25, t=2, tau=1, df=1.03**-3, notional=1e8)` 得 **≈ 169{,}647 元**。
@@ -275,11 +275,11 @@ cap.NPV()   # ≈1,311,843（例13.2 为 1,310,756，差异来自闰年计息天
 !!! note "关键公式速查"
     | 概念 | 公式 |
     |---|---|
-    | caplet（Black） | $N\,\tau\,DF(T_i)\,[F\,\Phi(d_1)-K\,\Phi(d_2)]$ |
-    | floorlet（Black） | $N\,\tau\,DF(T_i)\,[K\,\Phi(-d_2)-F\,\Phi(-d_1)]$ |
+    | caplet（Black） | $M\,\tau\,DF(T_i)\,[F\,\Phi(d_1)-K\,\Phi(d_2)]$ |
+    | floorlet（Black） | $M\,\tau\,DF(T_i)\,[K\,\Phi(-d_2)-F\,\Phi(-d_1)]$ |
     | $d_1,d_2$ | $d_1=\dfrac{\ln(F/K)+\tfrac12\sigma^2T}{\sigma\sqrt T}$，$d_2=d_1-\sigma\sqrt T$ |
     | Cap−Floor 平价 | $\text{Cap}(K)-\text{Floor}(K)=\text{payer 互换}(K)$；匹配互换 ATM 时 Cap = Floor |
-    | Swaption（payer） | $N\,A\,[F\,\Phi(d_1)-K\,\Phi(d_2)]$，$A=\sum_j\tau_j\,DF(T_j)$ |
+    | Swaption（payer） | $M\,A\,[F\,\Phi(d_1)-K\,\Phi(d_2)]$，$A=\sum_j\tau_j\,DF(T_j)$ |
     | 关键细节 | 到期时间 = 重置日；折现 = 支付日 |
 
 !!! quote "延伸阅读"
