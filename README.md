@@ -34,13 +34,12 @@
 
 ```bash
 # 1. 安装环境（uv 会自动下载 Python 3.14，已验证兼容 QuantLib 1.42）
-uv sync --extra all          # 一键装齐全部（data + quantlib + book + docx + pytest）
+uv sync --extra all          # 一键装齐全部（data + quantlib + book + pytest）
 # 或按需分别安装：
 #   uv sync                  # 仅核心依赖
 #   uv sync --extra data     # 联网抓取中国市场数据（akshare/tushare）
 #   uv sync --extra quantlib # 衍生品/含权债定价（QuantLib）
 #   uv sync --extra book     # 成书工具链（MkDocs/Jupyter）
-#   uv sync --extra docx     # 导出 Word 版（python-docx；另需系统安装 pandoc ≥ 3.8）
 
 # 2. 生成内置示例数据（一次，离线）
 uv run python scripts/make_sample_data.py
@@ -52,8 +51,6 @@ uv run jupyter lab
 uv run python scripts/export_notebooks.py
 uv run mkdocs serve          # 浏览器打开 http://127.0.0.1:8000
 
-# 5. 导出 Word 版（全书 + 各章，输出到 dist/，不入库）；加 --pdf 另导出全书 PDF（需 Windows + Word）
-uv run python scripts/make_docx.py --pdf
 ```
 
 ## 写作约定

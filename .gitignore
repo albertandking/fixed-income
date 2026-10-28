@@ -22,5 +22,3 @@ data/raw/*
 # Claude Code local settings
 .claude/settings.local.json
 
-# Word 版导出（scripts/make_docx.py）
-dist/

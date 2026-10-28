@@ -1,7 +1,7 @@
 """正文与 notebook 的文本完整性检查。
 
 脚本批量编辑时，LaTeX 命令中的 ``\\t``（``\\times``）、``\\a``（``\\approx``）、``\\f``（``\\frac``）
-等可能被误转义为控制字符；`mkdocs build --strict` 不会报错，但网页与 Word 版公式会损坏。
+等可能被误转义为控制字符；`mkdocs build --strict` 不会报错，但网页中的公式会损坏。
 """
 
 import json
