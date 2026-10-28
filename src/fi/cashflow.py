@@ -1,7 +1,7 @@
 """货币时间价值、计息惯例（day count）、现金流与应计利息。
 
 时间价值采用每年复利 ``freq`` 次的离散复利；计息惯例支持 ACT/ACT、
-ACT/365、ACT/360、30/360。应计利息按"已计息期间 / 完整付息期间"折算当期票息。
+ACT/365、ACT/360、30/360。应计利息按"已计息期间 / 完整付息期间"折算当期票息（ACT 类惯例取实际天数之比 t/TS）。
 """
 
 from __future__ import annotations
@@ -96,6 +96,9 @@ def accrued_interest(settle: dt.date, prev_coupon: dt.date, next_coupon: dt.date
                      convention: str = "ACT/ACT") -> float:
     """结算日的应计利息：当期票息 × 已计息期间 / 完整付息期间。
 
+    ACT 类惯例（ACT/ACT、ACT/365F、ACT/360）按实际天数之比 :math:`t/TS` 折算；
+    30/360 按 30/360 计息天数之比折算。
+
     Parameters
     ----------
     settle, prev_coupon, next_coupon : datetime.date
@@ -108,6 +111,11 @@ def accrued_interest(settle: dt.date, prev_coupon: dt.date, next_coupon: dt.date
         计息惯例，传给 :func:`year_fraction`。
     """
     coupon = face * coupon_rate / freq
+    conv = convention.upper().replace(" ", "").replace("ACTUAL", "ACT")
+    if conv.startswith("ACT"):
+        # 实际天数类惯例：按 t/TS（已计息实际天数 / 当期付息周期实际天数）折算，
+        # 与 ICMA Actual/Actual、中证债券指数规则一致；跨闰年时不按公历年分段。
+        return coupon * _days(prev_coupon, settle) / _days(prev_coupon, next_coupon)
     period = year_fraction(prev_coupon, next_coupon, convention)
     accrued = year_fraction(prev_coupon, settle, convention)
     return coupon * accrued / period
