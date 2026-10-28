@@ -479,7 +479,7 @@ bond = ql.FloatingRateBond(0, 100.0, sched, idx, dc, ql.Unadjusted, 0,
                            [1.0], [0.005], [], [], False, 100.0, today)       # QM = 50bp
 disc = ql.YieldTermStructureHandle(ql.FlatForward(today, 0.025, dc))          # 基准 + DM
 bond.setPricingEngine(ql.DiscountingBondEngine(disc))
-bond.cleanPrice()                              # 99.9945（第8章写作 ≈ 99.99）
+bond.cleanPrice()                              # 99.9945（原因见第8章 8.6 节及下方提示）
 frn.price_frn(0.02, 0.005, 0.005, 8, 4)        # 100.0
 
 c0 = ql.as_floating_rate_coupon(bond.cashflows()[0])

@@ -20,7 +20,7 @@ def price_frn(reference, quoted_margin, disc_margin, n_periods, freq: int = 4, f
     Parameters
     ----------
     reference : float
-        年化基准利率（如 SHIBOR、LPR、DR）。
+        年化基准利率（如 Shibor、LPR、DR007）。
     quoted_margin : float
         票面利差 QM（写在条款里的固定加点）。
     disc_margin : float

@@ -19,7 +19,7 @@ def merton_pd(asset_value, debt, asset_vol, r, t) -> dict:
     """Merton 模型：违约距离与（风险中性）违约概率。
 
     :math:`d_2=\\dfrac{\\ln(V/D)+(r-\\tfrac12\\sigma_V^2)t}{\\sigma_V\\sqrt t}`，
-    违约距离 = d_2，违约概率 :math:`PD=N(-d_2)`。
+    违约距离 = d_2，违约概率 :math:`PD=\\Phi(-d_2)`（:math:`\\Phi` 为标准正态分布函数）。
     """
     V, D, sig = asset_value, debt, asset_vol
     d2 = (np.log(V / D) + (r - 0.5 * sig ** 2) * t) / (sig * np.sqrt(t))
@@ -29,7 +29,7 @@ def merton_pd(asset_value, debt, asset_vol, r, t) -> dict:
 def merton_credit_spread(asset_value, debt, asset_vol, r, t) -> float:
     """Merton 模型隐含的信用利差（连续复利）。
 
-    风险负债现值 :math:`B=V\\,N(-d_1)+D e^{-rt}N(d_2)`，利差 :math:`s=-\\ln(B/D)/t-r`。
+    风险负债现值 :math:`B=V\\,\\Phi(-d_1)+D e^{-rt}\\Phi(d_2)`，利差 :math:`s=-\\ln(B/D)/t-r`。
     """
     V, D, sig = asset_value, debt, asset_vol
     d1 = (np.log(V / D) + (r + 0.5 * sig ** 2) * t) / (sig * np.sqrt(t))

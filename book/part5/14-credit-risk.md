@@ -78,9 +78,9 @@ Merton（1974）的关键贡献，是把公司**资本结构**与**期权**联�
 
 由 Black-Scholes 框架，**违约概率（风险中性）**为：
 
-$$PD = N(-d_2),\qquad d_2=\frac{\ln(V/D)+(r-\tfrac12\sigma_V^2)T}{\sigma_V\sqrt T}$$
+$$PD = \Phi(-d_2),\qquad d_2=\frac{\ln(V/D)+(r-\tfrac12\sigma_V^2)T}{\sigma_V\sqrt T}$$
 
-其中 $d_2$ 就是**违约距离（Distance to Default, DD）**——衡量"资产价值离违约点有几个标准差"。DD 越大、PD 越小。
+其中 $\Phi(\cdot)$ 为标准正态分布函数，$d_2$ 就是**违约距离（Distance to Default, DD）**——衡量"资产价值离违约点有几个标准差"。DD 越大、PD 越小。
 
 !!! example "例14.1：Merton 模型估违约概率"
     负债 $D=100$、资产波动率 $\sigma_V=25\%$、$r=3\%$、$T=1$ 年。不同资产价值（即不同杠杆）下：
@@ -199,11 +199,14 @@ QuantLib 用 `DefaultProbabilityTermStructure`（如 `FlatHazardRate`）表示�
 import QuantLib as ql
 
 today = ql.Date(15, 6, 2026); ql.Settings.instance().evaluationDate = today
-dpts = ql.FlatHazardRate(today, ql.QuoteHandle(ql.SimpleQuote(0.0333)), ql.Actual365Fixed())
+lam = 0.02 / (1 - 0.4)          # 与 fi.credit.hazard_from_spread 相同的强度 λ = 1/30
+dpts = ql.FlatHazardRate(today, ql.QuoteHandle(ql.SimpleQuote(lam)), ql.Actual365Fixed())
 d5 = today + ql.Period(5, ql.Years)
-dpts.survivalProbability(d5)   # 0.8465，与 fi.credit 一致
-dpts.defaultProbability(d5)    # 0.1535
+dpts.survivalProbability(d5)   # 0.846404（fi.credit：0.846482）
+dpts.defaultProbability(d5)    # 0.153596
 ```
+
+两者在第4位小数上的差异来自时间口径：QuantLib 按 Actual/365F 计算，估值日至5年后共 1826 天（含 2028 年闰日），即 $tpprox5.0027$ 年；`fi.credit` 直接取 $t=5$。
 
 !!! tip "约化模型天然适合校准市场"
     QuantLib 的违约期限结构可由一组 **CDS 报价** bootstrap 出分段强度曲线（`PiecewiseFlatHazardRate` + `SpreadCdsHelper`），与第5章 bootstrap 利率曲线如出一辙。这正是约化模型的工程优势：**直接吃市场报价、吐违约概率**。
