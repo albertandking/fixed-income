@@ -1,4 +1,4 @@
-# 第13章　利率期权（Cap/Floor/Swaption）
+# 第13章　利率期权
 
 [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch13_ir_options.ipynb)
 

@@ -1,4 +1,4 @@
-# 第15章　结构化产品与 ABS
+# 第15章　结构化产品与资产支持证券
 
 [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch15_structured.ipynb)
 
