@@ -299,7 +299,7 @@ dpts.defaultProbability(d5)    # 0.1535
     - [ ] 认识中债隐含评级、刚兑打破与永煤事件的意义
 
 !!! quote "延伸阅读"
-    - Merton, R. C. (1974). *On the Pricing of Corporate Debt: The Risk Structure of Interest Rates*.（结构化模型原始文献）
-    - Jarrow, R. & Turnbull, S. (1995). *Pricing Derivatives on Financial Securities Subject to Credit Risk*.（约化模型经典）
+    - Merton, R. C. (1974). *On the Pricing of Corporate Debt: The Risk Structure of Interest Rates*.（结构化模型原始文献）；
+    - Jarrow, R. & Turnbull, S. (1995). *Pricing Derivatives on Financial Securities Subject to Credit Risk*.（约化模型经典）；
     - Fabozzi, *Bond Markets, Analysis, and Strategies*，"Credit Risk" 与 "Credit Risk Modeling" 章节；
     - 中央结算公司中债隐含评级方法说明；穆迪 KMV 模型白皮书。

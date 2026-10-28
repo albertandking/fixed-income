@@ -294,5 +294,5 @@ import QuantLib as ql
 
 !!! quote "延伸阅读"
     - Fabozzi, *Bond Markets, Analysis, and Strategies*，"Liability-Driven Strategies / Bond Portfolio Management" 相关章节；
-    - Redington, F. M. (1952). *Review of the Principles of Life-Office Valuations*. （免疫理论原始文献）
+    - Redington, F. M. (1952). *Review of the Principles of Life-Office Valuations*. （免疫理论原始文献）；
     - Tuckman & Serrat, *Fixed Income Securities*，关于对冲与组合风险的章节。

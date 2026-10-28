@@ -202,7 +202,7 @@ net_stressed = base_riding - 4.68 * 0.0020 - 0.0010  # 约 1.61%
 
 1. **骑乘收益分解**（图17-1）：用一条示意性国债收益率曲线，比较不同买入期限下的 carry 与 roll-down；
 2. **绩效指标演示**：用两条独立生成的收益序列，比较年化收益、波动、零无风险利率口径比值和最大回撤；
-3. **扩展练习**：配套解答 notebook 用单期假设展示 carry、骑乘、久期与凸性贡献。
+3. **扩展练习**：配套解答 notebook 用单期假设展示 carry、骑乘、久期与凸性贡献；
 4. **利率冲击与成本**（图17-2）：在例17.1上增加卖出收益率偏移和合计交易成本，观察近似收益何时低于示意的短债收益。
 
 **这些演示还不是历史回测**：随机序列没有由利率信号生成仓位，也未计入买卖报价、手续费和融资成本。若要判断策略在中国债市是否有效，需要事先写明信号、可交易债券、调仓日期和成本规则，使用带日期的历史价格或收益率数据，并与同风险或明确指定的基准比较。中债收益率曲线可作为公开数据入口，使用方式应遵守其数据说明。
@@ -290,5 +290,5 @@ net_stressed = base_riding - 4.68 * 0.0020 - 0.0010  # 约 1.61%
     - Fabozzi, *Bond Markets, Analysis, and Strategies*，"Active Bond Portfolio Management" 与 "Indexing / Passive Strategies" 章节；
     - Ilmanen, A. *Expected Returns*（carry、roll-down 等收益来源的系统论述）；
     - CFA Institute Research Foundation：[业绩归因概览](https://rpc.cfainstitute.org/research/foundation/2019/performance-attribution)（相对基准识别主动收益来源）；
-    - 中债/中证债券指数编制方法说明；债券指数基金招募说明书中的复制方法。
+    - 中债/中证债券指数编制方法说明；债券指数基金招募说明书中的复制方法；
     - [中债收益率曲线查询](https://yield.chinabond.com.cn/cbweb-mn/yield_main?locale=zh_CN)：开展真实数据练习时须记录日期、曲线类型及数据使用条件。

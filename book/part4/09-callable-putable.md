@@ -426,8 +426,8 @@ for sigma in (0.005, 0.015, 0.030):
 !!! quote "延伸阅读"
     - Fabozzi, *Bond Markets, Analysis, and Strategies*，"Analysis of Bonds with Embedded Options" 与 "Valuing Bonds with Embedded Options / OAS" 章节；
     - Tuckman & Serrat, *Fixed Income Securities*，关于二叉树模型与含权债的章节；
-    - Black, F., Derman, E. & Toy, W. (1990). A one-factor model of interest rates and its application to Treasury bond options. *Financial Analysts Journal*, 46(1), 33–39. <https://doi.org/10.2469/faj.v46.n1.33>（BDT 模型原始文献）
-    - Hull, J. & White, A. (1990). Pricing interest-rate-derivative securities. *The Review of Financial Studies*, 3(4), 573–592. <https://doi.org/10.1093/rfs/3.4.573>（Hull–White 模型原始文献）
+    - Black, F., Derman, E. & Toy, W. (1990). A one-factor model of interest rates and its application to Treasury bond options. *Financial Analysts Journal*, 46(1), 33–39. <https://doi.org/10.2469/faj.v46.n1.33>（BDT 模型原始文献）；
+    - Hull, J. & White, A. (1990). Pricing interest-rate-derivative securities. *The Review of Financial Studies*, 3(4), 573–592. <https://doi.org/10.1093/rfs/3.4.573>（Hull–White 模型原始文献）；
     - QuantLib [`CallableFixedRateBond` 接口](https://quantlib-python-docs.readthedocs.io/en/latest/instruments/bonds.html#callable-bond)与 [QuantLib-Python 债券定价引擎文档](https://quantlib-python-docs.readthedocs.io/en/latest/pricing_engines/bonds.html)；
     - 王冰山、刘家祺（2024）.《并非唯"利"是图：多因素影响下的含权债行权》.《金融市场研究》2024 年第 4 期（总第 143 期），21–30.（[全文 PDF](https://www.nafmii.org.cn/yj/jrscyj/qk/2024/202404/202406/P020250324541474616102.pdf)）；
     - 张佳梦、江之韵、李虹佳（2022）.《永续类债务融资工具的市场定价逻辑与趋势》.《金融市场研究》2022 年第 8 期，27–40.（2021 年"NAFMII 研究计划"获奖课题，[全文 PDF](https://www.nafmii.org.cn/yj/scyjyfx/nafmiiyjjh/2021n/202304/P020230428533782516938.pdf)）；

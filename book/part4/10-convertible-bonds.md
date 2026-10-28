@@ -274,6 +274,6 @@ bond.NPV()   # ≈ 104.9（含 2% 信用利差，低于 fi 的 112）
 
 !!! quote "延伸阅读"
     - Fabozzi, *Bond Markets, Analysis, and Strategies*，"Convertible Securities" 章节；
-    - Tsiveriotis, K. & Fernandes, C. (1998). *Valuing Convertible Bonds with Credit Risk*. （含信用风险的可转债定价经典文献）
-    - Longstaff & Schwartz (2001). *Valuing American Options by Simulation: A Simple Least-Squares Approach*.（LSM 方法原始文献）
+    - Tsiveriotis, K. & Fernandes, C. (1998). *Valuing Convertible Bonds with Credit Risk*. （含信用风险的可转债定价经典文献）；
+    - Longstaff & Schwartz (2001). *Valuing American Options by Simulation: A Simple Least-Squares Approach*.（LSM 方法原始文献）；
     - 中国可转债市场可参考交易所可转债发行与交易规则、各券募集说明书中的条款设计。

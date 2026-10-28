@@ -400,7 +400,7 @@ ql.BondFunctions.convexity(bond, rate)                        # ≈ 10.88（口�
     本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch06_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch06_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
 
 !!! success "概念题 1 详解"
-    - **麦考利久期**：现金流按现值加权的**平均回收时间**（单位：年），回答"我投出去的钱平均多久收回来"；
+    - **麦考利久期**：现金流按现值加权的**平均回收时间**（单位：年），回答"我投出去的钱平均多久收回来"。
     - **修正久期**：价格对收益率的**弹性**，$\Delta P/P\approx -D_{\text{mod}}\Delta y$，回答"收益率动 1%、价格动百分之几"；二者关系 $D_{\text{mod}}=D_{\text{mac}}/(1+y/k)$。
     - **零息债**只有一笔在 $T$ 年的现金流，其现值权重 $w=1$，加权平均时间就是 $T$ 本身，故 $D_{\text{mac}}=T$（见例6.2）。附息债因期间有票息回款分担权重，久期必短于期限。
 
