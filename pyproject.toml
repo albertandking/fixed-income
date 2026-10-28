@@ -22,10 +22,6 @@ data = [
 quantlib = [
     "QuantLib>=1.33",
 ]
-# 组合优化：uv sync --extra opt
-opt = [
-    "cvxpy>=1.4",
-]
 # 成书工具链：uv sync --extra book
 book = [
     "mkdocs-material>=9.5",
@@ -39,7 +35,7 @@ docx = [
 ]
 # 一键安装全部：uv sync --extra all
 all = [
-    "fixed-income[data,quantlib,opt,book,docx]",
+    "fixed-income[data,quantlib,book,docx]",
     "pytest>=8.0",
 ]
 
@@ -52,3 +48,10 @@ packages = ["src/fi"]
 
 [tool.uv]
 package = true
+
+# 默认索引固定为清华大学 TUNA 镜像：uv.lock 中的下载地址即指向该镜像，
+# 固定后无论读者本机是否另配镜像，uv sync / uv run 都不会改写锁文件。
+[[tool.uv.index]]
+name = "tuna"
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple/"
+default = true

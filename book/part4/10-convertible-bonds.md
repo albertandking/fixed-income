@@ -1,6 +1,6 @@
 # 第10章　可转换债券
 
-[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch10_convertible.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch10_convertible.ipynb)
+[![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch10_convertible.ipynb)
 
 !!! info "配套代码"
     本章可转债定价（股票二叉树 + 反向归纳）、纯债价值与溢价率由 `fi.convertible` 实现，并与 QuantLib `ConvertibleFixedCouponBond` 对拍。
@@ -221,7 +221,7 @@ bond.NPV()   # ≈ 104.9（含 2% 信用利差，低于 fi 的 112）
 ## 10.9 习题参考答案与详解
 
 !!! tip "完整可运行解答 notebook"
-    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch10_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch10_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch10_solutions.ipynb`](https://github.com/albertandking/fixed-income/blob/main/notebooks/solutions/ch10_solutions.ipynb)（可在本地或通过 Binder 在线运行）。
 
 !!! success "概念题 1"
     - **转股权**（投资者）：转股期内按转股价把债转成股；

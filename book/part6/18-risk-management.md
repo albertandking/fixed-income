@@ -1,6 +1,6 @@
 # 第18章　风险管理系统
 
-[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch18_risk_management.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch18_risk_management.ipynb)
+[![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch18_risk_management.ipynb)
 
 !!! info "配套代码"
     本章用 `fi.var` 演示 VaR/CVaR、单一利率冲击下的情景损益，并用**模拟**的正态与厚尾损益比较估计结果。现有主 notebook 没有真实国债与信用债持仓或历史行情；配套解答中的多品种组合也仅是简化教学示例。
@@ -250,7 +250,7 @@ portfolio_pnl = gov_rate_pnl + credit_rate_pnl + credit_spread_pnl  # -2,760,000
 ## 18.9 习题参考答案与详解
 
 !!! tip "编程实验示例 notebook"
-    [`notebooks/solutions/ch18_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch18_solutions.ipynb)给出模拟分布、单因子情景和多品种估值示例；它不是带真实持仓及历史数据的完整风险系统。
+    [`notebooks/solutions/ch18_solutions.ipynb`](https://github.com/albertandking/fixed-income/blob/main/notebooks/solutions/ch18_solutions.ipynb)给出模拟分布、单因子情景和多品种估值示例；它不是带真实持仓及历史数据的完整风险系统。
 
 !!! success "概念题 1"
     **VaR 三要素**：置信水平、持有期和损益分布。**历史模拟**用真实历史变动或可比历史损益形成经验分位数，依赖样本选择；**参数法**在零均值正态假设下使用 $z_\alpha\sigma$，计算快，但可能漏估厚尾和非线性；**蒙特卡洛**从指定模型抽取情景，可表示较复杂风险，但结果取决于所选模型。现有 notebook 的厚尾样本是模拟数据，不是历史行情。

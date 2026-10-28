@@ -4,7 +4,7 @@
 
 - 正文用 Markdown 编写（`book/` 目录）
 - 代码放在 Jupyter Notebook 中（`notebooks/` 目录），可本地逐格运行
-- 每章习题的**编程实验完整可运行解答**放在 `notebooks/solutions/`（每章一个，离线可执行；各章正文"习题参考答案与详解"含 Colab 链接）
+- 每章习题的**编程实验完整可运行解答**放在 `notebooks/solutions/`（每章一个，离线可执行；各章正文"习题参考答案与详解"含解答 notebook 链接）
 - 正文按需引用 / 嵌入 notebook 的代码与输出（通过 `scripts/export_notebooks.py` 手动导出）
 - 数据：内置示例数据集（离线可跑）+ 中国市场接口（akshare / tushare，联网抓取）
 - 环境：uv 管理，推荐 Python 3.14（兼容 3.11+）；成书：MkDocs + Material 主题
@@ -15,7 +15,7 @@
 ## 在线访问
 
 - 📖 在线阅读（GitHub Pages）：https://albertandking.github.io/fixed-income/
-- ▶️ 在线运行代码：每章正文顶部都有 Colab 与 Binder 徽章，点开即可在云端运行该章 notebook。
+- ▶️ 在线运行代码：每章正文顶部都有 Binder 徽章，点开即可在云端运行该章 notebook。
 
 ## 目录（8 部分 / 18 章）
 
@@ -34,7 +34,7 @@
 
 ```bash
 # 1. 安装环境（uv 会自动下载 Python 3.14，已验证兼容 QuantLib 1.42）
-uv sync --extra all          # 一键装齐全部（data + quantlib + opt + book + pytest）
+uv sync --extra all          # 一键装齐全部（data + quantlib + book + docx + pytest）
 # 或按需分别安装：
 #   uv sync                  # 仅核心依赖
 #   uv sync --extra data     # 联网抓取中国市场数据（akshare/tushare）

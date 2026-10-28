@@ -1,6 +1,6 @@
 # 第6章　久期与凸性
 
-[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch06_duration_convexity.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch06_duration_convexity.ipynb)
+[![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch06_duration_convexity.ipynb)
 
 !!! info "配套代码"
     本章所有数字都可在配套 notebook（`notebooks/ch06_duration_convexity.ipynb`）中复现，默认依赖内置数据，离线即可运行；久期、凸性、DV01 与关键利率久期均由复用包 `fi.risk` 实现。**章末 6.10 节给出全部习题的参考答案与详解，便于自学。**
@@ -397,7 +397,7 @@ ql.BondFunctions.convexity(bond, rate)                        # ≈ 10.88（口�
 ## 6.10 习题参考答案与详解
 
 !!! tip "完整可运行解答 notebook"
-    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch06_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch06_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch06_solutions.ipynb`](https://github.com/albertandking/fixed-income/blob/main/notebooks/solutions/ch06_solutions.ipynb)（可在本地或通过 Binder 在线运行）。
 
 !!! success "概念题 1 详解"
     - **麦考利久期**：现金流按现值加权的**平均回收时间**（单位：年），回答"我投出去的钱平均多久收回来"。

@@ -51,7 +51,7 @@
 ## 如何使用本书
 
 - **在线阅读**：左侧导航按六个部分组织，共 18 章和 5 个附录。
-- **运行代码**：每章顶部设有 Colab 和 Binder 徽章，点击即可在云端运行该章 notebook。
+- **运行代码**：各章配套 notebook 可按附录A在本地运行；每章顶部的 Binder 徽章也可在云端打开该章 notebook。
 - **本地环境**：参见[附录 A：本地环境配置](appendix/a-setup.md)，使用 `uv sync` 安装项目环境。
 - **数据使用**：优先使用教材内置的离线样本；联网案例使用免费的 akshare 或 tushare 数据，详见[附录 C：中国债券市场数据源](appendix/c-data-sources.md)。
 

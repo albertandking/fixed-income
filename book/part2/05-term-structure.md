@@ -1,6 +1,6 @@
 # 第5章　利率期限结构与曲线构建
 
-[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch05_term_structure.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch05_term_structure.ipynb)
+[![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch05_term_structure.ipynb)
 
 !!! info "配套代码"
     本章 bootstrap、插值与远期曲线由 `fi.curve` 实现，并与 QuantLib `PiecewiseYieldCurve` 对拍；案例从内置中国国债样本构建期限结构，离线即可运行。
@@ -268,7 +268,7 @@ yc.zeroRate(d3, ql.ActualActual(ql.ActualActual.ISDA), ql.Compounded, ql.Annual)
 ## 5.10 习题参考答案与详解
 
 !!! tip "完整可运行解答 notebook"
-    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch05_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch05_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch05_solutions.ipynb`](https://github.com/albertandking/fixed-income/blob/main/notebooks/solutions/ch05_solutions.ipynb)（可在本地或通过 Binder 在线运行）。
 
 !!! success "概念题 1"
     **到期收益率曲线（平价）**：附息债 YTM 按期限连成的线，每点是"一整只附息债的综合平均收益率"，易观测但不纯粹。**即期曲线**：各期限零息债收益率，是"某一期限的纯时间价值"。**远期曲线**：今天锁定的未来各段利率，由即期无套利推出。**即期曲线才是正确的折现基准**，因为每笔现金流应当用与其期限对应的零息利率折现；用单一 YTM 折现只是便利的近似。

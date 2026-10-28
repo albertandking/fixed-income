@@ -1,6 +1,6 @@
 # 第16章　货币市场工具与回购市场
 
-[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch16_money_market_repo.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch16_money_market_repo.ipynb)
+[![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch16_money_market_repo.ipynb)
 
 !!! info "配套代码"
     本章回购现金流、资金成本与杠杆套息均由复用包 `fi.repo` 实现；案例使用内置货币市场利率样本（`fi.data.load_sample("money_market")`），离线即可运行。
@@ -459,7 +459,7 @@ repo.max_leverage(haircut=0.05)   # 20.0
 ## 16.10 习题参考答案与详解
 
 !!! tip "编程实验示例 notebook"
-    编程实验的示例代码见 [`notebooks/solutions/ch16_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch16_solutions.ipynb)。使用真实历史数据的实验仍需自行获取和整理数据。
+    编程实验的示例代码见 [`notebooks/solutions/ch16_solutions.ipynb`](https://github.com/albertandking/fixed-income/blob/main/notebooks/solutions/ch16_solutions.ipynb)。使用真实历史数据的实验仍需自行获取和整理数据。
 
 !!! success "概念题 1"
     **大额存单**面向个人和非金融企业等存款客户，本质是银行存款产品；**同业存单**由银行在银行间市场发行，是标准化、可交易的主动负债工具；**同业拆借**则是金融机构之间无担保的短期资金交易。**Shibor** 是优质报价银行报出的无担保人民币同业拆出利率形成的报价基准，不是一张存单，也不等于任何一笔拆借成交。

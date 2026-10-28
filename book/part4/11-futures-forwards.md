@@ -1,6 +1,6 @@
 # 第11章　利率期货与远期
 
-[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch11_futures_forwards.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch11_futures_forwards.ipynb)
+[![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch11_futures_forwards.ipynb)
 
 !!! info "配套代码"
     本章转换因子、CTD、套保比率与 FRA 由 `fi.futures` 实现；案例用国债期货对冲组合久期，离线即可运行。
@@ -229,7 +229,7 @@ fwd = curve.forwardRate(d1, d2, dc, ql.Simple).rate()   # 远期利率 ≈ FRA �
 ## 11.10 习题参考答案与详解
 
 !!! tip "完整可运行解答 notebook"
-    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch11_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch11_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch11_solutions.ipynb`](https://github.com/albertandking/fixed-income/blob/main/notebooks/solutions/ch11_solutions.ipynb)（可在本地或通过 Binder 在线运行）。
 
 !!! success "概念题 1"
     用"名义标准券 + 一篮子可交割券"，是为了**避免单一现券被逼仓（squeeze）**：若只许交割某一只券，空头到期必须买入该券，多头可囤券抬价。一篮子可交割让空头能选最便宜的券交割，市场更难操纵；名义标准券（3% 票息虚拟券）则提供统一报价基准。

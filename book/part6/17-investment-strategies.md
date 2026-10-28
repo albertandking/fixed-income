@@ -1,6 +1,6 @@
 # 第17章　债券投资策略与回测
 
-[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch17_strategies.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch17_strategies.ipynb)
+[![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch17_strategies.ipynb)
 
 !!! info "配套代码"
     本章用 `fi.backtest` 演示单期收益分解与绩效评估。配套曲线是按中国国债常见期限设置的**教学示意数据，并非历史行情**；两条收益序列也由程序生成，均可离线复现。
@@ -233,7 +233,7 @@ net_stressed = base_riding - 4.68 * 0.0020 - 0.0010  # 约 1.61%
 ## 17.8 习题参考答案与详解
 
 !!! tip "编程实验示例 notebook"
-    [`notebooks/solutions/ch17_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch17_solutions.ipynb)提供骑乘、合成收益序列和单期收益分解演示；它尚未用历史行情执行真正的久期择时回测。
+    [`notebooks/solutions/ch17_solutions.ipynb`](https://github.com/albertandking/fixed-income/blob/main/notebooks/solutions/ch17_solutions.ipynb)提供骑乘、合成收益序列和单期收益分解演示；它尚未用历史行情执行真正的久期择时回测。
 
 !!! success "概念题 1"
     **骑乘曲线**在向上倾斜且大致不变的曲线情景下，可能因剩余期限缩短而获得正的 roll-down，再叠加持有期收益。它仍承担较高久期风险；若曲线上移或利差走阔，价格损失可能超过骑乘收益。与短债的收益差额不能直接称为风险调整后的超额收益。

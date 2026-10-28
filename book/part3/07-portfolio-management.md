@@ -1,6 +1,6 @@
 # 第7章　债券组合管理
 
-[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch07_portfolio.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch07_portfolio.ipynb)
+[![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch07_portfolio.ipynb)
 
 !!! info "配套代码"
     本章免疫演示、久期匹配与现金流匹配（线性规划）由 `fi.portfolio` 实现；案例构建一个负债驱动的中国债券组合，离线即可运行。
@@ -188,11 +188,37 @@ res["cost"], res["units"]      # 278.905, [0.8978, 0.9158, 0.9615]
 - **组合久期** $=\sum_i w_i D_i$（$w_i$ 为市值权重）；
 - **组合 DV01** $=\sum_i \text{DV01}_i$（金额可直接相加，是风控限额的通用口径，见第6章）。
 
+以第6章 6.8 节的三券组合（2Y、5Y、10Y 平价国债各 1000 万元）为例，用 QuantLib 逐券计算修正久期与 DV01，再汇总到组合层：
+
 ```python
 import QuantLib as ql
-# 对每只债用 ql.BondFunctions.duration / 自带定价引擎取 DV01，再按市值加权/求和
-# 组合 DV01 = Σ 各券 DV01（金额可加），组合久期 = Σ w_i · D_i
+
+today = ql.Date(15, 6, 2026)
+ql.Settings.instance().evaluationDate = today
+dc = ql.ActualActual(ql.ActualActual.ISMA)
+
+def par_bond(coupon, years):
+    """平价国债：半年付息、票息 = 收益率，面值 100。"""
+    sched = ql.Schedule(today, today + ql.Period(years, ql.Years), ql.Period(ql.Semiannual),
+                        ql.NullCalendar(), ql.Unadjusted, ql.Unadjusted,
+                        ql.DateGeneration.Backward, False)
+    return ql.FixedRateBond(0, 100.0, sched, [coupon], dc)
+
+book = [(0.0195, 2, 1000.0), (0.0225, 5, 1000.0), (0.0255, 10, 1000.0)]   # (收益率, 期限, 市值/万元)
+total_mv = sum(mv for _, _, mv in book)
+port_dur = port_dv01 = 0.0
+for y, years, mv in book:
+    bond = par_bond(y, years)
+    rate = ql.InterestRate(y, dc, ql.Compounded, ql.Semiannual)
+    d_mod = ql.BondFunctions.duration(bond, rate, ql.Duration.Modified)
+    dv01 = d_mod * mv * 1e-4                     # 万元/bp：修正久期 × 市值 × 1bp
+    port_dur += mv / total_mv * d_mod
+    port_dv01 += dv01
+    print(f"{years:>2}Y  D_mod={d_mod:.4f}  DV01={dv01:.4f} 万元/bp")   # 1.9522 / 4.7041 / 8.7778
+print(f"组合久期 = {port_dur:.4f}，组合 DV01 = {port_dv01:.4f} 万元/bp")   # 5.1447，1.5434
 ```
+
+结果与第6章用 `fi.risk` 计算的数字一致（组合久期 5.14、组合 DV01 约 1.543 万元/bp），也与 7.5 节 `pf.portfolio_duration` 的市值加权结果相同。`ql.BondFunctions.duration` 的收益率须以 `ql.InterestRate` 给出复利方式与频率，此处为半年复利，与 `fi.risk` 的口径一致；口径不一致时两者会出现差异（见附录B）。
 
 !!! tip "组合久期的局限"
     组合久期只刻画**平行移动**风险。两个久期相同的组合，对**曲线变陡/变平**的暴露可能完全不同——这要用**关键利率久期**（第6章）来分解。负债驱动组合尤其要关注：负债集中在长端，若只匹配总久期、不匹配各关键期限久期，曲线非平行移动会打开缺口。
@@ -237,7 +263,7 @@ import QuantLib as ql
 ## 7.9 习题参考答案与详解
 
 !!! tip "完整可运行解答 notebook"
-    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch07_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch07_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch07_solutions.ipynb`](https://github.com/albertandking/fixed-income/blob/main/notebooks/solutions/ch07_solutions.ipynb)（可在本地或通过 Binder 在线运行）。
 
 !!! success "概念题 1"
     持有到期点 $H$ 的最终财富 = 票息再投资累积值 + $H$ 时点债券卖价。利率上行→再投资收益↑（好）、卖价↓（坏）；下行则相反。当**久期 = 持有期 $H$**（即负债到期时间）时，这两个相反效应在 $H$ 点一阶抵消，财富对小幅利率变动不敏感——被"免疫"。直觉：把跷跷板支点放在 $H$，在小幅平行扰动下，$H$ 点高度不变。

@@ -1,6 +1,6 @@
 # 第2章　计息惯例、现金流与货币时间价值
 
-[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch02_time_value.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch02_time_value.ipynb)
+[![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch02_time_value.ipynb)
 
 !!! info "配套代码"
     本章时间价值、计息惯例与应计利息均由 `fi.cashflow` 实现，并与 QuantLib 的 `DayCounter` 交叉验证；案例（房贷计算器、国债应计利息）可离线运行。
@@ -253,7 +253,7 @@ bond.accruedAmount(ql.Date(15, 6, 2026))   # 0.75；在本例规则付息期内�
 ## 2.10 习题参考答案与详解
 
 !!! tip "完整可运行解答 notebook"
-    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch02_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch02_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch02_solutions.ipynb`](https://github.com/albertandking/fixed-income/blob/main/notebooks/solutions/ch02_solutions.ipynb)（可在本地或通过 Binder 在线运行）。
 
 !!! success "概念题 1"
     **货币时间价值**：在利率为正、风险和其他条件相同情况下，较早取得的资金可用于投资并获得收益，因此未来现金流需要**折现**至同一时点后进行比较和加总。

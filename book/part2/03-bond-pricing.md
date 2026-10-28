@@ -1,6 +1,6 @@
 # 第3章　债券定价原理
 
-[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch03_bond_pricing.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch03_bond_pricing.ipynb)
+[![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch03_bond_pricing.ipynb)
 
 !!! info "配套代码"
     本章定价均由复用包 `fi.pricing.price_bond` 实现，并与 QuantLib `FixedRateBond` 对拍；案例使用内置数据，离线即可运行。
@@ -268,7 +268,7 @@ ql.BondFunctions.cleanPrice(bond, rate)   # 97.2249，与 fi.price_bond 一致
 ## 3.10 习题参考答案与详解
 
 !!! tip "完整可运行解答 notebook"
-    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch03_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch03_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch03_solutions.ipynb`](https://github.com/albertandking/fixed-income/blob/main/notebooks/solutions/ch03_solutions.ipynb)（可在本地或通过 Binder 在线运行）。
 
 !!! success "概念题 1"
     由**一价定律**：债券等于一篮子未来现金流，复制这些现金流（用零息债组合）的成本就是现金流现值之和，故债券价格必等于此。若**市价 < 现值**，套利者买入低估的债、同时卖出复制其现金流的零息债组合，锁定无风险利润；若**市价 > 现值**则反向操作。逐利的套利推动价格回到现值——除非二者相等，套利机会才消失。

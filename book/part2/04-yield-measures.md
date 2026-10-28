@@ -1,6 +1,6 @@
 # 第4章　收益率计量
 
-[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch04_yield_measures.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch04_yield_measures.ipynb)
+[![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch04_yield_measures.ipynb)
 
 !!! info "配套代码"
     本章到期收益率由 `fi.pricing.ytm`（牛顿法 + 二分法回退）求解，远期利率由 `fi.pricing.forward_rate` 计算，并与 QuantLib 对拍；案例使用内置数据，离线即可运行。
@@ -240,7 +240,7 @@ bond.bondYield(price, ql.ActualActual(ql.ActualActual.ISDA), ql.Compounded, ql.A
 ## 4.9 习题参考答案与详解
 
 !!! tip "完整可运行解答 notebook"
-    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch04_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch04_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch04_solutions.ipynb`](https://github.com/albertandking/fixed-income/blob/main/notebooks/solutions/ch04_solutions.ipynb)（可在本地或通过 Binder 在线运行）。
 
 !!! success "概念题 1"
     **票面收益率** = 票面利率（与市价无关）；**当期收益率** = 年票息/市价（只看票息、忽略资本利得）；**到期收益率（YTM）** = 使现金流现值等于市价的折现率（最全面）。对**折价债**（市价 < 面值），三者排序 **票面 < 当期 < YTM**：因为折价买入，到期还能赚"拉回面值"的资本利得，所以 YTM 最高；当期收益率用更小的市价做分母，故高于票面。

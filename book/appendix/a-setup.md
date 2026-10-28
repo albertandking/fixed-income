@@ -1,12 +1,12 @@
 # 附录A　本地环境配置（uv + QuantLib）
 
-本附录说明如何在个人电脑上搭建与本书一致的 Python 计算环境，使正文中的每个数字都能由配套 notebook 复现。全书使用 **uv** 管理 Python 解释器与依赖，复用包 `fi` 与 QuantLib、akshare 等第三方库一并安装。只想在浏览器中运行代码的读者，可直接使用各章顶部的 Colab/Binder 徽章（见 A.5.2），无须在本地安装任何软件。
+本附录说明如何在个人电脑上搭建与本书一致的 Python 计算环境，使正文中的每个数字都能由配套 notebook 复现。全书使用 **uv** 管理 Python 解释器与依赖，复用包 `fi` 与 QuantLib、akshare 等第三方库一并安装。只想在浏览器中运行代码的读者，可直接使用各章顶部的 Binder 徽章（见 A.5.2），无须在本地安装任何软件。
 
 !!! abstract "本附录要点"
     1. 安装 uv（一条命令）；
     2. 获取本书仓库，执行 `uv sync --extra all` 装齐全部依赖；
     3. 用 `uv run pytest -q` 等命令验证安装，生成内置离线样本；
-    4. 用 `uv run jupyter lab` 打开各章 notebook，或在 Colab/Binder 上在线运行；
+    4. 用 `uv run jupyter lab` 打开各章 notebook，或通过 Binder 在线运行；
     5. 遇到 QuantLib 安装、中文字体、国内网络、Windows 编码等问题时，查阅 A.7。
 
 !!! note "关于版本号"
@@ -24,11 +24,11 @@ uv 是由 Astral 公司开发的 Python 包与项目管理工具，用 Rust 编�
 
 | 工具 | 管理对象 | 环境与锁定方式 | 在本书中的定位 |
 | --- | --- | --- | --- |
-| **pip** | Python 包（来自 PyPI） | 需另用 `venv` 建环境；`requirements.txt` 通常只记录直接依赖，间接依赖的版本不固定 | Colab 与 Binder 在线环境使用 |
+| **pip** | Python 包（来自 PyPI） | 需另用 `venv` 建环境；`requirements.txt` 通常只记录直接依赖，间接依赖的版本不固定 | Binder 在线环境使用 |
 | **conda** | Python 包及非 Python 二进制库（来自 conda 渠道） | 自带环境管理；锁定需借助额外工具 | 不使用；本书全部依赖均有 PyPI 预编译包，无须 conda |
 | **uv** | Python 解释器与 Python 包 | 每个项目一个 `.venv`；`uv.lock` 记录全部直接与间接依赖的精确版本和校验哈希 | 本地环境的标准做法 |
 
-conda 的优势在于能安装 C/Fortran 等非 Python 库，适合依赖复杂科学计算栈的场景。本书用到的 NumPy、SciPy、QuantLib、cvxpy 等在 PyPI 上均提供主流平台的预编译轮子（wheel），因此 uv 已能满足需要。两类工具不宜混用，否则容易造成"包装在哪个环境"的混乱；已安装 conda 的读者，在使用本书仓库前可先执行 `conda deactivate` 退出 conda 环境。
+conda 的优势在于能安装 C/Fortran 等非 Python 库，适合依赖复杂科学计算栈的场景。本书用到的 NumPy、SciPy、QuantLib 等在 PyPI 上均提供主流平台的预编译轮子（wheel），因此 uv 已能满足需要。两类工具不宜混用，否则容易造成"包装在哪个环境"的混乱；已安装 conda 的读者，在使用本书仓库前可先执行 `conda deactivate` 退出 conda 环境。
 
 ### A.1.3 锁文件与可复现性
 
@@ -106,10 +106,9 @@ uv sync --extra all
 | --- | --- | --- |
 | `data` | `akshare`、`tushare` | 联网抓取中国市场数据（附录C） |
 | `quantlib` | `QuantLib` | 与 `fi` 对拍的定价库，含权债与衍生品章节使用 |
-| `opt` | `cvxpy` | 凸优化求解，用于组合优化（`pyproject.toml` 所注用途） |
 | `book` | `mkdocs-material`、`mkdocs-print-site-plugin`、`jupyter`、`nbconvert` | 运行 notebook、本地预览成书 |
 | `docx` | `python-docx` | 导出 Word 版教材（另需系统安装 pandoc，见 A.6.2） |
-| `all` | 以上五组，外加 `pytest` | 一键装齐，推荐 |
+| `all` | 以上四组，外加 `pytest` | 一键装齐，推荐 |
 
 也可以只安装需要的组，多个组可以叠加：
 
@@ -119,7 +118,7 @@ uv sync --extra quantlib --extra book    # QuantLib + Jupyter
 ```
 
 !!! warning "uv sync 默认为精确同步"
-    `uv sync` 会使 `.venv` 与所选依赖组**完全一致**，不在所选组中的包会被卸载。例如，已执行 `uv sync --extra all` 后再执行 `uv sync --extra book`，akshare、QuantLib、cvxpy 等约三十个包会被移除。需要保留已装的包时，加上 `--inexact` 选项，或者始终使用 `uv sync --extra all`。执行前可加 `--dry-run` 查看将要发生的变化。
+    `uv sync` 会使 `.venv` 与所选依赖组**完全一致**，不在所选组中的包会被卸载。例如，已执行 `uv sync --extra all` 后再执行 `uv sync --extra book`，akshare、QuantLib 等二十余个包会被移除。需要保留已装的包时，加上 `--inexact` 选项，或者始终使用 `uv sync --extra all`。执行前可加 `--dry-run` 查看将要发生的变化。
 
 ### A.3.4 使用环境：uv run
 
@@ -205,35 +204,23 @@ uv run jupyter nbconvert --to notebook --execute notebooks/ch01_fi_overview.ipyn
 
 `--output-dir` 把执行结果写到别处，以免覆盖仓库中的 notebook；若确需更新仓库中的输出，可改用 `--inplace`。
 
-### A.5.2 在线运行：Colab 与 Binder
+### A.5.2 在线运行：Binder
 
-每章正文顶部都有两个徽章：
+每章正文顶部的 Binder 徽章可在 mybinder.org 上打开该章 notebook。Binder 按仓库中的 `binder/requirements.txt` 构建环境：以 pip 安装本书复用包及 `data`、`quantlib` 两个依赖组，并安装 JupyterLab。首次构建需要数分钟，会话闲置一段时间后会被回收，修改不会保存。
 
-- **Colab**：在 Google Colab 中打开该章 notebook，使用 Google 提供的云端 Python 环境；
-- **Binder**：在 mybinder.org 上按仓库中的 `binder/requirements.txt` 构建环境。该文件以 pip 安装本书复用包及 `data`、`quantlib`、`opt` 三个依赖组，并安装 JupyterLab。Binder 首次构建需要数分钟，会话闲置一段时间后会被回收，修改不会保存。
+Binder 使用 pip 而非 uv 安装依赖，不读取 `uv.lock`，所装版本可能与本地不同，个别数值的末位可能因此出现差异。正文数字以本地 `uv sync` 环境的运行结果为准。
 
-两种在线环境都使用 pip 而非 uv 安装依赖，不读取 `uv.lock`，所装版本可能与本地不同，个别数值的末位可能因此出现差异。
+### A.5.3 环境检查单元
 
-### A.5.3 自举单元的作用
-
-每个 notebook 的第一个代码单元是"自举单元"，内容如下：
+每个 notebook 的第一个代码单元检查复用包 `fi` 是否可用：
 
 ```python
-import importlib.util, sys, subprocess
+import importlib.util
 if importlib.util.find_spec('fi') is None:
-    if 'google.colab' in sys.modules:
-        subprocess.run(['git', 'clone', '--depth', '1',
-                        'https://github.com/albertandking/fixed-income.git', '/content/fi-book'], check=False)
-        subprocess.run([sys.executable, '-m', 'pip', 'install', '-e', '/content/fi-book'], check=False)
-    else:
-        print('提示：请在仓库根目录执行 `uv sync --extra all` 后再运行本 notebook。')
+    raise ModuleNotFoundError('未找到复用包 fi：请在仓库根目录执行 `uv sync`，再用 `uv run jupyter lab` 启动（见附录A）。')
 ```
 
-它首先检查当前环境能否找到 `fi`。本地已执行 `uv sync` 或在 Binder 中运行时，`fi` 已经安装，该单元不做任何事；在 Colab 中则把仓库浅克隆到 `/content/fi-book`，再用 pip 以可编辑方式安装；在其他未安装 `fi` 的环境中，只打印提示。
-
-!!! warning "在 Colab 中使用自举单元的两点注意"
-    1. 自举单元执行的是 `pip install -e /content/fi-book`，只安装核心依赖，不包括 QuantLib、akshare 等可选依赖。需要这些库的章节，可在 Colab 中另加一个单元执行 `%pip install QuantLib akshare`。
-    2. 可编辑安装通过写入 `.pth` 文件生效，而 Python 只在启动时读取 `.pth` 文件。作者在本地模拟这一流程时发现，同一进程内安装完成后仍找不到 `fi`，新进程则可以正常导入。因此，若运行自举单元后紧接着出现 `ModuleNotFoundError: No module named 'fi'`，应在 Colab 菜单中重启会话（Runtime → Restart session），再从第一个单元起依次运行；此时 `fi` 已安装，自举单元会直接跳过。
+本地已执行 `uv sync` 或在 Binder 中运行时，`fi` 已经安装，该单元不做任何事；否则立即报错并提示安装方法，以免在后续单元中出现难以定位的导入错误。
 
 ---
 
@@ -289,54 +276,44 @@ for name in ["Microsoft YaHei", "SimHei", "Noto Sans CJK SC", "PingFang SC", "Ar
     print(f"{name:<18}", "可用" if name in available else "未找到")
 ```
 
-作者本机（Windows）的结果为 Microsoft YaHei 与 SimHei 可用。若全部"未找到"，需要先安装中文字体。Linux（包括 Colab）中常用的做法是安装 Noto CJK 字体，例如在 Debian/Ubuntu 系统中执行 `sudo apt-get install fonts-noto-cjk`（Colab 中执行 `!apt-get install -y fonts-noto-cjk`），然后删除 matplotlib 的字体缓存目录（其位置可用 `matplotlib.get_cachedir()` 查看）并重启内核，使 matplotlib 重新扫描字体。也可以不安装到系统，而用 `fm.fontManager.addfont("字体文件路径")` 临时注册某个字体文件，再把 `font.sans-serif` 设为该字体名称。
+作者本机（Windows）的结果为 Microsoft YaHei 与 SimHei 可用。若全部"未找到"，需要先安装中文字体。Linux 中常用的做法是安装 Noto CJK 字体，例如在 Debian/Ubuntu 系统中执行 `sudo apt-get install fonts-noto-cjk`，然后删除 matplotlib 的字体缓存目录（其位置可用 `matplotlib.get_cachedir()` 查看）并重启内核，使 matplotlib 重新扫描字体。也可以不安装到系统，而用 `fm.fontManager.addfont("字体文件路径")` 临时注册某个字体文件，再把 `font.sans-serif` 设为该字体名称。
 
 ### A.7.3 国内网络下的下载加速
 
-uv 默认从 PyPI（`https://pypi.org/simple`）下载包，从 GitHub 下载 Python 解释器。在国内网络下下载较慢时，可以改用国内镜像。镜像**不是必需的**：网络通畅时无须任何配置；镜像与 PyPI 之间也可能有短暂的同步延迟。
-
-根据 uv 文档（Package indexes 与 Environment variables 两节），替换默认索引有三种方式。
-
-**方式一：环境变量 `UV_DEFAULT_INDEX`**（只影响当前终端，适合临时使用）：
-
-```bash
-# macOS / Linux / Git Bash
-export UV_DEFAULT_INDEX=https://pypi.tuna.tsinghua.edu.cn/simple
-uv sync --extra all
-```
-
-```powershell
-# Windows PowerShell
-$env:UV_DEFAULT_INDEX = "https://mirrors.aliyun.com/pypi/simple/"
-uv sync --extra all
-```
-
-旧变量 `UV_INDEX_URL` 在文档中已标注为弃用（deprecated），应改用 `UV_DEFAULT_INDEX`。
-
-**方式二：用户级配置文件 `uv.toml`**（对本机所有项目长期有效，推荐）。文件位置为 macOS/Linux 的 `~/.config/uv/uv.toml`、Windows 的 `%APPDATA%\uv\uv.toml`，内容为：
+本书仓库已在 `pyproject.toml` 中把默认索引固定为清华大学 TUNA 镜像：
 
 ```toml
-[[index]]
-url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+[[tool.uv.index]]
+name = "tuna"
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple/"
 default = true
 ```
 
-`default = true` 表示用该镜像取代 PyPI 作为默认索引。同一文件中还可以加入 `python-install-mirror = "..."`，为 uv 下载 Python 解释器指定镜像（对应环境变量 `UV_PYTHON_INSTALL_MIRROR`），例如作者本机使用的南京大学镜像 `https://mirrors.nju.edu.cn/github-release/astral-sh/python-build-standalone/`。
+`uv.lock` 中所有包的下载地址也指向该镜像，因此读者执行 `uv sync` 时，Python 包均从清华镜像下载，无须另作配置。依据 uv 文档（Configuration files 一节），项目级配置与用户级配置合并时项目级优先，即使读者在本机 `uv.toml` 中配置了其他镜像，本仓库仍使用清华镜像，锁文件不会被改写。作者已用 `uv lock --check` 确认，锁文件与该配置一致。
 
-**方式三：项目级 `pyproject.toml`**，写法为 `[[tool.uv.index]]` 加 `url` 与 `default = true`。这会把镜像地址写进仓库、影响所有使用者，因此本书仓库不采用这种方式，读者也不应把这类修改提交到仓库。
+只有两种情形会覆盖这一设置：一是设置环境变量 `UV_DEFAULT_INDEX`，二是用 `--config-file` 或 `UV_CONFIG_FILE` 指定配置文件（此时 uv 不再读取项目配置）。这两种情形下，`uv sync` 或 `uv run` 会按新索引重写 `uv.lock` 中的下载地址；作者实测，包版本不变，改变的只是地址。这类改动不应提交到仓库，可用 `git checkout -- uv.lock` 还原。注意，`--frozen` 选项虽能避免重写锁文件，但此时 uv 直接按锁文件中的地址（即清华镜像）下载，所设的其他镜像并不生效。
 
-常用镜像地址如下（2026年10月本机均可访问，并已用 `UV_DEFAULT_INDEX` 实际安装测试过清华与阿里云两个）：
+清华镜像暂时无法访问时，可临时改用其他镜像（2026年10月本机均可访问），同步完成后还原锁文件：
+
+```bash
+# macOS / Linux / Git Bash：只影响当前终端
+export UV_DEFAULT_INDEX=https://mirrors.aliyun.com/pypi/simple/
+uv sync --extra all
+git checkout -- uv.lock      # 还原锁文件中的下载地址
+```
 
 | 镜像 | 地址 |
 | --- | --- |
-| 清华大学 TUNA | `https://pypi.tuna.tsinghua.edu.cn/simple` |
 | 阿里云 | `https://mirrors.aliyun.com/pypi/simple/` |
 | 中国科学技术大学 | `https://mirrors.ustc.edu.cn/pypi/simple/` |
 
-!!! note "锁文件与镜像"
-    `uv.lock` 记录了每个包的下载地址。本仓库的锁文件是在配置清华镜像的环境下生成的，其中的地址均指向清华镜像，因此未作任何配置的读者执行 `uv sync` 时，Python 包实际上已经从该镜像下载；作者已用 `uv lock --check --no-config`（不读取任何本机配置）确认，此时锁文件有效，不会被改写。
+旧变量 `UV_INDEX_URL` 在 uv 文档中已标注为弃用（deprecated），应改用 `UV_DEFAULT_INDEX`。
 
-    若读者配置了其他索引（包括阿里云等镜像，或显式指定 PyPI），uv 会认为锁文件需要更新，在执行 `uv sync` 或 `uv run` 时自动重写 `uv.lock` 中的下载地址。作者实测，以阿里云镜像重新锁定后，159 个包的版本与原锁文件完全一致，改变的只是地址。这类改动不应提交到仓库，可用 `git checkout -- uv.lock` 还原；也可以在同步时加 `--frozen` 选项，直接按锁文件安装而不重新锁定。由此可见，对本仓库而言，镜像配置主要用于加快 Python 解释器的下载（`python-install-mirror`）以及读者自己的其他项目。
+uv 首次运行时还会从 GitHub 下载 Python 解释器，这一步不受上述索引设置影响。下载较慢时，可在用户级配置文件 `uv.toml`（macOS/Linux 为 `~/.config/uv/uv.toml`，Windows 为 `%APPDATA%\uv\uv.toml`）中加入 `python-install-mirror`，例如南京大学镜像：
+
+```toml
+python-install-mirror = "https://mirrors.nju.edu.cn/github-release/astral-sh/python-build-standalone/"
+```
 
 ### A.7.4 Windows 下的中文编码
 

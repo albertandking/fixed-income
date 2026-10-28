@@ -1,6 +1,6 @@
 # 第1章　固定收益证券与中国债券市场概述
 
-[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch01_fi_overview.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch01_fi_overview.ipynb)
+[![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch01_fi_overview.ipynb)
 
 !!! info "配套代码"
     本章末尾用 `fi.data` 加载内置国债收益率曲线样本并画出第一张图；环境搭建详见[附录A](../appendix/a-setup.md)。
@@ -252,7 +252,7 @@ ax.set_title("图1-1　中国国债收益率曲线（样本数据）")
 ## 1.9 习题参考答案与详解
 
 !!! tip "完整可运行解答 notebook"
-    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch01_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch01_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch01_solutions.ipynb`](https://github.com/albertandking/fixed-income/blob/main/notebooks/solutions/ch01_solutions.ipynb)（可在本地或通过 Binder 在线运行）。
 
 !!! success "概念题 1"
     **债券是债权凭证，股票是所有权凭证**。债券按契约约定生成本息现金流，股票则对应企业的剩余收益和剩余风险。

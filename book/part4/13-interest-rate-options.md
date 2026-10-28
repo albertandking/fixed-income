@@ -1,6 +1,6 @@
 # 第13章　利率期权（Cap/Floor/Swaption）
 
-[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch13_ir_options.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch13_ir_options.ipynb)
+[![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch13_ir_options.ipynb)
 
 !!! info "配套代码"
     本章 Cap/Floor/Swaption 的 Black 定价、隐含波动率由 `fi.rateopt` 实现，并可与 QuantLib `CapFloor` 对拍。对拍时必须统一曲线、日期、日计数、支付频率、已知 fixing 与结算约定。
@@ -233,7 +233,7 @@ cap.NPV()   # ≈1,311,843（例13.2 为 1,310,756，差异来自闰年计息天
 ## 13.10 习题参考答案与详解
 
 !!! tip "完整可运行解答 notebook"
-    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch13_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch13_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch13_solutions.ipynb`](https://github.com/albertandking/fixed-income/blob/main/notebooks/solutions/ch13_solutions.ipynb)（可在本地或通过 Binder 在线运行）。
 
 !!! success "概念题 1"
     **Cap（上限）**保护浮动利率**借款人**（利率超上限获赔，对冲加息）；**Floor（下限）**保护浮动利率**投资者/放款人**（利率低于下限获赔，对冲降息）；**Collar（双限）= 买 Cap + 卖 Floor**，把利率锁在区间内。**零成本 Collar**：选择 Floor 的执行价，使卖 Floor 的权利金恰好抵消买 Cap 的成本（净权利金为零）；它不表示未来没有现金流或风险。

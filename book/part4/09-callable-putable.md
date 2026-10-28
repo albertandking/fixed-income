@@ -1,6 +1,6 @@
 # 第9章　可赎回债券与可回售债券
 
-[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch09_callable_putable.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch09_callable_putable.ipynb)
+[![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch09_callable_putable.ipynb)
 
 !!! info "配套代码与阅读说明"
     本章用 `fi.tree` 演示利率树、含权债定价和有效久期/凸性，并用 QuantLib 的 `CallableFixedRateBond` 和 Hull–White 树引擎说明工程实现。`fi.tree` 是教学用简化模型，未校准市场零息曲线；本章的示例数值不应直接用于交易或会计估值。
@@ -371,7 +371,7 @@ for sigma in (0.005, 0.015, 0.030):
 ## 9.10 习题参考答案与详解
 
 !!! tip "完整可运行解答 notebook"
-    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch09_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch09_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch09_solutions.ipynb`](https://github.com/albertandking/fixed-income/blob/main/notebooks/solutions/ch09_solutions.ipynb)（可在本地或通过 Binder 在线运行）。
 
 !!! success "概念题 1"
     可赎回债 = 同条件普通债 − 发行人赎回权。发行人持有期权，投资者卖出期权并要求补偿。可回售债 = 同条件普通债 + 投资者回售权。投资者持有期权，通过更高价格或更低票息为保护付费。
