@@ -204,18 +204,14 @@ swap.fairRate()  # 3.0455%（平价互换利率）
 
 **计算题**
 
-<ol start="5">
-<li>用 2.5% 平坦零息曲线，求 3 年期年付互换的平价利率；再求一笔"付固定 3%"的存量 payer 互换（名义 1 亿）的价值与 DV01。</li>
-<li>一笔 payer 互换 DV01 = 5 万元/bp，若利率上行 20bp，互换价值变动约多少？方向如何？</li>
-</ol>
+5. 用 2.5% 平坦零息曲线，求 3 年期年付互换的平价利率；再求一笔"付固定 3%"的存量 payer 互换（名义 1 亿）的价值与 DV01。
+6. 一笔 payer 互换 DV01 = 5 万元/bp，若利率上行 20bp，互换价值变动约多少？方向如何？
 
 **编程实验**
 
-<ol start="7">
-<li>用 <code>fi.swap.bootstrap_swap_curve</code> 复现例12.4，并用 bootstrap 出的折现因子重算各期限平价互换利率，验证复原。</li>
-<li>复现图12-1：对一笔付固定 2.5% 的 payer 互换，模拟市场利率从 1% 到 5%，画出其盯市价值，标出价值为零处与斜率（对应 DV01）。</li>
-<li>用 <code>fi.swap</code> 与 QuantLib <code>VanillaSwap</code> 对同一笔互换定价，比较 NPV 与 fair rate 的差异，解释计息惯例的影响。</li>
-</ol>
+7. 用 `fi.swap.bootstrap_swap_curve` 复现例12.4，并用 bootstrap 出的折现因子重算各期限平价互换利率，验证复原。
+8. 复现图12-1：对一笔付固定 2.5% 的 payer 互换，模拟市场利率从 1% 到 5%，画出其盯市价值，标出价值为零处与斜率（对应 DV01）。
+9. 用 `fi.swap` 与 QuantLib `VanillaSwap` 对同一笔互换定价，比较 NPV 与 fair rate 的差异，解释计息惯例的影响。
 
 ---
 

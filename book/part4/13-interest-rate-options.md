@@ -219,18 +219,14 @@ cap.NPV()   # ≈1,311,843（例13.2 为 1,310,756，差异来自闰年计息天
 
 **计算题**
 
-<ol start="5">
-<li>一个 caplet：远期 2.5%、执行 3%、重置 2 年、支付 3 年、vol 25%、名义 1 亿，求其 Black 价值（用 DF=1.03⁻³）。</li>
-<li>由市场报价：某 ATM caplet 价值 30 万元（F=K=3%、重置 1y、支付 2y、名义 1 亿），反求隐含波动率。</li>
-</ol>
+5. 一个 caplet：远期 2.5%、执行 3%、重置 2 年、支付 3 年、vol 25%、名义 1 亿，求其 Black 价值（用 DF=1.03⁻³）。
+6. 由市场报价：某 ATM caplet 价值 30 万元（F=K=3%、重置 1y、支付 2y、名义 1 亿），反求隐含波动率。
 
 **编程实验**
 
-<ol start="7">
-<li>用 <code>fi.rateopt</code> 复现例13.1–13.4，并复现图13-1（Cap/Floor vs 执行价），验证 Cap−Floor 平价。</li>
-<li>构造一组不同执行价的（合成）caplet 价格，用 <code>implied_vol</code> 反求隐含波动率并画<strong>波动率微笑</strong>。</li>
-<li>用 <code>fi.rateopt.black_swaption</code> 计算不同期权期限 × 执行价的 swaption 价格，反求隐含波动率，构建一张小型<strong>波动率曲面</strong>。</li>
-</ol>
+7. 用 `fi.rateopt` 复现例13.1–13.4，并复现图13-1（Cap/Floor vs 执行价），验证 Cap−Floor 平价。
+8. 构造一组不同执行价的（合成）caplet 价格，用 `implied_vol` 反求隐含波动率并画**波动率微笑**。
+9. 用 `fi.rateopt.black_swaption` 计算不同期权期限 × 执行价的 swaption 价格，反求隐含波动率，构建一张小型**波动率曲面**。
 
 ---
 

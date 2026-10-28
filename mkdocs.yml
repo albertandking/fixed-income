@@ -36,6 +36,7 @@ markdown_extensions:
   - footnotes
   - attr_list
   - md_in_html
+  - sane_lists              # 尊重有序列表起始编号（习题"计算题 4."等不被重排为 1.）
   - toc:
       permalink: true
   - pymdownx.highlight:
