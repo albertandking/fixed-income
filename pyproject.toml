@@ -33,9 +33,13 @@ book = [
     "jupyter>=1.0",
     "nbconvert>=7.0",
 ]
+# 导出 Word 版教材（另需系统安装 pandoc ≥ 3.8）：uv sync --extra docx
+docx = [
+    "python-docx>=1.2",
+]
 # 一键安装全部：uv sync --extra all
 all = [
-    "fixed-income[data,quantlib,opt,book]",
+    "fixed-income[data,quantlib,opt,book,docx]",
     "pytest>=8.0",
 ]
 

@@ -40,6 +40,7 @@ uv sync --extra all          # 一键装齐全部（data + quantlib + opt + book
 #   uv sync --extra data     # 联网抓取中国市场数据（akshare/tushare）
 #   uv sync --extra quantlib # 衍生品/含权债定价（QuantLib）
 #   uv sync --extra book     # 成书工具链（MkDocs/Jupyter）
+#   uv sync --extra docx     # 导出 Word 版（python-docx；另需系统安装 pandoc ≥ 3.8）
 
 # 2. 生成内置示例数据（一次，离线）
 uv run python scripts/make_sample_data.py
@@ -50,6 +51,9 @@ uv run jupyter lab
 # 4. 本地预览整本书
 uv run python scripts/export_notebooks.py
 uv run mkdocs serve          # 浏览器打开 http://127.0.0.1:8000
+
+# 5. 导出 Word 版（全书 + 各章，输出到 dist/，不入库）
+uv run python scripts/make_docx.py
 ```
 
 ## 写作约定
