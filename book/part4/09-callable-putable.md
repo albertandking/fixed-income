@@ -67,7 +67,7 @@ $$
 - 赎回权与回售权在同一日期并存时，合同规定的行权先后顺序是什么。
 
 !!! note "中国市场的“X+Y”结构"
-    中国信用债中常见"3+2"等结构：债券的法定到期日可能在第 5 年，但投资者在第 3 年末可以回售，发行人同时可能拥有调整后续票面利率的权利。这类条款形成相互作用的选择权，但回售决策还受信用、流动性、融资需求等因素影响，不能简化为"票息不上调就一定回售"。交易商协会对 2015–2023 年样本的研究（王冰山、刘家祺，2024）也强调了行权的多因素特征。
+    中国信用债中常见"3+2"等结构：债券的法定到期日可能在第 5 年，但投资者在第 3 年末可以回售，发行人同时可能拥有调整后续票面利率的权利。这类条款形成相互作用的选择权，但回售决策还受信用、流动性、融资需求等因素影响，不能简化为"票息不上调就一定回售"。王冰山、刘家祺（2024）对 2015 年至 2023 年 6 月银行间市场已行权含权债的统计也表明，利率调整水平并非行权结果的主导因素，投资集中度限制、操作风险、发行人信用状况、信息基础设施及主承销商沟通协调等因素均会影响行权。
 
     非金融企业永续类债务融资工具还可能设置发行人赎回权和票息跳升机制；估值时需同时考虑条款设计、发行人融资能力及市场定价。
 
@@ -426,10 +426,10 @@ for sigma in (0.005, 0.015, 0.030):
 !!! quote "延伸阅读"
     - Fabozzi, *Bond Markets, Analysis, and Strategies*，"Analysis of Bonds with Embedded Options" 与 "Valuing Bonds with Embedded Options / OAS" 章节；
     - Tuckman & Serrat, *Fixed Income Securities*，关于二叉树模型与含权债的章节；
-    - Black, F., Derman, E. & Toy, W. (1990). A one-factor model of interest rates and its application to Treasury bond options. *Financial Analysts Journal*, 46(1), 33–39.（BDT 模型原始文献）
-    - Hull, J. & White, A. (1990). Pricing interest-rate-derivative securities. *The Review of Financial Studies*, 3(4), 573–592.（Hull–White 模型原始文献）
-    - QuantLib `CallableFixedRateBond` 接口与 [QuantLib-Python 债券定价引擎文档](https://quantlib-python-docs.readthedocs.io/en/latest/pricing_engines/bonds.html)；
-    - 王冰山、刘家祺（2024）.《并非唯"利"是图：多因素影响下的含权债行权》.《金融市场研究》2024 年第 4 期；
-    - 中国银行间市场交易商协会.《永续类债务融资工具的市场定价逻辑与趋势》；
-    - Basel Committee on Banking Supervision, *Basel Framework*, CAP10（资本定义）；
+    - Black, F., Derman, E. & Toy, W. (1990). A one-factor model of interest rates and its application to Treasury bond options. *Financial Analysts Journal*, 46(1), 33–39. <https://doi.org/10.2469/faj.v46.n1.33>（BDT 模型原始文献）
+    - Hull, J. & White, A. (1990). Pricing interest-rate-derivative securities. *The Review of Financial Studies*, 3(4), 573–592. <https://doi.org/10.1093/rfs/3.4.573>（Hull–White 模型原始文献）
+    - QuantLib [`CallableFixedRateBond` 接口](https://quantlib-python-docs.readthedocs.io/en/latest/instruments/bonds.html#callable-bond)与 [QuantLib-Python 债券定价引擎文档](https://quantlib-python-docs.readthedocs.io/en/latest/pricing_engines/bonds.html)；
+    - 王冰山、刘家祺（2024）.《并非唯"利"是图：多因素影响下的含权债行权》.《金融市场研究》2024 年第 4 期（总第 143 期），21–30.（[全文 PDF](https://www.nafmii.org.cn/yj/jrscyj/qk/2024/202404/202406/P020250324541474616102.pdf)）；
+    - 张佳梦、江之韵、李虹佳（2022）.《永续类债务融资工具的市场定价逻辑与趋势》.《金融市场研究》2022 年第 8 期，27–40.（2021 年"NAFMII 研究计划"获奖课题，[全文 PDF](https://www.nafmii.org.cn/yj/scyjyfx/nafmiiyjjh/2021n/202304/P020230428533782516938.pdf)）；
+    - Basel Committee on Banking Supervision, *Basel Framework*, [CAP10 Definition of eligible capital](https://www.bis.org/committees/bcbs/basel-framework/standard/cap/10/inforce/2019-12-15/published/2020-06-05)（合格资本的定义）；
     - 中国市场可参考交易商协会、交易所关于含权债（含永续债、二级资本债）估值与信息披露的规则。

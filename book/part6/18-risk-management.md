@@ -65,7 +65,7 @@ VaR 给出尾部门槛，**条件风险价值（CVaR，也称期望损失 ES）*
 
 可把 VaR 想成一道**损失门槛**，ES 则描述越过门槛后最差一部分结果的平均深度。两个组合即使 VaR 相同，尾部平均损失也可能不同。ES 因而提供额外信息，但仍依赖同一套持仓、样本和模型假设，不能代替压力测试。
 
-ES 在通常的定义下满足**次可加性**：同一风险模型下，组合的 ES 不大于各部分 ES 之和。VaR 在一般分布下不一定满足这一性质；这并不意味着任何资产组合都会因分散化降低实际风险。巴塞尔市场风险框架（FRTB）的**内部模型法**使用 ES，须区分本章的 1 日 99% 教学示例与监管资本采用的模型、置信水平及流动性期限要求。
+ES 在通常的定义下满足**次可加性**：同一风险模型下，组合的 ES 不大于各部分 ES 之和。VaR 在一般分布下不一定满足这一性质；这并不意味着任何资产组合都会因分散化降低实际风险。巴塞尔市场风险框架（FRTB）的**内部模型法**使用 ES：采用 97.5% 单尾置信水平，以 10 天为基础期限并按各风险因子的流动性期限调整，且须以压力时期校准。因此须区分本章的 1 日 99% 教学示例与监管资本采用的模型、置信水平及流动性期限要求。
 
 !!! example "例18.2：同一波动尺度下的分布假设比较"
     以标准差约 25 万元的**模拟损益**为例，分别用正态参数法、正态蒙特卡洛和厚尾模拟样本的经验分位数计算 99% 1 日 VaR：
@@ -206,7 +206,7 @@ portfolio_pnl = gov_rate_pnl + credit_rate_pnl + credit_spread_pnl  # -2,760,000
 - **巴塞尔市场风险框架（FRTB）**：其**内部模型法**使用预期损失（ES），与本章的 1 日 99% VaR 教学计算不是同一监管口径；标准法另有资本计量规则；
 - **银行账簿利率风险（IRRBB）**：评估利率冲击下的经济价值变动（ΔEVE）与净利息收入变动（ΔNII）。巴塞尔框架规定 EVE 六种标准冲击、NII 两种标准冲击；冲击幅度按币种和现行规则确定，不宜一概写成 ±200bp；
 - **流动性指标**：流动性覆盖率（LCR）、净稳定资金比率（NSFR）；
-- **中国监管**：适用机构须按国内现行资本、市场风险、流动性及银行账簿利率风险规定执行；例如金融监管总局 2025 年发布的《商业银行市场风险管理办法》明确将银行账簿利率风险与市场风险管理办法区分。
+- **中国监管**：适用机构须按国内现行资本、市场风险、流动性及银行账簿利率风险规定执行；例如金融监管总局 2025 年 6 月印发、自印发之日起施行的《商业银行市场风险管理办法》（金规〔2025〕15 号）明确，所称市场风险不包含银行账簿利率风险，后者适用《商业银行银行账簿利率风险管理指引（修订）》。
 
 监管要求提供了风险计量、限额和报告的制度框架；具体适用口径应以机构类型及现行规则为准。
 
@@ -317,4 +317,4 @@ portfolio_pnl = gov_rate_pnl + credit_rate_pnl + credit_spread_pnl  # -2,760,000
     - Jorion, P. *Value at Risk: The New Benchmark for Managing Financial Risk*（VaR 经典）；
     - 巴塞尔委员会：[市场风险最低资本要求](https://www.bis.org/publications/201901-standards-minimum-capital-requirements-market-risk)与[现行银行账簿利率风险框架](https://www.bis.org/committees/bcbs/basel-framework/standard/srp/31/inforce/2026-01-01/published/2024-07-16)；
     - Fabozzi, *Bond Markets, Analysis, and Strategies*，风险管理相关章节；
-    - 国家金融监督管理总局：[《商业银行市场风险管理办法》发布说明](https://www.nfra.gov.cn/cn/view/pages/ItemDetail.html?docId=1214421&generaltype=0&itemId=915)。
+    - 国家金融监督管理总局：[《商业银行市场风险管理办法》发布说明](https://www.nfra.gov.cn/cn/view/pages/ItemDetail.html?docId=1214421&generaltype=0&itemId=915)与[印发通知全文](https://www.nfra.gov.cn/cn/view/pages/governmentDetail.html?docId=1214382&itemId=861&generaltype=1)（金规〔2025〕15 号）。

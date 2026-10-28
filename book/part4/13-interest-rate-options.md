@@ -285,5 +285,6 @@ cap.NPV()   # ≈1,311,843（例13.2 为 1,310,756，差异来自闰年计息天
 !!! quote "延伸阅读"
     - Hull, *Options, Futures, and Other Derivatives*，"Interest Rate Derivatives: The Standard Market Models"（Black 模型、Cap/Floor、Swaption）；
     - Brigo & Mercurio, *Interest Rate Models — Theory and Practice*（波动率曲面、SABR、shifted lognormal 的系统论述）；
-    - [中国货币网：利率期权产品与交易说明](https://www.chinamoney.com.cn/chinese/mgbbcphjy/)；
-    - [中国货币网：关于利率期权业务试运行上线的通知](https://www.chinamoney.com.cn/chinese/rdgz/20200313/1565533.html)。
+    - [中国货币网：本币交易系统"产品和交易"说明](https://www.chinamoney.com.cn/chinese/mgbbcphjy/)（见其中"利率期权"栏）；
+    - [中国货币网：关于利率期权业务试运行上线的通知](https://www.chinamoney.com.cn/chinese/rdgz/20200313/1565533.html)（中汇交发〔2020〕51 号，附《银行间市场利率期权交易规则（试行）》）；
+    - [中国货币网：关于本币交易系统新增利率期权标的基准利率的通知](https://www.chinamoney.com.cn/chinese/rdgz/20210319/1918199.html)（中汇交发〔2021〕86 号，新增挂钩 FDR001、FDR007 的利率互换期权与利率上/下限期权）。
