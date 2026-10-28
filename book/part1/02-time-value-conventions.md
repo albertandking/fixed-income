@@ -105,7 +105,7 @@ $$\boxed{\;\text{pmt}=PV\cdot\frac{i}{1-(1+i)^{-N}}\;}$$
 | **30/360**         | 按规则将每月视为30天、每年视为360天                              | 部分债券和利率衍生品；需进一步区分 30/360 US、30E/360 等子约定 |
 
 !!! warning "ACT/ACT 和 30/360 都不是唯一算法"
-    仅写"ACT/ACT"或"30/360"往往不足以唯一确定计算结果。ACT/ACT (ISDA) 按公历年拆分，ACT/ACT (ICMA) 依赖参考付息周期；30/360 US 与 30E/360 对月末日期的调整规则也不同。合同、程序与教材算例必须使用同一子约定。30/360 和 ACT/360 由历史上的市场报价与计算需要逐渐形成，以360为分母便于按月、季度和半年进行拆分，但这是合同约定，不表示一个公历年实际有360天。ISDA 已以《2021 ISDA Interest Rate Derivatives Definitions》更新利率衍生品定义文件，新交易通常引用2021年版定义。[^isda-2021]
+    仅写"ACT/ACT"或"30/360"往往不足以唯一确定计算结果。ACT/ACT (ISDA) 按公历年拆分，ACT/ACT (ICMA) 依赖参考付息周期；30/360 US 与 30E/360 对月末日期的调整规则也不同。合同、程序与教材算例必须使用同一子约定。30/360 和 ACT/360 由历史上的市场报价与计算需要逐渐形成，以360为分母便于按月、季度和半年进行拆分，但这是合同约定，不表示一个公历年实际有360天。ISDA 已以《2021 ISDA Interest Rate Derivatives Definitions》更新利率衍生品定义文件。2021年定义自2021年10月4日起实施，主要中央对手方已将其纳入清算规则，非清算交易则逐步迁移。[^isda-2021]
 
 !!! example "例2.3：同一区间在不同计息惯例下的年化分数"
     从 2026-03-15 到 2026-09-15，实际 184 天（2026 非闰年）：
@@ -126,7 +126,7 @@ $$\boxed{\;\text{pmt}=PV\cdot\frac{i}{1-(1+i)^{-N}}\;}$$
 
 ## 2.5 净价、全价与应计利息
 
-债券在两个付息日之间结算时，发行人尚未支付当期票息，但卖方在持有期间已累积了部分利息。买方在结算时支付这部分**应计利息（accrued interest, AI）**，待下一付息日再收取完整的当期票息。不同市场、券种和业务规则采用的应计利息口径并不完全相同。以中证债券指数计算与维护规则为例，附息债券每百元面值的应计利息可写为：[^csi-accrued]
+债券在两个付息日之间结算时，发行人尚未支付当期票息，但卖方在持有期间已累积了部分利息。买方在结算时支付这部分**应计利息（accrued interest, AI）**，待下一付息日再收取完整的当期票息。不同市场、券种和业务规则采用的应计利息口径并不完全相同。以《中证指数有限公司债券指数计算与维护细则》为例，附息债券每百元面值的应计利息可写为：[^csi-accrued]
 
 $$\text{AI}=\underbrace{\frac{C}{f}}_{\text{当期票息}}\times\frac{t}{TS}$$
 
@@ -311,12 +311,12 @@ bond.accruedAmount(ql.Date(15, 6, 2026))   # 0.75；在本例规则付息期内�
     - ICMA, *Appendix A5: Day Count Fraction—ICMA Actual/Actual*，债券市场 Actual/Actual (ICMA) 的计算说明；
     - ISDA, *2021 ISDA Interest Rate Derivatives Definitions*，利率衍生品计息惯例的现行定义框架。
 
-[^icma-actact]: International Capital Market Association: [*Appendix A5: Day Count Fraction—ICMA Actual/Actual*](https://www.icmagroup.org/assets/documents/ICMA-PMH-Appendix-A5-March-2022.pdf), March 2022.
+[^icma-actact]: International Capital Market Association: [*ICMA Primary Market Handbook, Appendix A5: Day Count Fraction—ICMA Actual/Actual*](https://www.icmagroup.org/assets/documents/ICMA-PMH-Appendix-A5-March-2022.pdf), March 2022.
 
-[^isda-2021]: International Swaps and Derivatives Association: [*2021 ISDA Interest Rate Derivatives Definitions*](https://www.isda.org/book/2021-isda-interest-rate-derivatives-definitions/). ISDA说明2021年定义已对2006年定义进行更新。
+[^isda-2021]: International Swaps and Derivatives Association: [*2021 ISDA Interest Rate Derivatives Definitions*](https://www.isda.org/book/2021-isda-interest-rate-derivatives-definitions/). ISDA说明2021年定义是对2006年定义的更新。另见 ISDA: [*Landmark Change in Interest Rate Derivatives Market as New Definitions Take Effect*](https://www.isda.org/a/arigE/Landmark-Change-in-Interest-Rate-Derivatives-Market-as-New-Definitions-Take-Effect.pdf), October 4, 2021：2021年定义自当日实施，多数主要中央对手方同步将其纳入清算规则，ISDA自该日起不再更新2006年定义。
 
-[^csi-accrued]: 中证指数有限公司：[《中证指数有限公司债券指数计算与维护细则》](https://oss-ch.csindex.com.cn/notice/20251231114335-%E9%99%84%E4%BB%B61%20%E3%80%8A%E4%B8%AD%E8%AF%81%E6%8C%87%E6%95%B0%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%E5%80%BA%E5%88%B8%E6%8C%87%E6%95%B0%E8%AE%A1%E7%AE%97%E4%B8%8E%E7%BB%B4%E6%8A%A4%E7%BB%86%E5%88%99%E3%80%8B.pdf)，附息债券按 $AI=(C/f)\times(t/TS)$ 计算。
+[^csi-accrued]: 中证指数有限公司：[《中证指数有限公司债券指数计算与维护细则》](https://oss-ch.csindex.com.cn/notice/20251231114335-%E9%99%84%E4%BB%B61%20%E3%80%8A%E4%B8%AD%E8%AF%81%E6%8C%87%E6%95%B0%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%E5%80%BA%E5%88%B8%E6%8C%87%E6%95%B0%E8%AE%A1%E7%AE%97%E4%B8%8E%E7%BB%B4%E6%8A%A4%E7%BB%86%E5%88%99%E3%80%8B.pdf)（V4.0，2025年12月），附息债券按 $AI=(C/f)\times(t/TS)$ 计算。
 
-[^net-price-rule]: 上海证券交易所：[《债券净价交易投资者问答》](https://www.sse.com.cn/aboutus/mediacenter/hotandd/c/c_20150912_3988250.shtml)。该问答同时说明了净价交易、全价结算的含义，并列示部分券种或交易安排的适用差异。
+[^net-price-rule]: 上海证券交易所：[《关于发布施行〈上海证券交易所债券交易规则〉及有关事项的通知》](http://www.sse.com.cn/lawandrules/sselawsrules2025/bond/trading/currency/c/c_20250604_10780834.shtml)（上证发〔2022〕24号），2022年1月27日，规则第五十六条规定债券现券交易采用净价申报，另有规定的除外；通知明确次级档资产支持证券、可转债及特定债券采用全价申报。净价交易、全价结算的含义另见上海证券交易所：[《上海证券交易所债券净价交易投资者问答》](https://www.sse.com.cn/aboutus/mediacenter/hotandd/c/c_20150912_3988250.shtml)。
 
 下一章（第3章）将综合运用上述两项基础工具：用时间价值折现、按惯例处理应计，给中国国债与国开债**定价**。
