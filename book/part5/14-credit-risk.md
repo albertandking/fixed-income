@@ -1,6 +1,6 @@
 # 第14章　信用风险与定价模型
 
-[![在 Colab 打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/ch14_credit_risk.ipynb) [![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch14_credit_risk.ipynb)
+[![在 Binder 打开](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/albertandking/fixed-income/main?labpath=notebooks/ch14_credit_risk.ipynb)
 
 !!! info "配套代码"
     本章 Merton 结构化模型、约化模型与隐含违约率曲线由 `fi.credit` 实现，并与 QuantLib 违约期限结构对拍。
@@ -206,7 +206,7 @@ dpts.survivalProbability(d5)   # 0.846404（fi.credit：0.846482）
 dpts.defaultProbability(d5)    # 0.153596
 ```
 
-两者在第4位小数上的差异来自时间口径：QuantLib 按 Actual/365F 计算，估值日至5年后共 1826 天（含 2028 年闰日），即 $tpprox5.0027$ 年；`fi.credit` 直接取 $t=5$。
+两者在第4位小数上的差异来自时间口径：QuantLib 按 Actual/365F 计算，估值日至5年后共 1826 天（含 2028 年闰日），即 $t\approx5.0027$ 年；`fi.credit` 直接取 $t=5$。
 
 !!! tip "约化模型天然适合校准市场"
     QuantLib 的违约期限结构可由一组 **CDS 报价** bootstrap 出分段强度曲线（`PiecewiseFlatHazardRate` + `SpreadCdsHelper`），与第5章 bootstrap 利率曲线如出一辙。这正是约化模型的工程优势：**直接吃市场报价、吐违约概率**。
@@ -251,7 +251,7 @@ dpts.defaultProbability(d5)    # 0.153596
 ## 14.10 习题参考答案与详解
 
 !!! tip "完整可运行解答 notebook"
-    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch14_solutions.ipynb`](https://colab.research.google.com/github/albertandking/fixed-income/blob/main/notebooks/solutions/ch14_solutions.ipynb)（点击徽章可在 Colab 直接运行）。
+    本节编程实验的**完整可运行代码**见 [`notebooks/solutions/ch14_solutions.ipynb`](https://github.com/albertandking/fixed-income/blob/main/notebooks/solutions/ch14_solutions.ipynb)（可在本地或通过 Binder 在线运行）。
 
 !!! success "概念题 1"
     **预期损失 $EL=PD\times LGD\times EAD$**：违约概率 × 违约损失率 × 违约时敞口。**回收率 $R$ 与 LGD 的关系**：$LGD=1-R$（违约后没收回的比例）。例如 PD=3%、回收率 40%（LGD=60%）、敞口 1 亿，则 $EL=3\%\times60\%\times1\text{亿}=180$ 万元。
